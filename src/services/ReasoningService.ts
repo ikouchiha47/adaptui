@@ -1,23 +1,11 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
-import { 
-  Category, 
-  QueryRequest, 
-  LLMResponse, 
-  ReasoningPattern, 
-  ReasoningStep 
-} from '@/types';
+// Reasoning Service - Provider-agnostic reasoning patterns and prompt building
 
-export class LLMCore {
-  private genAI: GoogleGenerativeAI;
-  private model: any;
+import { Category, QueryRequest, ReasoningPattern } from '@/types';
+
+export class ReasoningService {
   private reasoningPatterns: Map<string, ReasoningPattern>;
 
-  constructor(apiKey: string) {
-    this.genAI = new GoogleGenerativeAI(apiKey);
-    this.model = this.genAI.getGenerativeModel({ model: 'gemini-pro' });
-    
-    // Initialize reasoning patterns
+  constructor() {
     this.reasoningPatterns = new Map();
     this.initializeReasoningPatterns();
   }
@@ -85,24 +73,10 @@ export class LLMCore {
     });
   }
 
-  async processQuery(query: QueryRequest, category: Category): Promise<LLMResponse> {
-    const pattern = this.selectReasoningPattern(query, category);
-    const reasoningResult = await this.executeReasoning(query, pattern);
-    
-    return {
-      id: query.id,
-      category,
-      components: reasoningResult.components,
-      reasoning: reasoningResult.reasoning,
-      confidence: reasoningResult.confidence,
-      metadata: reasoningResult.metadata
-    };
-  }
-
-  private selectReasoningPattern(query: QueryRequest, category: Category): ReasoningPattern {
-    // Simple heuristic-based pattern selection
-    // In a real implementation, this could use ML classification
-    
+  /**
+   * Select appropriate reasoning pattern based on query
+   */
+  selectReasoningPattern(query: QueryRequest, category?: Category): ReasoningPattern {
     const queryLower = query.query.toLowerCase();
     
     // Complex queries benefit from Tree of Thought
@@ -129,23 +103,10 @@ export class LLMCore {
     return this.reasoningPatterns.get('chain-of-thought')!;
   }
 
-  private async executeReasoning(query: QueryRequest, pattern: ReasoningPattern): Promise<any> {
-    const prompt = this.buildReasoningPrompt(query, pattern);
-    
-    try {
-      const result = await this.model.generateContent(prompt);
-      const response = await result.response;
-      const text = response.text();
-      
-      // Parse the response to extract components and reasoning
-      return this.parseLLMResponse(text, query);
-    } catch (error) {
-      console.error('LLM processing error:', error);
-      throw new Error(`Failed to process query: ${error}`);
-    }
-  }
-
-  private buildReasoningPrompt(query: QueryRequest, pattern: ReasoningPattern): string {
+  /**
+   * Build reasoning prompt for UI generation
+   */
+  buildReasoningPrompt(query: QueryRequest, pattern: ReasoningPattern): string {
     return `
 You are AdaptUI, an intelligent interface generator. Follow this reasoning pattern: ${pattern.name}
 
@@ -169,7 +130,10 @@ Each component should have:
 Respond only with valid JSON.`;
   }
 
-  private parseLLMResponse(text: string, query: QueryRequest): any {
+  /**
+   * Parse LLM response and extract structured data
+   */
+  parseLLMResponse(text: string, query: QueryRequest): any {
     try {
       // Extract JSON from the response
       const jsonMatch = text.match(/\{[\s\S]*\}/);
@@ -201,55 +165,11 @@ Respond only with valid JSON.`;
         }],
         reasoning: 'Fallback response due to parsing error',
         confidence: 0.1,
-        metadata: { error: error.message }
+        metadata: { error: String(error) }
       };
     }
   }
-
-  // Tool calling functionality
-  async callTool(toolName: string, parameters: any): Promise<any> {
-    // Implement tool calling based on the tool name
-    // This is a placeholder - expand based on your specific tools
-    
-    const tools = {
-      'web_search': this.webSearch,
-      'get_location': this.getLocation,
-      'calculate': this.calculate,
-      'summarize': this.summarize
-    };
-    
-    const tool = tools[toolName as keyof typeof tools];
-    if (!tool) {
-      throw new Error(`Unknown tool: ${toolName}`);
-    }
-    
-    return await tool(parameters);
-  }
-
-  private async webSearch(parameters: { query: string }): Promise<any> {
-    // Implement web search functionality
-    return { result: `Search results for: ${parameters.query}` };
-  }
-
-  private async getLocation(parameters: any): Promise<any> {
-    // Implement location services
-    return { latitude: 37.7749, longitude: -122.4194, address: 'San Francisco, CA' };
-  }
-
-  private async calculate(parameters: { expression: string }): Promise<any> {
-    // Implement calculation functionality
-    try {
-      const result = eval(parameters.expression); // WARNING: Use a safe math library in production
-      return { result };
-    } catch (error) {
-      throw new Error(`Calculation error: ${error}`);
-    }
-  }
-
-  private async summarize(parameters: { text: string }): Promise<any> {
-    // Implement summarization using the LLM
-    const prompt = `Please summarize the following text in 2-3 sentences:\n\n${parameters.text}`;
-    const result = await this.model.generateContent(prompt);
-    return { summary: result.response.text() };
-  }
 }
+
+// Export singleton instance
+export const reasoningService = new ReasoningService();

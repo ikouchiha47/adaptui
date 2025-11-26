@@ -1,16 +1,16 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import { 
-  QueryRequest, 
-  Category, 
-  LLMResponse, 
-  BackgroundJob, 
-  UserPreferences,
-  DeviceInfo
-} from '@/types';
-import { LLMCore } from '@/core/LLMCore';
 import { CategoryManager } from '@/core/CategoryManager';
+import { GeminiCore } from '@/core/GeminiCore';
 import { DatabaseService } from '@/services/DatabaseService';
+import {
+    BackgroundJob,
+    Category,
+    DeviceInfo,
+    LLMResponse,
+    QueryRequest,
+    UserPreferences
+} from '@/types';
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface AppState {
   // Core services
@@ -47,7 +47,7 @@ interface AppState {
   clearHistory: () => void;
 }
 
-export const useAppStore = create<AppState>()(
+export const useAppStore = create<AppState & { getState: () => AppState }>()(
   persist(
     (set, get) => ({
       // Initial state
@@ -83,7 +83,7 @@ export const useAppStore = create<AppState>()(
           await databaseService.initialize();
           
           // Initialize LLM core
-          const llmCore = new LLMCore(apiKey);
+          const llmCore = new GeminiCore(apiKey);
           
           // Load categories
           const categories = categoryManager.getAllCategories();
@@ -127,7 +127,7 @@ export const useAppStore = create<AppState>()(
             query,
             timestamp: new Date(),
             context: {
-              previousQueries: responses.slice(-5), // Last 5 responses for context
+              previousQueries: [], // Context from previous queries
               userPreferences
             }
           };
@@ -197,18 +197,18 @@ export const useAppStore = create<AppState>()(
         const jobIndex = activeJobs.findIndex(job => job.id === jobId);
         if (jobIndex !== -1) {
           const job = activeJobs[jobIndex];
-          const updatedJob = { ...job, status };
+          const updatedJob = { ...job, status: status as any };
           
           const newActiveJobs = activeJobs.filter(job => job.id !== jobId);
           
           if (status === 'completed' || status === 'failed') {
             set({
               activeJobs: newActiveJobs,
-              completedJobs: [updatedJob, ...completedJobs]
+              completedJobs: [updatedJob as any, ...completedJobs]
             });
           } else {
             set({
-              activeJobs: [...newActiveJobs, updatedJob]
+              activeJobs: [...newActiveJobs, updatedJob as any]
             });
           }
         }
@@ -234,10 +234,11 @@ export const useAppStore = create<AppState>()(
     {
       name: 'adaptui-store',
       storage: createJSONStorage(() => ({
-        getItem: async (name: string) => {
+        getItem: async (name: string): Promise<string | null> => {
           try {
-            const { databaseService } = useAppStore.getState();
-            return await databaseService.getUserPreference(name);
+            const state = useAppStore.getState() as any;
+            const result = await state.databaseService.getUserPreference(name);
+            return result ? JSON.stringify(result) : null;
           } catch {
             return null;
           }

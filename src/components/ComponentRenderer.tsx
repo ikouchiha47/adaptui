@@ -1,6 +1,6 @@
+import { ComponentStyle, UIComponent } from '@/types';
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
-import { UIComponent, ComponentStyle } from '@/types';
+import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 interface ComponentRendererProps {
   component: UIComponent;
@@ -264,7 +264,7 @@ const styles = {
     marginBottom: 12,
   },
   cardImage: {
-    width: '100%',
+    width: '100%' as any,
     height: 150,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
