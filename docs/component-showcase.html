@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdaptUI Component Library - Neo Brutal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #FFF8E7; color: #000000; padding: 40px 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 60px; }
+        h1 { font-size: 48px; font-weight: 900; margin-bottom: 16px; }
+        .subtitle { font-size: 20px; margin-bottom: 32px; font-weight: 600; }
+        .stats { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+        .stat { 
+            background: #FFFFFF; padding: 24px 40px; border: 3px solid #000000;
+            box-shadow: 4px 4px 0 #000000;
+        }
+        .stat-value { font-size: 36px; font-weight: 900; }
+        .stat-label { font-size: 14px; font-weight: 600; margin-top: 4px; }
+        .section { margin-bottom: 80px; }
+        .section-title { font-size: 32px; font-weight: 900; margin-bottom: 24px; }
+        .component-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px; }
+        .component-card { 
+            background: #FFFFFF; border: 3px solid #000000; padding: 24px;
+            box-shadow: 6px 6px 0 #000000; transition: transform 0.2s;
+        }
+        .component-card:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 #000000; }
+        .component-name { font-size: 24px; font-weight: 900; margin-bottom: 8px; }
+        .component-description { font-size: 14px; margin-bottom: 16px; line-height: 1.6; }
+        .component-preview { 
+            background: #FFF8E7; border: 2px solid #000000; padding: 20px;
+            margin-bottom: 16px; min-height: 120px;
+        }
+        .preview-card { 
+            background: #FFFFFF; border: 3px solid #000000; padding: 16px;
+            box-shadow: 4px 4px 0 #000000;
+        }
+        .preview-card-title { font-size: 18px; font-weight: 900; margin-bottom: 8px; }
+        .preview-card-subtitle { font-size: 14px; margin-bottom: 12px; }
+        .preview-badge { 
+            display: inline-block; padding: 6px 12px; background: #FFE66D;
+            border: 2px solid #000000; font-size: 12px; font-weight: 700;
+            box-shadow: 2px 2px 0 #000000; margin-right: 8px;
+        }
+        .preview-chip { 
+            display: inline-block; padding: 8px 16px; background: #FFFFFF;
+            border: 2px solid #000000; font-weight: 700; cursor: pointer;
+            box-shadow: 2px 2px 0 #000000; margin: 4px;
+        }
+        .preview-chip.selected { background: #FF6B6B; }
+        .photo-grid { display: grid; gap: 8px; height: 200px; }
+        .photo-grid.hero-left { grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; }
+        .photo-grid.hero-left .photo:first-child { grid-row: 1 / 3; }
+        .photo-grid.hero-right { grid-template-columns: 1fr 2fr; grid-template-rows: 1fr 1fr; }
+        .photo-grid.hero-right .photo:last-child { grid-row: 1 / 3; }
+        .photo-grid.equal-row { grid-template-columns: repeat(3, 1fr); }
+        .photo { 
+            background: #A78BFA; border: 2px solid #000000;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; box-shadow: 2px 2px 0 #000000;
+        }
+        .props { 
+            background: #FFF8E7; border: 2px solid #000000; padding: 12px;
+            font-family: 'Courier New', monospace; font-size: 12px;
+        }
+        footer { 
+            text-align: center; margin-top: 80px; padding-top: 40px;
+            border-top: 3px solid #000000; font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AdaptUI Component Library</h1>
+            <p class="subtitle">20 Pre-built Components • Neo Brutal Theme</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value">20</div>
+                    <div class="stat-label">Components</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">Photo Variants</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">95%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+        </header>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-id-card"></i> Cards (8 components)</h2>
+            <div class="component-grid">
+                <div class="component-card">
+                    <h3 class="component-name">card-travel</h3>
+                    <p class="component-description">Complete destination with highlights, photos, and local tips</p>
+                    <div class="component-preview">
+                        <div class="preview-card">
+                            <div class="preview-card-title">Ubud, Bali</div>
+                            <div class="preview-card-subtitle">Peaceful & Cultural</div>
+                            <span class="preview-badge"><i class="fas fa-star"></i> 4.8</span>
+                            <span class="preview-badge"><i class="fas fa-clock"></i> Morning</span>
+                        </div>
+                    </div>
+                    <div class="props">Required: destination, vibe, highlights<br>Optional: photoUrls, bestTime, localTip</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">card-restaurant</h3>
+                    <p class="component-description">Restaurant with cuisine, price, hours, and ratings</p>
+                    <div class="component-preview">
+                        <div class="preview-card">
+                            <div class="preview-card-title">Locavore</div>
+                            <div class="preview-card-subtitle">Indonesian Fusion • $$</div>
+                            <span class="preview-badge"><i class="fas fa-star"></i> 4.8</span>
+                            <span class="preview-badge"><i class="fas fa-check"></i> Open</span>
+                        </div>
+                    </div>
+                    <div class="props">Required: name, cuisine, priceRange<br>Optional: rating, hours, isOpen</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">card-hotel</h3>
+                    <p class="component-description">Hotel with amenities and pricing</p>
+                    <div class="component-preview">
+                        <div class="preview-card">
+                            <div class="preview-card-title">Four Seasons</div>
+                            <div class="preview-card-subtitle">$450/night</div>
+                            <span class="preview-badge"><i class="fas fa-swimming-pool"></i> Pool</span>
+                            <span class="preview-badge"><i class="fas fa-spa"></i> Spa</span>
+                        </div>
+                    </div>
+                    <div class="props">Required: name, roomTypes, pricePerNight<br>Optional: amenities, rating</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">card-activity</h3>
+                    <p class="component-description">Activity/experience with duration and difficulty</p>
+                    <div class="component-preview">
+                        <div class="preview-card">
+                            <div class="preview-card-title">Sunrise Volcano Hike</div>
+                            <div class="preview-card-subtitle">4 hours • Moderate</div>
+                            <span class="preview-badge"><i class="fas fa-dollar-sign"></i> $75/person</span>
+                        </div>
+                    </div>
+                    <div class="props">Required: name, type, duration<br>Optional: difficulty, cost, bestTime</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">card-highlight</h3>
+                    <p class="component-description">Compact card for individual highlights/attractions</p>
+                    <div class="component-preview">
+                        <div class="preview-card">
+                            <div class="preview-card-title">Pura Tirta Empul</div>
+                            <div class="preview-card-subtitle">Sacred water temple</div>
+                            <span class="preview-badge"><i class="fas fa-landmark"></i> Cultural</span>
+                        </div>
+                    </div>
+                    <div class="props">Required: name, type<br>Optional: description, cost, photoUrl</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">card-item</h3>
+                    <p class="component-description">Generic card for products/services</p>
+                    <div class="component-preview">
+                        <div class="preview-card">
+                            <div class="preview-card-title">Canon EOS R5</div>
+                            <div class="preview-card-subtitle">Professional camera</div>
+                            <span class="preview-badge"><i class="fas fa-dollar-sign"></i> $3,899</span>
+                        </div>
+                    </div>
+                    <div class="props">Required: name, description<br>Optional: price, rating, tags</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">card-detail</h3>
+                    <p class="component-description">Detailed card with specs/features</p>
+                    <div class="component-preview">
+                        <div class="preview-card">
+                            <div class="preview-card-title">iPhone 15 Pro</div>
+                            <div class="preview-card-subtitle">A17 Pro • 48MP • Titanium</div>
+                            <span class="preview-badge"><i class="fas fa-dollar-sign"></i> $999</span>
+                        </div>
+                    </div>
+                    <div class="props">Required: name<br>Optional: specs, features, price, image</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">transport-tickets</h3>
+                    <p class="component-description">Shows available flights, trains, and buses</p>
+                    <div class="component-preview">
+                        <div class="preview-card">
+                            <div class="preview-card-title"><i class="fas fa-plane"></i> Bangkok → Phuket</div>
+                            <div class="preview-card-subtitle">1h 20m • $120</div>
+                        </div>
+                    </div>
+                    <div class="props">Required: tickets<br>Use Cases: Travel booking, transport options</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-list"></i> Lists (4 components)</h2>
+            <div class="component-grid">
+                <div class="component-card">
+                    <h3 class="component-name">list-travel</h3>
+                    <p class="component-description">Vertical list layout, best for mobile</p>
+                    <div class="component-preview">
+                        <div class="preview-card" style="margin-bottom: 8px;">
+                            <div class="preview-card-title">Destination 1</div>
+                        </div>
+                        <div class="preview-card">
+                            <div class="preview-card-title">Destination 2</div>
+                        </div>
+                    </div>
+                    <div class="props">Required: items<br>Optional: title, separator, emptyMessage</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">list-items</h3>
+                    <p class="component-description">Generic vertical list for any items</p>
+                    <div class="component-preview">
+                        <div class="preview-card" style="margin-bottom: 8px;">
+                            <div class="preview-card-title">Item 1</div>
+                        </div>
+                        <div class="preview-card">
+                            <div class="preview-card-title">Item 2</div>
+                        </div>
+                    </div>
+                    <div class="props">Required: items<br>Optional: title, separator</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">list-grid</h3>
+                    <p class="component-description">Grid layout (2 columns on mobile)</p>
+                    <div class="component-preview">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                            <div class="preview-card">
+                                <div class="preview-card-title">Item 1</div>
+                            </div>
+                            <div class="preview-card">
+                                <div class="preview-card-title">Item 2</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="props">Required: items<br>Optional: columns, gap, title</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">list-carousel</h3>
+                    <p class="component-description">Horizontal scrolling list</p>
+                    <div class="component-preview">
+                        <div style="display: flex; gap: 8px; overflow-x: auto;">
+                            <div class="preview-card" style="min-width: 100px;">
+                                <div class="preview-card-title">Item 1</div>
+                            </div>
+                            <div class="preview-card" style="min-width: 100px;">
+                                <div class="preview-card-title">Item 2</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="props">Required: items<br>Optional: title, showIndicators</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-images"></i> Photo Grid Variants</h2>
+            <div class="component-grid">
+                <div class="component-card">
+                    <h3 class="component-name">hero-left</h3>
+                    <p class="component-description">Large photo left, 2 stacked right. Best for romantic, luxury, featured attractions.</p>
+                    <div class="component-preview">
+                        <div class="photo-grid hero-left">
+                            <div class="photo">HERO</div>
+                            <div class="photo">2</div>
+                            <div class="photo">3</div>
+                        </div>
+                    </div>
+                    <div class="props">photoGridVariant: "hero-left"</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">hero-right</h3>
+                    <p class="component-description">2 stacked left, large photo right. Best for temples, nature, cultural sites.</p>
+                    <div class="component-preview">
+                        <div class="photo-grid hero-right">
+                            <div class="photo">1</div>
+                            <div class="photo">2</div>
+                            <div class="photo">HERO</div>
+                        </div>
+                    </div>
+                    <div class="props">photoGridVariant: "hero-right"</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">equal-row</h3>
+                    <p class="component-description">3 equal photos. Best for generic listings (avoid when possible - boring!).</p>
+                    <div class="component-preview">
+                        <div class="photo-grid equal-row">
+                            <div class="photo">1</div>
+                            <div class="photo">2</div>
+                            <div class="photo">3</div>
+                        </div>
+                    </div>
+                    <div class="props">photoGridVariant: "equal-row"</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-filter"></i> Filters & Badges</h2>
+            <div class="component-grid">
+                <div class="component-card">
+                    <h3 class="component-name">filter-chips</h3>
+                    <p class="component-description">Interactive filter chips with selection states</p>
+                    <div class="component-preview">
+                        <div class="preview-chip selected"><i class="fas fa-heart"></i> Romantic</div>
+                        <div class="preview-chip"><i class="fas fa-candle-holder"></i> Intimate</div>
+                        <div class="preview-chip"><i class="fas fa-gem"></i> Upscale</div>
+                    </div>
+                    <div class="props">Required: options<br>Optional: selected, multiSelect</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">badge-time</h3>
+                    <p class="component-description">Shows suggested time with icon</p>
+                    <div class="component-preview">
+                        <span class="preview-badge"><i class="fas fa-moon"></i> Evening</span>
+                        <span class="preview-badge"><i class="fas fa-sun"></i> Morning</span>
+                    </div>
+                    <div class="props">Required: time<br>Optional: icon, reasoning</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">badge-crowd</h3>
+                    <p class="component-description">Shows crowd level</p>
+                    <div class="component-preview">
+                        <span class="preview-badge"><i class="fas fa-user"></i> Quiet</span>
+                        <span class="preview-badge"><i class="fas fa-users"></i> Busy</span>
+                    </div>
+                    <div class="props">Required: level<br>Optional: percentage, icon</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">badge-weather</h3>
+                    <p class="component-description">Shows weather conditions</p>
+                    <div class="component-preview">
+                        <span class="preview-badge"><i class="fas fa-sun"></i> 28°C</span>
+                        <span class="preview-badge"><i class="fas fa-cloud-rain"></i> Rainy</span>
+                    </div>
+                    <div class="props">Required: condition<br>Optional: temperature, icon</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-layer-group"></i> Layout (4 components)</h2>
+            <div class="component-grid">
+                <div class="component-card">
+                    <h3 class="component-name">stack-vertical</h3>
+                    <p class="component-description">Vertical container for stacking components</p>
+                    <div class="component-preview">
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div class="preview-badge">Component 1</div>
+                            <div class="preview-badge">Component 2</div>
+                            <div class="preview-badge">Component 3</div>
+                        </div>
+                    </div>
+                    <div class="props">Required: children<br>Optional: gap, padding</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">stack-horizontal</h3>
+                    <p class="component-description">Horizontal container for side-by-side components</p>
+                    <div class="component-preview">
+                        <div style="display: flex; gap: 8px;">
+                            <div class="preview-badge">Item 1</div>
+                            <div class="preview-badge">Item 2</div>
+                            <div class="preview-badge">Item 3</div>
+                        </div>
+                    </div>
+                    <div class="props">Required: children<br>Optional: gap, alignment</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">photo-grid</h3>
+                    <p class="component-description">Grid layout for destination photos with 3 dynamic variants</p>
+                    <div class="component-preview">
+                        <div class="photo-grid equal-row">
+                            <div class="photo">1</div>
+                            <div class="photo">2</div>
+                            <div class="photo">3</div>
+                        </div>
+                    </div>
+                    <div class="props">Required: photos<br>Optional: maxPhotos, variant</div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-name">photo-grid-variant</h3>
+                    <p class="component-description">Smart photo grid with 4 layout variants (hero-left, hero-right, equal-row, experimental)</p>
+                    <div class="component-preview">
+                        <div class="photo-grid hero-left">
+                            <div class="photo">HERO</div>
+                            <div class="photo">2</div>
+                            <div class="photo">3</div>
+                        </div>
+                    </div>
+                    <div class="props">Required: photos, variant<br>Optional: maxPhotos, styleOverrides</div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p><strong>AdaptUI Component Library</strong> • 20 Components • Neo Brutal Theme</p>
+            <p style="margin-top: 12px;">Pre-built components ensure visual quality. LLM selects and configures, doesn't generate.</p>
+            <p style="margin-top: 12px;"><a href="./COMPONENT_LIBRARY.md" style="color: #000; text-decoration: underline; font-weight: 700;">View Full Documentation →</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.querySelectorAll('.preview-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('.preview-chip').forEach(c => c.classList.remove('selected'));
+                chip.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>

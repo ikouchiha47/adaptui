@@ -269,10 +269,16 @@ const GEMINI_API_KEY = 'your-api-key-here';
 
 ## 📖 Documentation
 
+- **[COMPONENT_LIBRARY.md](./docs/COMPONENT_LIBRARY.md)** - Complete component library with all 20 components, variants, and examples
+- **[BLOG_1_ADAPTUI_ARCHITECTURE.md](./BLOG_1_ADAPTUI_ARCHITECTURE.md)** - Deep dive into the two-phase architecture
 - **[THEME_GUIDE.md](./THEME_GUIDE.md)** - Complete theme system documentation
 - **[QUICKSTART.md](./QUICKSTART.md)** - Quick start guide and demo script
 - **[IMPLEMENTATION_SUMMARY.md](./IMPLEMENTATION_SUMMARY.md)** - Technical implementation details
 - **[DOC.md](./DOC.md)** - Original product specification
+
+### Interactive Showcases
+
+- **[Component Showcase](./docs/component-showcase.html)** - Interactive component library (open in browser)
 
 ---
 
