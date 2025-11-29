@@ -35,28 +35,95 @@ AdaptUI generates a single, unified interface for your specific need:
 
 All in one screen. No app switching. No context loss.
 
+### Screenshots
+
+<table>
+  <tr>
+    <td><img src="blogs/assets/01_start.png" alt="Start Screen" width="200"/></td>
+    <td><img src="blogs/assets/02_travel.png" alt="Travel Mode" width="200"/></td>
+    <td><img src="blogs/assets/03_search.png" alt="Search" width="200"/></td>
+    <td><img src="blogs/assets/04_results.png" alt="Results" width="200"/></td>
+  </tr>
+  <tr>
+    <td align="center"><em>Start Screen</em></td>
+    <td align="center"><em>Travel Mode</em></td>
+    <td align="center"><em>Search</em></td>
+    <td align="center"><em>Results</em></td>
+  </tr>
+</table>
+
 ---
 
 ## 🏗️ How It Works
 
-### 1. **Intelligent Categorization**
-AdaptUI analyzes your query and determines the best category:
-- **Travel Planning** - Trips, itineraries, destinations
-- **Local Discovery** - Events, restaurants, things nearby
-- **Research** - Comparisons, analysis, information gathering
+AdaptUI uses a **two-phase architecture** that separates data gathering from UI generation:
 
-### 2. **AI-Powered UI Generation**
-Using Google Gemini, AdaptUI:
-- Applies advanced reasoning patterns (Tree of Thought, ReAct, Chain of Thought)
-- Generates a JSON schema defining the UI components
-- Renders a native React Native interface
+### Phase 1: Data Gathering (3-5 seconds)
+The heavy lifting happens here:
 
-### 3. **Adaptive Rendering**
-The UI adapts to:
-- Your query context
-- Device type (phone/tablet)
-- Previous interactions
-- User preferences
+1. **Query Analysis** - LLM extracts intent, emotion, sentiment, and temporal context
+2. **Query Expansion** - Generates related search terms for better coverage
+3. **Parallel Fetching** - Searches multiple sources simultaneously (Google Places, web, Reddit)
+4. **Data Enrichment** - Adds photos, coordinates, crowd levels, opening hours
+5. **Clustering** - Groups places geographically into 3-5 areas
+6. **Ranking** - Scores places using rating, popularity, relevance, and temporal signals
+
+**Output:** Clean, enriched data with everything the UI needs.
+
+### Phase 2: UI Generation (1-2 seconds)
+Component selection and configuration:
+
+1. **Component Selection** - LLM picks from pre-built, visually validated components
+2. **Dynamic Filters** - Generates filters based on query emotion and data characteristics
+3. **Variant Configuration** - Selects photo layouts, badge types, and spacing
+4. **Device Adaptation** - Adjusts layout for screen size and capabilities
+5. **Schema Generation** - Creates complete UISchema ready to render
+
+**Output:** Native React Native UI with no hydration needed.
+
+### Why Two Phases?
+
+**Phase 1 can be slow** - It's doing real work (API calls, enrichment, clustering). Users see progress: "Searching places...", "Fetching photos...", "Analyzing crowd levels..."
+
+**Phase 2 is fast** - No external API calls, just LLM component selection. The UI appears almost instantly after data is ready.
+
+**Key Insight:** The LLM doesn't generate UI code. It selects from pre-built components. This is critical because **broken UI can be iterated and fixed, but bad UI can't be fixed without vision**. Pre-built components are visually validated by humans.
+
+### Architecture Diagram
+
+```
+User Query
+    ↓
+┌─────────────────────────────────────────┐
+│ Phase 1: Data Gathering (3-5s)         │
+│                                         │
+│  Query Analysis → Query Expansion      │
+│       ↓                                 │
+│  Parallel Fetching (Google, Web)       │
+│       ↓                                 │
+│  Data Enrichment (Photos, Coords)      │
+│       ↓                                 │
+│  Clustering & Ranking                   │
+└─────────────────────────────────────────┘
+    ↓
+  Enriched Data
+    ↓
+┌─────────────────────────────────────────┐
+│ Phase 2: UI Generation (1-2s)          │
+│                                         │
+│  Component Selection                    │
+│       ↓                                 │
+│  Dynamic Filter Generation              │
+│       ↓                                 │
+│  Variant Configuration                  │
+│       ↓                                 │
+│  Schema Generation                      │
+└─────────────────────────────────────────┘
+    ↓
+  React Native UI
+```
+
+**Read more:** [BLOG_1_ADAPTUI_ARCHITECTURE.md](./BLOG_1_ADAPTUI_ARCHITECTURE.md)
 
 ---
 
