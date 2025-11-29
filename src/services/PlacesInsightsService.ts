@@ -23,15 +23,21 @@ export interface EnrichedPlaceData {
   bestTimeToVisit?: string;
 }
 
+import { CacheServiceFactory } from './CacheServiceFactory';
+import { ICacheService } from './ICacheService';
+
 export class PlacesInsightsService {
   private apiKey: string;
   private insightsUrl = 'https://areainsights.googleapis.com/v1:computeInsights';
   private placesUrl = 'https://places.googleapis.com/v1/places:searchText';
+  private cacheService: ICacheService;
 
-  constructor() {
+  constructor(cacheService?: ICacheService) {
     const key = configManager.getApiKeyOrNull('googlePlaces');
     if (!key) throw new Error('Google Places API key required');
     this.apiKey = key;
+    // Use provided cache service or get from factory
+    this.cacheService = cacheService || CacheServiceFactory.getInstance();
   }
 
   /**
@@ -58,7 +64,7 @@ export class PlacesInsightsService {
         headers: {
           'Content-Type': 'application/json',
           'X-Goog-Api-Key': this.apiKey,
-          'X-Goog-FieldMask': 'places.id,places.displayName,contextualContents,places.generativeSummary,places.areaSummary'
+          'X-Goog-FieldMask': 'places.id,places.displayName,places.formattedAddress,places.location,places.rating,places.userRatingCount,places.photos,places.types,places.primaryType,places.priceLevel,places.currentOpeningHours,contextualContents,places.generativeSummary,places.areaSummary'
         },
         body: JSON.stringify(payload)
       });
@@ -68,6 +74,19 @@ export class PlacesInsightsService {
       if (!data.places) {
         console.warn('⚠️ [PlacesInsights] No places found');
         return [];
+      }
+
+      console.log(`✅ [PlacesInsights] Got ${data.places.length} places from API`);
+      
+      // Log first place to see structure
+      if (data.places.length > 0) {
+        const firstPlace = data.places[0];
+        console.log(`📸 [PlacesInsights] First place photo data:`, {
+          name: firstPlace.displayName?.text,
+          hasPhotos: !!firstPlace.photos,
+          photoCount: firstPlace.photos?.length || 0,
+          firstPhotoName: firstPlace.photos?.[0]?.name
+        });
       }
 
       // Zip places with contextual contents
@@ -81,6 +100,15 @@ export class PlacesInsightsService {
         return {
           placeId,
           name: place.displayName?.text,
+          formattedAddress: place.formattedAddress,
+          location: place.location,
+          rating: place.rating,
+          userRatingCount: place.userRatingCount,
+          photos: place.photos,
+          types: place.types,
+          primaryType: place.primaryType,
+          priceLevel: place.priceLevel,
+          currentOpeningHours: place.currentOpeningHours,
           generativeSummary: place.generativeSummary,
           areaSummary: place.areaSummary,
           context: data.contextualContents?.[idx]
@@ -88,10 +116,148 @@ export class PlacesInsightsService {
       });
 
       console.log(`✅ [PlacesInsights] Got ${results.length} places with summaries`);
-      return results;
+      
+      // Enrich places without generativeSummary with web descriptions
+      try {
+        const enrichedResults = await this.enrichWithWebDescriptions(results, location);
+        return enrichedResults || results;
+      } catch (error) {
+        console.warn('⚠️ [PlacesInsights] Web enrichment failed, returning original results:', error);
+        return results;
+      }
     } catch (error) {
       console.error('❌ [PlacesInsights] Error:', error);
       return [];
+    }
+  }
+
+  /**
+   * Enrich places with web descriptions if Google doesn't provide them
+   * Uses TaskManager to throttle requests (max 2 concurrent)
+   */
+  private async enrichWithWebDescriptions(places: any[], location?: { lat: number; lng: number }): Promise<any[] | undefined> {
+    // Only enrich places missing generativeSummary
+    const placesToEnrich = places.filter(p => !p.generativeSummary);
+    
+    if (placesToEnrich.length === 0) {
+      console.log('✅ [PlacesInsights] All places have generativeSummary');
+      return places;
+    }
+    
+    // Skip enrichment if too many places (would be too slow)
+    if (placesToEnrich.length > 10) {
+      console.log(`⚠️ [PlacesInsights] Too many places to enrich (${placesToEnrich.length}), skipping web enrichment`);
+      return places;
+    }
+    
+    try {
+      const { SearchProxyService } = await import('./SearchProxyService');
+      const { OpenAICore } = await import('../core/OpenAICore');
+      const { configManager } = await import('../config/ConfigManager');
+      const { TaskManager } = await import('./research/TaskManager');
+      
+      const openaiKey = configManager.getApiKeyOrNull('openai');
+      if (!openaiKey) {
+        console.warn('⚠️ [PlacesInsights] No OpenAI key, skipping web enrichment');
+        return places;
+      }
+      
+      const searchProxy = new SearchProxyService(this.cacheService);
+      const llm = new OpenAICore(openaiKey, 'gpt-4o-mini');
+      
+      console.log(`🌐 [PlacesInsights] Enriching ${placesToEnrich.length} places with web descriptions (throttled)...`);
+    
+      // Use TaskManager to throttle enrichment (2 concurrent, 1 sec between)
+      const taskManager = new TaskManager(2, 1000);
+      
+      // Add all enrichment tasks to queue
+      const taskIds: string[] = [];
+      for (const place of placesToEnrich) {
+        const placeType = place.primaryType || place.types?.[0] || 'place';
+        const query = `${place.name} ${placeType} price range atmosphere reviews`;
+        const taskId = taskManager.addTask('scrape', query, 5);
+        taskIds.push(taskId);
+      }
+      
+      // Execute tasks with throttling
+      const enrichedPlaces: any[] = [];
+      let completedCount = 0;
+      
+      for (let i = 0; i < taskIds.length; i++) {
+        const place = placesToEnrich[i];
+        
+        const task = await taskManager.executeNext(async (t) => {
+          completedCount++;
+          console.log(`  [${completedCount}/${placesToEnrich.length}] Enriching: ${place.name}`);
+          
+          try {
+            const results = await searchProxy.search(t.input);
+            
+            if (results.length === 0) {
+              return place; // No enrichment
+            }
+            
+            // Combine top 3 snippets
+            const snippets = results.slice(0, 3)
+              .map(r => r.snippet)
+              .filter(s => s && s.length > 20)
+              .join(' ');
+            
+            if (!snippets) {
+              return place;
+            }
+            
+            // Extract description with LLM
+            const extractPrompt = `Based on these web snippets about "${place.name}", write ONE concise sentence (max 120 chars) describing what makes this place special.
+
+Snippets:
+${snippets}
+
+Rules:
+- ONE short sentence only (under 120 characters)
+- Focus on unique features, atmosphere, or what it's known for
+- Be specific, not generic
+- No quotes around the output
+
+Description:`;
+            
+            const description = await llm.generateText(extractPrompt);
+            const cleaned = description.replace(/^["']|["']$/g, '').trim();
+            
+            if (cleaned.length > 20 && cleaned.length < 150) {
+              console.log(`    ✅ "${cleaned}"`);
+              
+              // Add as webEnrichedSummary
+              return {
+                ...place,
+                webEnrichedSummary: {
+                  overview: cleaned,
+                  source: 'web_search'
+                }
+              };
+            }
+            
+            return place;
+          } catch (error) {
+            console.warn(`    ⚠️ Failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+            return place;
+          }
+        });
+        
+        if (task && task.status === 'complete' && task.result) {
+          enrichedPlaces.push(task.result);
+        } else {
+          enrichedPlaces.push(place); // Keep original on error
+        }
+      }
+      
+      // Merge enriched places back with original places
+      const enrichedMap = new Map(enrichedPlaces.map(p => [p.placeId, p]));
+      return places.map(p => enrichedMap.get(p.placeId) || p);
+      
+    } catch (error) {
+      console.error('❌ [PlacesInsights] Web enrichment error:', error);
+      return places; // Return original on error
     }
   }
 
@@ -192,7 +358,7 @@ export class PlacesInsightsService {
         headers: {
           'Content-Type': 'application/json',
           'X-Goog-Api-Key': this.apiKey,
-          'X-Goog-FieldMask': 'id,displayName,formattedAddress,rating,userRatingCount,editorialSummary,photos,types,priceLevel'
+          'X-Goog-FieldMask': 'id,displayName,formattedAddress,location,rating,userRatingCount,editorialSummary,photos,types,priceLevel,primaryType'
         }
       });
 

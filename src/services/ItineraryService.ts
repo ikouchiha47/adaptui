@@ -1,7 +1,7 @@
 // Itinerary Service - Generate travel itineraries based on query and capabilities
 
-import { configManager } from '../config/ConfigManager';
-import { GeminiCore } from '../core/GeminiCore';
+import { LLMProvider } from '../core/LLMProvider';
+import { LLMProviderFactory } from '../core/LLMProviderFactory';
 
 export interface ItineraryDay {
   day: number;
@@ -42,17 +42,10 @@ export interface Itinerary {
 }
 
 export class ItineraryService {
-  private llm: LLMCore;
+  private llm: LLMProvider;
 
   constructor() {
-    const apiKey = configManager.getApiKeyOrNull('gemini');
-    const modelName = configManager.getModelName();
-
-    if (!apiKey) {
-      throw new Error('Gemini API key required');
-    }
-
-    this.llm = new GeminiCore(apiKey, modelName);
+    this.llm = LLMProviderFactory.getProvider();
   }
 
   /**
@@ -69,16 +62,7 @@ export class ItineraryService {
 
       const prompt = this.buildItineraryPrompt(destination, query, capabilities, duration);
 
-      const result = await this.llm.model.generateContent({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: {
-          responseMimeType: 'application/json',
-          temperature: 0.8,
-        }
-      });
-
-      const response = await result.response;
-      const text = response.text();
+      const text = await this.llm.generateJSON(prompt, 0.8);
       const itinerary = JSON.parse(text);
 
       console.log(`✅ [ItineraryService] Generated ${itinerary.days.length}-day itinerary`);

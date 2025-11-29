@@ -1,17 +1,20 @@
-// Cache Service - Store queries and results using SQLite
+// Cache Service - Store queries and results using SQLite (React Native)
 
 import * as SQLite from 'expo-sqlite';
 
-export interface CacheEntry<T> {
-  key: string;
-  data: T;
-  timestamp: number;
-  ttl: number;
-}
-
 export class CacheService {
+  private static instance: CacheService | null = null;
   private static db: SQLite.SQLiteDatabase | null = null;
   private static readonly DEFAULT_TTL = 24 * 60 * 60 * 1000; // 24 hours
+
+  private constructor() {}
+
+  static getInstance(): CacheService {
+    if (!this.instance) {
+      this.instance = new CacheService();
+    }
+    return this.instance;
+  }
 
   /**
    * Initialize database with WAL mode and performance optimizations

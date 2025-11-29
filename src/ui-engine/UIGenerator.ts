@@ -1,9 +1,7 @@
 // UI Generator - Creates UI schemas from user queries using LLM
 
-import { configManager } from '../config/ConfigManager';
-import { GeminiCore } from '../core/GeminiCore';
 import { LLMProvider } from '../core/LLMProvider';
-import { OpenAICore } from '../core/OpenAICore';
+import { LLMProviderFactory } from '../core/LLMProviderFactory';
 import { HybridUIStructure, HybridUIStructureSchema } from '../types/hybrid-ui.zod';
 import { QueryAnalysisSchema } from '../types/query-analysis.zod';
 import { DeviceContext, UISchema } from '../types/ui-schema';
@@ -13,22 +11,7 @@ export class UIGenerator {
   private llm: LLMProvider;
 
   constructor() {
-    // Try OpenAI first (better JSON support), fall back to Gemini
-    const openaiKey = configManager.getApiKeyOrNull('openai');
-    const openaiModel = configManager.getOpenAIModel();
-    
-    if (openaiKey) {
-      console.log('🤖 [UIGenerator] Using OpenAI for UI generation');
-      this.llm = new OpenAICore(openaiKey, openaiModel);
-    } else {
-      const geminiKey = configManager.getApiKeyOrNull('gemini');
-      const modelName = configManager.getModelName();
-      if (!geminiKey) {
-        throw new Error('OpenAI or Gemini API key required for UI generation');
-      }
-      console.log('🤖 [UIGenerator] Using Gemini for UI generation');
-      this.llm = new GeminiCore(geminiKey, modelName);
-    }
+    this.llm = LLMProviderFactory.getProvider();
   }
 
   async generateUI(query: string, context: DeviceContext, capabilities?: any, data?: any): Promise<UISchema> {
@@ -138,8 +121,8 @@ export class UIGenerator {
       
       let text: string;
       
-      // Use unified interface
-      text = await this.llm.generateContent(schemaPrompt);
+      // Use unified interface - expecting JSON response
+      text = await this.llm.generateJSON(schemaPrompt);
       
       const duration = Date.now() - startTime;
       

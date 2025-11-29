@@ -2,18 +2,20 @@ import * as Haptics from 'expo-haptics';
 import React, { useEffect } from 'react';
 import { Animated, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-interface PlanetProps {
+export interface PlanetProps {
   label: string;
   colors: readonly string[];
   x: number;
   y: number;
   onPress: () => void;
   delay: number;
+  theme?: any;
 }
 
-export function Planet({ label, colors, x, y, onPress, delay }: PlanetProps) {
+export function Planet({ label, colors, x, y, onPress, delay, theme }: PlanetProps) {
   const bounceAnim = new Animated.Value(0);
   const scaleAnim = new Animated.Value(1);
+  const isBrutal = theme?.borderWidth && theme.borderWidth > 2;
 
   useEffect(() => {
     Animated.loop(
@@ -71,15 +73,22 @@ export function Planet({ label, colors, x, y, onPress, delay }: PlanetProps) {
           styles.planetInner,
           {
             backgroundColor: colors[0],
-            shadowColor: colors[1],
-            shadowOffset: { width: 0, height: 8 },
-            shadowOpacity: 0.6,
-            shadowRadius: 12,
+            borderRadius: isBrutal ? 8 : 42,
+            borderWidth: isBrutal ? 3 : 0,
+            borderColor: isBrutal ? '#000000' : 'transparent',
+            shadowColor: isBrutal ? '#000000' : colors[1],
+            shadowOffset: isBrutal 
+              ? { width: 4, height: 4 }
+              : { width: 0, height: 8 },
+            shadowOpacity: isBrutal ? 1 : 0.6,
+            shadowRadius: isBrutal ? 0 : 12,
             elevation: 8,
           },
         ]}
       >
-        <Text style={styles.planetText}>{label}</Text>
+        <Text style={[styles.planetText, { color: isBrutal ? '#000000' : '#0a0d12' }]}>
+          {label}
+        </Text>
       </TouchableOpacity>
     </Animated.View>
   );

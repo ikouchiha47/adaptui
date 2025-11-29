@@ -1,11 +1,9 @@
 // Crowd Intelligence Service - Multi-source data fusion with sentiment understanding
-import { configManager } from '../config/ConfigManager';
-import { GeminiCore } from '../core/GeminiCore';
 import { LLMProvider } from '../core/LLMProvider';
-import { OpenAICore } from '../core/OpenAICore';
+import { LLMProviderFactory } from '../core/LLMProviderFactory';
 import { CacheService } from './CacheService';
-import { DDGScraperService } from './DDGScraperService';
 import { PlacesInsightsService } from './PlacesInsightsService';
+import { SearchProxyService } from './SearchProxyService';
 
 export interface CrowdScore {
   level: 'quiet' | 'moderate' | 'busy' | 'very busy';
@@ -36,7 +34,7 @@ export interface SearchCriteria {
   place: string;
   city: string;
   placeType: string; // restaurant, bar, temple, etc.
-  userIntent: string; // romantic, party, peaceful, cultural
+  userIntent: string | string[]; // Single intent or array (uses FIRST only, rest for pagination)
   timeOfDay?: string; // morning, afternoon, evening, night
   dayOfWeek?: string; // monday-sunday
   desiredCrowdLevel?: 'quiet' | 'moderate' | 'busy' | 'very busy';
@@ -44,27 +42,17 @@ export interface SearchCriteria {
 
 export class CrowdIntelligenceService {
   private insightsService: PlacesInsightsService;
-  private scraperService: DDGScraperService;
+  private searchProxy: SearchProxyService;
   private llm: LLMProvider | null;
 
   constructor() {
     this.insightsService = new PlacesInsightsService();
-    this.scraperService = new DDGScraperService();
+    this.searchProxy = new SearchProxyService(CacheService as any);
 
-    // Initialize LLM provider (prefer OpenAI, fallback to Gemini)
-    const openaiKey = configManager.getApiKeyOrNull('openai');
-    const openaiModel = configManager.getOpenAIModel();
-
-    if (openaiKey) {
-      this.llm = new OpenAICore(openaiKey, openaiModel);
-    } else {
-      const geminiKey = configManager.getApiKeyOrNull('gemini');
-      const modelName = configManager.getModelName();
-      if (geminiKey) {
-        this.llm = new GeminiCore(geminiKey, modelName);
-      } else {
-        this.llm = null;
-      }
+    try {
+      this.llm = LLMProviderFactory.getProvider();
+    } catch (error) {
+      this.llm = null;
     }
   }
 
@@ -115,8 +103,9 @@ export class CrowdIntelligenceService {
     // Convert score to crowd level
     const level = this.scoreToLevel(combinedScore);
 
-    // Calculate sentiment match
-    const sentimentMatch = this.calculateSentimentMatch(level, criteria.userIntent);
+    // Calculate sentiment match (use first intent if array)
+    const primaryIntent = Array.isArray(criteria.userIntent) ? criteria.userIntent[0] : criteria.userIntent;
+    const sentimentMatch = this.calculateSentimentMatch(level, primaryIntent);
 
     // Calculate confidence based on source availability
     const confidence = this.calculateConfidence([
@@ -179,7 +168,6 @@ export class CrowdIntelligenceService {
       }
 
       const placeId = summaries[0].placeId;
-      console.log(`🔍 [CrowdIntel] Using place ID: ${placeId}`);
 
       // Check cache first
       const [cachedSummary, cachedHours] = await Promise.all([
@@ -276,22 +264,211 @@ export class CrowdIntelligenceService {
 
   /**
    * Source 2: DuckDuckGo Scraper (real-time mentions)
+   * Constructs intent-based search queries for web scraping
    */
   private async getDDGScraperScore(criteria: SearchCriteria): Promise<number | null> {
     try {
-      const scrapedData = await this.scraperService.scrapePlaceData(
-        criteria.place,
-        criteria.city,
-        criteria.userIntent
-      );
+      // Construct intent-based search queries
+      const searchQueries = this.constructIntentBasedQueries(criteria);
+      
+      console.log(`🔍 [CrowdIntel] Search queries:`, searchQueries);
+      
+      // Use SearchProxyService (handles DDG + Brave with fallback)
+      const allResults = [];
+      for (const query of searchQueries) {
+        const results = await this.searchProxy.search(query);
+        allResults.push(...results);
+      }
 
-      if (!scrapedData.estimatedCrowdLevel) return null;
+      if (allResults.length === 0) return null;
 
-      return this.levelToScore(scrapedData.estimatedCrowdLevel);
+      // Analyze results to estimate crowd level
+      const crowdLevel = this.estimateCrowdLevelFromResults(allResults);
+      return this.levelToScore(crowdLevel);
     } catch (error) {
-      console.warn('⚠️ [CrowdIntel] DDG Scraper failed:', error);
+      console.warn('⚠️ [CrowdIntel] Search failed:', error);
       return null;
     }
+  }
+
+  /**
+   * Estimate crowd level from search results
+   */
+  private estimateCrowdLevelFromResults(results: any[]): string {
+    // Simple heuristic: more results = more popular = busier
+    if (results.length > 50) return 'packed';
+    if (results.length > 30) return 'busy';
+    if (results.length > 15) return 'moderate';
+    return 'quiet';
+  }
+
+  /**
+   * Construct intent-based search queries for DDG scraping
+   * Generates queries that target specific aspects based on user intent
+   * 
+   * Supports both single intent (string) and multiple intents (array)
+   * For array: Uses FIRST intent only (additional intents reserved for pagination)
+   */
+  private constructIntentBasedQueries(criteria: SearchCriteria): string[] {
+    const { place, city, userIntent, placeType, timeOfDay } = criteria;
+    
+    // Handle multi-intent: Use FIRST intent only, store rest for pagination
+    if (Array.isArray(userIntent)) {
+      const primaryIntent = userIntent[0];
+      const additionalIntents = userIntent.slice(1);
+      
+      console.log(`🎯 [CrowdIntel] Multi-intent detected: [${userIntent.join(', ')}]`);
+      console.log(`   Using primary: "${primaryIntent}"`);
+      if (additionalIntents.length > 0) {
+        console.log(`   Reserved for pagination: [${additionalIntents.join(', ')}]`);
+      }
+      
+      // Use only the first intent
+      return this.constructIntentBasedQueries({
+        ...criteria,
+        userIntent: primaryIntent
+      });
+    }
+    
+    const queries: string[] = [];
+    
+    // Base query: crowd level mentions
+    queries.push(`${place} ${city} crowded busy reviews`);
+    
+    // Comprehensive intent-specific queries
+    const intentQueries: Record<string, string[]> = {
+      // Romantic experiences
+      romantic: [
+        `${place} ${city} romantic quiet intimate`,
+        `${place} ${city} couples date night reviews`,
+        `${place} ${city} romantic atmosphere ambiance`
+      ],
+      
+      // Peaceful/relaxation
+      peaceful: [
+        `${place} ${city} peaceful quiet calm`,
+        `${place} ${city} less crowded serene`,
+        `${place} ${city} relaxing tranquil atmosphere`
+      ],
+      
+      // Party/nightlife
+      party: [
+        `${place} ${city} busy lively nightlife`,
+        `${place} ${city} crowded popular party`,
+        `${place} ${city} energetic vibrant scene`
+      ],
+      
+      // Cultural experiences
+      cultural: [
+        `${place} ${city} cultural experience authentic`,
+        `${place} ${city} traditional local heritage`,
+        `${place} ${city} historical significance`
+      ],
+      
+      // Fun/entertainment
+      fun: [
+        `${place} ${city} fun exciting vibrant`,
+        `${place} ${city} popular must-visit`,
+        `${place} ${city} entertaining lively`
+      ],
+      
+      // Adventure/thrill
+      adventure: [
+        `${place} ${city} adventure thrilling exciting`,
+        `${place} ${city} unique experience`,
+        `${place} ${city} adventurous activities`
+      ],
+      
+      // Foodie experiences
+      foodie: [
+        `${place} ${city} food delicious authentic`,
+        `${place} ${city} culinary dining experience`,
+        `${place} ${city} restaurant reviews taste`
+      ],
+      
+      // Family-friendly
+      family: [
+        `${place} ${city} family friendly kids`,
+        `${place} ${city} children activities safe`,
+        `${place} ${city} family suitable crowd`
+      ],
+      
+      // Luxury/upscale
+      luxury: [
+        `${place} ${city} luxury upscale premium`,
+        `${place} ${city} high-end exclusive`,
+        `${place} ${city} sophisticated elegant`
+      ],
+      
+      // Budget/affordable
+      budget: [
+        `${place} ${city} affordable cheap budget`,
+        `${place} ${city} value for money`,
+        `${place} ${city} inexpensive worth it`
+      ],
+      
+      // Solo travel
+      solo: [
+        `${place} ${city} solo traveler safe`,
+        `${place} ${city} alone friendly welcoming`,
+        `${place} ${city} solo experience crowd`
+      ],
+      
+      // Photography/Instagram
+      photography: [
+        `${place} ${city} photogenic instagram worthy`,
+        `${place} ${city} beautiful scenic views`,
+        `${place} ${city} photo spots pictures`
+      ],
+      
+      // Nature/outdoor
+      nature: [
+        `${place} ${city} nature outdoor scenic`,
+        `${place} ${city} natural beauty peaceful`,
+        `${place} ${city} outdoor activities crowd`
+      ],
+      
+      // Shopping
+      shopping: [
+        `${place} ${city} shopping busy crowded`,
+        `${place} ${city} stores markets vendors`,
+        `${place} ${city} shopping experience crowd`
+      ],
+      
+      // Spiritual/religious
+      spiritual: [
+        `${place} ${city} spiritual peaceful sacred`,
+        `${place} ${city} religious quiet respectful`,
+        `${place} ${city} meditation serene crowd`
+      ],
+      
+      // Local/authentic
+      local: [
+        `${place} ${city} local authentic hidden`,
+        `${place} ${city} locals favorite off beaten`,
+        `${place} ${city} authentic experience crowd`
+      ]
+    };
+    
+    // Add intent-specific queries (fallback to 'fun' if intent not found)
+    const intentSpecific = intentQueries[userIntent] || intentQueries.fun;
+    queries.push(...intentSpecific);
+    
+    // Time-specific query if provided
+    if (timeOfDay) {
+      queries.push(`${place} ${city} ${timeOfDay} crowd level`);
+    }
+    
+    // Place type specific query
+    if (placeType) {
+      queries.push(`${place} ${city} ${placeType} wait time busy`);
+    }
+    
+    // Reddit-specific query for authentic reviews
+    queries.push(`site:reddit.com ${place} ${city} crowded worth it`);
+    
+    // Limit to top 5 most relevant queries
+    return queries.slice(0, 5);
   }
 
   /**
@@ -321,7 +498,7 @@ Return JSON:
   "reasoning": "brief explanation"
 }`;
 
-      const response = await this.llm.generateContent(prompt);
+      const response = await this.llm.generateJSON(prompt);
       const parsed = JSON.parse(response);
 
       return this.levelToScore(parsed.crowdLevel);

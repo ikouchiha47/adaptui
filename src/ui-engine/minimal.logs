@@ -1,0 +1,2015 @@
+ LOG  [getTabs] Plugin tab check: {"id": "transport", "isEnabled": true, "label": "Transport", "willAdd": true}
+ LOG  🎯 [SearchProgressIndicator] Component unmounting
+ LOG  🗑️ [AdaptUI] Clearing travel cache...
+ LOG  🗑️ [CacheService] Cleared all cache
+ LOG  ✅ [AdaptUI] Cache cleared, re-searching...
+ LOG  🚀 [AdaptUI] Starting search flow...
+ LOG  📝 Query: fun bars in Bangkok
+ LOG  🎯 Mode: hybrid
+ LOG  ⚡ Cache: enabled
+ LOG  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ LOG  PHASE 1: Query Analysis
+ LOG  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ LOG  🔍 [QueryAnalysis] Analyzing: fun bars in Bangkok
+ LOG  💾 [CacheService] Getting from cache: query_processing_y5kcio
+ LOG  [getTabs] Plugin tabs available: 2
+ LOG  [getTabs] Plugin tab check: {"id": "neighborhood", "isEnabled": true, "label": "Area", "willAdd": true}
+ LOG  [getTabs] Plugin tab check: {"id": "transport", "isEnabled": true, "label": "Transport", "willAdd": true}
+ LOG  🎯 [SearchProgressIndicator] Render - progress: null
+ LOG  🎯 [SearchProgressIndicator] Component mounted
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 1, "currentTask": "Analyzing query...", "results": 0, "status": "searching", "totalSteps": 3}
+ LOG  🎯 [SearchProgressIndicator] Render - progress: {"currentStep": 1, "currentTask": "Analyzing query...", "results": 0, "status": "searching", "totalSteps": 3}
+ LOG  ⚠️ [CacheService] Cache miss: query_processing_y5kcio
+ LOG  🔍 [QueryProcessing] Starting advanced query processing...
+ LOG  📝 Original query: fun bars in Bangkok
+ LOG  🔄 [QueryExpansion] Expanding query...
+ LOG  🤖 [OpenAICore] Generating JSON with temperature 0.5...
+ LOG  🧩 [QueryDecomposition] Decomposing query...
+ LOG  🤖 [OpenAICore] Generating JSON with temperature 0.5...
+ LOG  🎯 [StepBack] Performing step-back reasoning...
+ LOG  🤖 [OpenAICore] Generating JSON with temperature 0.5...
+ LOG  ✅ [QueryExpansion] Generated 10 variations
+ LOG  ✅ [QueryDecomposition] Generated 5 sub-queries
+ LOG  ✅ [StepBack] Abstract question: How can someone identify and choose enjoyable nightlife experiences in a large, unfamiliar city that match their personal preferences and constraints?
+ LOG  ✅ [QueryProcessing] Processing complete
+ LOG  🎯 Enhanced query: fun bars in Bangkok | popular fun bars in Bangkok | fun rooftop bars in Bangkok with good views | recent reviews or ratings for fun bars in Bangkok | How can someone identify and choose enjoyable nightlife experiences in a large, unfamiliar city that match their personal preferences and constraints? | rooftop bars | speakeasy bars
+ LOG  🌍 Context-injected query: fun bars in Bangkok | popular fun bars in Bangkok | fun rooftop bars in Bangkok with good views | recent reviews or ratings for fun bars in Bangkok | How can someone identify and choose enjoyable nightlife experiences in a large, unfamiliar city that match their personal preferences and constraints? | rooftop bars | speakeasy bars
+ LOG  💾 [CacheService] Setting cache: query_processing_y5kcio
+ LOG  ✅ [CacheService] Cached: query_processing_y5kcio
+ LOG  💾 [QueryProcessing] Cached processed query
+ LOG  🎯 [QueryAnalysis] Enhanced query: fun bars in Bangkok | popular fun bars in Bangkok | fun rooftop bars in Bangkok with good views | recent reviews or ratings for fun bars in Bangkok | How can someone identify and choose enjoyable nightlife experiences in a large, unfamiliar city that match their personal preferences and constraints? | rooftop bars | speakeasy bars
+ LOG  📝 [QueryAnalysis] Prompt preview: You are a travel query analyzer. Extract structured parameters from natural language.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUERY ANALYSIS [2025-11-28T13:55:28.522Z]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+User Query: ...
+ LOG  🤖 [OpenAICore] Calling gpt-5.1...
+ LOG  ✅ [OpenAICore] Response received (0ms)
+ LOG  🔧 [OpenAICore] Using Responses API for structured output...
+ LOG  📋 [OpenAICore] Using simplified JSON schema
+ LOG  ✅ [OpenAICore] Structured response received (9925ms)
+ LOG  📝 [OpenAICore] Extracted JSON: {"intent":"search","categories":["dining","entertainment"],"sentiment":{"emotion":"fun","intensity":"high","vibe":["lively","social","energetic","scenic"]},"temporal":{"suggestedTimeOfDay":"night","ti
+ LOG  📄 [QueryAnalysis] Raw response: {"intent":"search","categories":["dining","entertainment"],"sentiment":{"emotion":"fun","intensity":"high","vibe":["lively","social","energetic","scenic"]},"temporal":{"suggestedTimeOfDay":"night","ti
+ LOG  📊 [QueryAnalysis] Parsed analysis: {
+  "intent": "search",
+  "categories": [
+    "dining",
+    "entertainment"
+  ],
+  "sentiment": {
+    "emotion": "fun",
+    "intensity": "high",
+    "vibe": [
+      "lively",
+      "social",
+      "energetic",
+      "scenic"
+    ]
+  },
+  "temporal": {
+    "suggestedTimeOfDay": "night",
+    "timeReasoning": "Bars and nightlife in Bangkok are most active and enjoyable during evening to late-night hours, when crowds, music, and city views peak.",
+    "duration": 3,
+    "bestTimes": [
+      {
+        "time": "8:00 PM - 11:00 PM",
+        "reason": "Most rooftop and speakeasy bars are lively with good atmosphere and city views but not yet at peak overcrowding.",
+        "suitability": 0.92
+      },
+      {
+        "time": "11:00 PM - 1:00 AM",
+        "reason": "Peak nightlife energy for fun, social experiences at popular bars and speakeasies.",
+        "suitability": 0.88
+      }
+    ]
+  },
+  "parameters": {
+    "destination": "Bangkok",
+    "destinationAirports": [
+      "BKK",
+      "DMK"
+    ],
+    "establishments": [
+      "bar"
+    ],
+    "keywords": [
+      "fun",
+      "popular",
+      "rooftop",
+      "good views",
+      "speakeasy",
+      "nightlife",
+      "bars",
+      "recent reviews",
+      "ratings"
+    ],
+    "natureOfTravel": "adventure",
+    "filters": {
+      "priceRange": null,
+      "rating": null,
+      "cuisine": null,
+      "amenities": null,
+      "openNow": null
+    },
+    "sortBy": "rating",
+    "limit": 10
+  },
+  "missingFields": [
+    "userLocation",
+    "exact dates of visit",
+    "priceRange",
+    "preferred music or atmosphere (quiet lounge vs party)",
+    "group size",
+    "tolerance for crowds",
+    "dress code preferences"
+  ],
+  "suggestedQuestions": [
+    "What dates or nights will you be in Bangkok?",
+    "What is your approximate budget per person for drinks or cover charges?",
+    "Do you prefer rooftop views, hidden speakeasies, or casual neighborhood bars?",
+    "Are you looking for quieter social spots or high-energy party venues?",
+    "Will you be going alone or with a group, and roughly how many people?",
+    "Do you have any dress code constraints (e.g., want casual only)?"
+  ],
+  "confidence": 0.93,
+  "suggestedUIType": "list",
+  "suggestedComponents": [
+    "card-restaurant",
+    "rating-summary",
+    "filter-chips",
+    "map-view",
+    "time-badge"
+  ]
+}
+ LOG  ✈️ [QueryAnalysis] Airport codes from LLM: ["BKK", "DMK"]
+ LOG  🛂 [QueryAnalysis] Grounding airports: ["BKK", "DMK"]
+ LOG  🛂 [QueryAnalysis] Grounding airport codes: ["BKK", "DMK"]
+ LOG  [AirportValidator] Validating inputs: ["BKK", "DMK"]
+ LOG  [AirportValidator] ✅ Validated IATA code: BKK
+ LOG  [AirportValidator] ✅ Validated IATA code: DMK
+ LOG  [AirportValidator] Final validated airports: ["BKK", "DMK"]
+ LOG  ✅ [QueryAnalysis] Validated airports: ["BKK", "DMK"]
+ LOG  ✅ [QueryAnalysis] Grounded airports: ["BKK", "DMK"]
+ LOG  ✅ [QueryAnalysis] Complete: {"categories": ["dining", "entertainment"], "emotion": "fun", "intent": "search", "time": "night"}
+ LOG  [AdaptUI] Analysis complete: {"categories": ["dining", "entertainment"], "emotion": "fun", "intent": "search", "time": "night"}
+ LOG  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ LOG  DATA LAYER: Fetching Places
+ LOG  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 2, "currentTask": "Fetching places...", "results": 0, "status": "searching", "totalSteps": 3}
+ LOG  🌍 [TravelService] Starting recommendation generation...
+ LOG  📍 Location: Bangkok
+ LOG  💰 Budget: undefined
+ LOG  🔄 Use real data: true
+ LOG  🚀 Advanced mode: true
+ LOG  💾 [CacheService] Getting from cache: travel_recommendations_buslqh
+ LOG  [getTabs] Plugin tabs available: 2
+ LOG  [getTabs] Plugin tab check: {"id": "neighborhood", "isEnabled": true, "label": "Area", "willAdd": true}
+ LOG  [getTabs] Plugin tab check: {"id": "transport", "isEnabled": true, "label": "Transport", "willAdd": true}
+ LOG  🎯 [SearchProgressIndicator] Render - progress: {"currentStep": 2, "currentTask": "Fetching places...", "results": 0, "status": "searching", "totalSteps": 3}
+ LOG  ⚠️ [CacheService] Cache miss: travel_recommendations_buslqh
+ LOG  📝 [TravelService] Cache miss, generating new recommendations...
+ LOG  🔧 [TravelService] Initializing capabilities...
+ LOG  🔍 [CapabilityDetector] Detecting capabilities...
+ LOG  🔍 [LocationService] Checking permissions...
+ LOG  ✅ [LocationService] Permissions: {"background": false, "canGetLocation": true, "foreground": true}
+ LOG  📍 [LocationService] Getting current location...
+ LOG  🔍 [LocationService] Checking permissions...
+ LOG  ✅ [LocationService] Permissions: {"background": false, "canGetLocation": true, "foreground": true}
+ LOG  ✅ [LocationService] Got location: 12.954203, 77.6564031
+ LOG  [CapabilityDetector] Found plugins: 2
+ LOG  [CapabilityDetector] Plugin capability: {"added": true, "defaultEnabled": true, "id": "neighborhood", "label": "Neighborhood"}
+ LOG  [CapabilityDetector] Plugin capability: {"added": true, "defaultEnabled": true, "id": "transport", "label": "Transport"}
+ LOG  [CapabilityDetector] Final capabilities: {"camera": false, "food": false, "internet": false, "location": true, "maps": true, "neighborhood": true, "notifications": true, "photos": true, "transport": true}
+ LOG  ✅ [TravelService] Capabilities initialized
+ LOG  🔍 [TravelService] Step 1: Analyzing intent...
+ LOG  🤖 [OpenAICore] Generating JSON with temperature 0.3...
+ LOG  🎯 [TravelService] Intent analysis: fun
+ LOG  ✅ [TravelService] Intent: fun
+ LOG  🏗️ [TravelService] Step 2: Generating recommendations...
+ LOG  🚀 [TravelService] Using advanced query processing mode
+ LOG  🚀 [TravelService] Using advanced query processing...
+Android Bundled 2ms src/plugins/PluginSystem.ts (1 module)
+ LOG  💾 [CacheService] Getting from cache: query_processing_xzlicd
+ LOG  ⚠️ [CacheService] Cache miss: query_processing_xzlicd
+ LOG  🔍 [QueryProcessing] Starting advanced query processing...
+ LOG  📝 Original query: fun bars in Bangkok
+ LOG  🔄 [QueryExpansion] Expanding query...
+ LOG  🤖 [OpenAICore] Generating JSON with temperature 0.5...
+ LOG  🧩 [QueryDecomposition] Decomposing query...
+ LOG  🤖 [OpenAICore] Generating JSON with temperature 0.5...
+ LOG  🎯 [StepBack] Performing step-back reasoning...
+ LOG  🤖 [OpenAICore] Generating JSON with temperature 0.5...
+ LOG  ✅ [QueryExpansion] Generated 10 variations
+ LOG  ✅ [StepBack] Abstract question: How can someone find enjoyable, well-reviewed nightlife options in Bangkok that fit their preferences, comfort level, and practical constraints (location, crowd level, accessibility, and time)?
+ LOG  ✅ [QueryDecomposition] Generated 7 sub-queries
+ LOG  ✅ [QueryProcessing] Processing complete
+ LOG  🎯 Enhanced query: fun bars in Bangkok | Identify highly rated, popular bars in Bangkok that are described as fun (lively atmosphere, social, good music, events) using google_places and places_insights | Filter these Bangkok bars by ratings (e.g., 4.3+), review volume, and recent review sentiment about atmosphere, music, and crowd | Classify the shortlisted bars by type of fun (rooftop views, live music, dance/clubby, cocktail-focused, casual neighborhood bar, themed bar) using places_insights and Neighborhood | Estimate typical crowd levels and peak times for each shortlisted bar (busy vs relaxed hours) using places_insights and Neighborhood | How can someone find enjoyable, well-reviewed nightlife options in Bangkok that fit their preferences, comfort level, and practical constraints (location, crowd level, accessibility, and time)? | rooftop bars | speakeasy bars
+ LOG  🌍 Context-injected query: fun bars in Bangkok | Identify highly rated, popular bars in Bangkok that are described as fun (lively atmosphere, social, good music, events) using google_places and places_insights | Filter these Bangkok bars by ratings (e.g., 4.3+), review volume, and recent review sentiment about atmosphere, music, and crowd | Classify the shortlisted bars by type of fun (rooftop views, live music, dance/clubby, cocktail-focused, casual neighborhood bar, themed bar) using places_insights and Neighborhood | Estimate typical crowd levels and peak times for each shortlisted bar (busy vs relaxed hours) using places_insights and Neighborhood | How can someone find enjoyable, well-reviewed nightlife options in Bangkok that fit their preferences, comfort level, and practical constraints (location, crowd level, accessibility, and time)? | rooftop bars | speakeasy bars [DATA_SOURCES: google_places, places_insights, airports_db] [TIMESTAMP: 2025-11-28T13:55:41.489Z]
+ LOG  💾 [CacheService] Setting cache: query_processing_xzlicd
+ LOG  ✅ [CacheService] Cached: query_processing_xzlicd
+ LOG  💾 [QueryProcessing] Cached processed query
+ LOG  🔍 [QueryProcessing] Executing expanded place searches...
+Android Bundled 97ms src/services/TaskExecutor.ts (1 module)
+Android Bundled 31ms src/services/PlacesInsightsService.ts (1 module)
+ LOG  🚀 [QueryProcessing] Searching 10 expanded terms: ["fun bars in Bangkok at night", "hidden gem bars in Bangkok", "local favorite bars in Bangkok", "off-the-beaten-path bars in Bangkok", "less touristy bars in Bangkok", "insider-only bars in Bangkok", "popular bars in Bangkok", "must-visit bars in Bangkok", "trendy fun bars in Bangkok", "fun rooftop bars in Bangkok with views"]
+ LOG  🔄 [TaskExecutor] TaskManager-based search for 10 terms...
+Android Bundled 54ms src/services/research/TaskManager.ts (1 module)
+Android Bundled 1ms src/services/GooglePlacesClient.ts (1 module)
+ LOG  ✅ [TaskExecutor] SearchProgressTracker loaded
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 0, "currentTask": "Initializing search...", "results": 0, "status": "searching", "totalSteps": 10}
+ LOG  🎯 [SearchProgressIndicator] Render - progress: {"currentStep": 0, "currentTask": "Initializing search...", "results": 0, "status": "searching", "totalSteps": 10}
+Android Bundled 0.5ms src/config/ConfigManager.ts (1 module)
+ LOG  🌍 [GooglePlacesClient] Geocoding city: Bangkok
+ LOG  ✅ [GooglePlacesClient] Geocoded Bangkok: {"lat": 13.7563309, "lng": 100.5017651}
+ LOG  [TaskManager] Added task search_1764338161886_u7ieoyjg9 (search) - Queue: 1
+ LOG  [TaskManager] Added task search_1764338161886_v7wvfdtpa (search) - Queue: 2
+ LOG  [TaskManager] Added task search_1764338161887_el201a39b (search) - Queue: 3
+ LOG  [TaskManager] Added task search_1764338161887_vtgj2ocm7 (search) - Queue: 4
+ LOG  [TaskManager] Added task search_1764338161887_cd2tnqk0k (search) - Queue: 5
+ LOG  [TaskManager] Added task search_1764338161887_u8o3qslka (search) - Queue: 6
+ LOG  [TaskManager] Added task search_1764338161888_f7jiz9svl (search) - Queue: 7
+ LOG  [TaskManager] Added task search_1764338161888_sq7t5ls1e (search) - Queue: 8
+ LOG  [TaskManager] Added task search_1764338161888_mmwavulcr (search) - Queue: 9
+ LOG  [TaskManager] Added task search_1764338161888_1u64xu8p3 (search) - Queue: 10
+ LOG  [TaskManager] Executing task search_1764338161886_u7ieoyjg9 (search)
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 1, "currentTask": "Searching: fun bars in Bangkok at night", "results": 0, "status": "searching", "totalSteps": 10}
+ LOG     [1/10] Searching: "fun bars in Bangkok at night"
+ LOG  🎯 [SearchProgressIndicator] Render - progress: {"currentStep": 1, "currentTask": "Searching: fun bars in Bangkok at night", "results": 0, "status": "searching", "totalSteps": 10}
+ LOG  ✅ [PlacesInsights] Got 5 places with summaries
+Android Bundled 53ms src/services/SearchProxyService.ts (1 module)
+Android Bundled 17ms src/core/OpenAICore.ts (1 module)
+ LOG  🌐 [PlacesInsights] Enriching 5 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338163702_m9npgsq5i (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338163702_jjhk4fflq (scrape) - Queue: 2
+ LOG  [TaskManager] Added task scrape_1764338163703_qbxyg03ae (scrape) - Queue: 3
+ LOG  [TaskManager] Added task scrape_1764338163703_dkpjy266f (scrape) - Queue: 4
+ LOG  [TaskManager] Added task scrape_1764338163703_97wzrn58n (scrape) - Queue: 5
+ LOG  [TaskManager] Executing task scrape_1764338163702_m9npgsq5i (scrape)
+ LOG    [1/5] Enriching: YABAR Secret Bar & Rooftop
+ LOG  [SearchProxy] Using ddg for: "YABAR Secret Bar & Rooftop bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_u5z0od
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_u5z0od
+ LOG  [DDGScraper] Original query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=YABAR+Secret+Bar+%26+Rooftop+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5666, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_6jmlmi
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_6jmlmi
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=YABAR+Secret+Bar+%26+Rooftop+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 226712, "status": 200}
+ LOG  [BraveScraper] Parsed results: 20
+ LOG  💾 [CacheService] Setting cache: brave_search_6jmlmi
+ LOG  ✅ [CacheService] Cached: brave_search_6jmlmi
+ LOG  ✅ [BraveScraper] Cached results
+ LOG      ✅ "YABAR Secret Bar & Rooftop offers a hidden oasis with stunning skyline views and creative cocktails in a vibrant atmosphere."
+ LOG  [TaskManager] Task scrape_1764338163702_m9npgsq5i completed
+ LOG  [TaskManager] Executing task scrape_1764338163702_jjhk4fflq (scrape)
+ LOG    [2/5] Enriching: Starlight Rooftop Bar
+ LOG  [SearchProxy] Using ddg for: "Starlight Rooftop Bar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_dgdtl0
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_dgdtl0
+ LOG  [DDGScraper] Original query: Starlight Rooftop Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Starlight Rooftop Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Starlight+Rooftop+Bar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 4491, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_1rbe5x
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_1rbe5x
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Starlight+Rooftop+Bar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338163702_jjhk4fflq completed
+ LOG  [TaskManager] Executing task scrape_1764338163703_qbxyg03ae (scrape)
+ LOG    [3/5] Enriching: Lucy Club Bangkok
+ LOG  [SearchProxy] Using ddg for: "Lucy Club Bangkok night_club price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_2ej6g
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_2ej6g
+ LOG  [DDGScraper] Original query: Lucy Club Bangkok night_club price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Lucy Club Bangkok night_club price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Lucy+Club+Bangkok+night_club+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 7514, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_au15z5
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_au15z5
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Lucy+Club+Bangkok+night_club+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338163703_qbxyg03ae completed
+ LOG  [TaskManager] Executing task scrape_1764338163703_dkpjy266f (scrape)
+ LOG    [4/5] Enriching: Leelabar
+ LOG  [SearchProxy] Using ddg for: "Leelabar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_oqywai
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_oqywai
+ LOG  [DDGScraper] Original query: Leelabar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Leelabar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Leelabar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5984, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_pr7v9v
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_pr7v9v
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Leelabar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69360, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338163703_dkpjy266f completed
+ LOG  [TaskManager] Executing task scrape_1764338163703_97wzrn58n (scrape)
+ LOG    [5/5] Enriching: The Speakeasy Rooftop Bar Bangkok
+ LOG  [SearchProxy] Using ddg for: "The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_yz2qmk
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_yz2qmk
+ LOG  [DDGScraper] Original query: The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=The+Speakeasy+Rooftop+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 4168, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_j4n83f
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_j4n83f
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=The+Speakeasy+Rooftop+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338163703_97wzrn58n completed
+ LOG     ✓ "fun bars in Bangkok at night": 5 places
+ LOG  [TaskManager] Task search_1764338161886_u7ieoyjg9 completed
+ LOG  [TaskManager] Executing task search_1764338161886_v7wvfdtpa (search)
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 2, "currentTask": "Searching: hidden gem bars in Bangkok", "results": 5, "status": "searching", "totalSteps": 10}
+ LOG     [2/10] Searching: "hidden gem bars in Bangkok"
+ LOG  🎯 [SearchProgressIndicator] Render - progress: {"currentStep": 2, "currentTask": "Searching: hidden gem bars in Bangkok", "results": 5, "status": "searching", "totalSteps": 10}
+ LOG  ✅ [PlacesInsights] Got 5 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 5 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338174733_spstd132v (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338174733_78irhqg36 (scrape) - Queue: 2
+ LOG  [TaskManager] Added task scrape_1764338174734_et5ngtk6z (scrape) - Queue: 3
+ LOG  [TaskManager] Added task scrape_1764338174734_ku0ngewnp (scrape) - Queue: 4
+ LOG  [TaskManager] Added task scrape_1764338174734_785hddq3g (scrape) - Queue: 5
+ LOG  [TaskManager] Executing task scrape_1764338174733_spstd132v (scrape)
+ LOG    [1/5] Enriching: YABAR Secret Bar & Rooftop
+ LOG  [SearchProxy] Using ddg for: "YABAR Secret Bar & Rooftop bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_u5z0od
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_u5z0od
+ LOG  [DDGScraper] Original query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=YABAR+Secret+Bar+%26+Rooftop+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5666, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_6jmlmi
+ LOG  ✅ [CacheService] Cache hit: brave_search_6jmlmi
+ LOG  ✅ [BraveScraper] Using cached results
+ LOG      ✅ "YABAR Secret Bar & Rooftop offers a hidden oasis with stunning skyline views and an eclectic cocktail menu."
+ LOG  [TaskManager] Task scrape_1764338174733_spstd132v completed
+ LOG  [TaskManager] Executing task scrape_1764338174733_78irhqg36 (scrape)
+ LOG    [2/5] Enriching: Vol de Nuit, The Hidden Bar
+ LOG  [SearchProxy] Using ddg for: "Vol de Nuit, The Hidden Bar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_8utus8
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_8utus8
+ LOG  [DDGScraper] Original query: Vol de Nuit, The Hidden Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Vol de Nuit, The Hidden Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Vol+de+Nuit%2C+The+Hidden+Bar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5134, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_7b0j1b
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_7b0j1b
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Vol+de+Nuit%2C+The+Hidden+Bar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338174733_78irhqg36 completed
+ LOG  [TaskManager] Executing task scrape_1764338174734_et5ngtk6z (scrape)
+ LOG    [3/5] Enriching: ROGUE AFFAIR Cocktail Bar
+ LOG  [SearchProxy] Using ddg for: "ROGUE AFFAIR Cocktail Bar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_2b42c
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_2b42c
+ LOG  [DDGScraper] Original query: ROGUE AFFAIR Cocktail Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: ROGUE AFFAIR Cocktail Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=ROGUE+AFFAIR+Cocktail+Bar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 4522, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_h5qi05
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_h5qi05
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=ROGUE+AFFAIR+Cocktail+Bar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338174734_et5ngtk6z completed
+ LOG  [TaskManager] Executing task scrape_1764338174734_ku0ngewnp (scrape)
+ LOG    [4/5] Enriching: YOU KNOW WHERE
+ LOG  [SearchProxy] Using ddg for: "YOU KNOW WHERE bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_45eedj
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_45eedj
+ LOG  [DDGScraper] Original query: YOU KNOW WHERE bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: YOU KNOW WHERE bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=YOU+KNOW+WHERE+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5160, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_uj0m4y
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_uj0m4y
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=YOU+KNOW+WHERE+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338174734_ku0ngewnp completed
+ LOG  [TaskManager] Executing task scrape_1764338174734_785hddq3g (scrape)
+ LOG    [5/5] Enriching: The Speakeasy Rooftop Bar Bangkok
+ LOG  [SearchProxy] Using ddg for: "The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_yz2qmk
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_yz2qmk
+ LOG  [DDGScraper] Original query: The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=The+Speakeasy+Rooftop+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 4178, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_j4n83f
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_j4n83f
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=The+Speakeasy+Rooftop+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338174734_785hddq3g completed
+ LOG     ✓ "hidden gem bars in Bangkok": 5 places
+ LOG  [TaskManager] Task search_1764338161886_v7wvfdtpa completed
+ LOG  [TaskManager] Executing task search_1764338161887_el201a39b (search)
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 3, "currentTask": "Searching: local favorite bars in Bangkok", "results": 10, "status": "searching", "totalSteps": 10}
+ LOG     [3/10] Searching: "local favorite bars in Bangkok"
+ LOG  🎯 [SearchProgressIndicator] Render - progress: {"currentStep": 3, "currentTask": "Searching: local favorite bars in Bangkok", "results": 10, "status": "searching", "totalSteps": 10}
+ LOG  ✅ [PlacesInsights] Got 5 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 5 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338183937_8wgjslx6t (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338183937_2wlel1718 (scrape) - Queue: 2
+ LOG  [TaskManager] Added task scrape_1764338183938_tfi62ct1x (scrape) - Queue: 3
+ LOG  [TaskManager] Added task scrape_1764338183938_7burlu5gc (scrape) - Queue: 4
+ LOG  [TaskManager] Added task scrape_1764338183938_1yhbmtr0y (scrape) - Queue: 5
+ LOG  [TaskManager] Executing task scrape_1764338183937_8wgjslx6t (scrape)
+ LOG    [1/5] Enriching: Sanay Rooftop Bar Khaosan - เสน่ห์ รูฟท็อป บาร์ ข้าวสาร
+ LOG  [SearchProxy] Using ddg for: "Sanay Rooftop Bar Khaosan - เสน่ห์ รูฟท็อป บาร์ ข้าวสาร bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_jdw6oh
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_jdw6oh
+ LOG  [DDGScraper] Original query: Sanay Rooftop Bar Khaosan - เสน่ห์ รูฟท็อป บาร์ ข้าวสาร bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Sanay Rooftop Bar Khaosan - เสน่ห์ รูฟท็อป บาร์ ข้าวสาร bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Sanay+Rooftop+Bar+Khaosan+-+%E0%B9%80%E0%B8%AA%E0%B8%99%E0%B9%88%E0%B8%AB%E0%B9%8C+%E0%B8%A3%E0%B8%B9%E0%B8%9F%E0%B8%97%E0%B9%87%E0%B8%AD%E0%B8%9B+%E0%B8%9A%E0%B8%B2%E0%B8%A3%E0%B9%8C+%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AA%E0%B8%B2%E0%B8%A3+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5121, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_n6zb3q
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_n6zb3q
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Sanay+Rooftop+Bar+Khaosan+-+%E0%B9%80%E0%B8%AA%E0%B8%99%E0%B9%88%E0%B8%AB%E0%B9%8C+%E0%B8%A3%E0%B8%B9%E0%B8%9F%E0%B8%97%E0%B9%87%E0%B8%AD%E0%B8%9B+%E0%B8%9A%E0%B8%B2%E0%B8%A3%E0%B9%8C+%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AA%E0%B8%B2%E0%B8%A3+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338183937_8wgjslx6t completed
+ LOG  [TaskManager] Executing task scrape_1764338183937_2wlel1718 (scrape)
+ LOG    [2/5] Enriching: Leelabar
+ LOG  [SearchProxy] Using ddg for: "Leelabar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_oqywai
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_oqywai
+ LOG  [DDGScraper] Original query: Leelabar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Leelabar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Leelabar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5996, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_pr7v9v
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_pr7v9v
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Leelabar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338183937_2wlel1718 completed
+ LOG  [TaskManager] Executing task scrape_1764338183938_tfi62ct1x (scrape)
+ LOG    [3/5] Enriching: YABAR Secret Bar & Rooftop
+ LOG  [SearchProxy] Using ddg for: "YABAR Secret Bar & Rooftop bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_u5z0od
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_u5z0od
+ LOG  [DDGScraper] Original query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=YABAR+Secret+Bar+%26+Rooftop+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 4892, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_6jmlmi
+ LOG  ✅ [CacheService] Cache hit: brave_search_6jmlmi
+ LOG  ✅ [BraveScraper] Using cached results
+ LOG      ✅ "YABAR Secret Bar & Rooftop offers a hidden oasis with stunning views and a vibrant atmosphere perfect for unforgettable nights."
+ LOG  [TaskManager] Task scrape_1764338183938_tfi62ct1x completed
+ LOG  [TaskManager] Executing task scrape_1764338183938_7burlu5gc (scrape)
+ LOG    [4/5] Enriching: Bukowski & Co.
+ LOG  [SearchProxy] Using ddg for: "Bukowski & Co. bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_chr3bn
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_chr3bn
+ LOG  [DDGScraper] Original query: Bukowski & Co. bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Bukowski & Co. bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Bukowski+%26+Co.+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5314, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_nuxy50
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_nuxy50
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Bukowski+%26+Co.+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69360, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338183938_7burlu5gc completed
+ LOG  [TaskManager] Executing task scrape_1764338183938_1yhbmtr0y (scrape)
+ LOG    [5/5] Enriching: The Ordinary Bar
+ LOG  [SearchProxy] Using ddg for: "The Ordinary Bar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_6cjla0
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_6cjla0
+ LOG  [DDGScraper] Original query: The Ordinary Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: The Ordinary Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=The+Ordinary+Bar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 4849, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_5yfdep
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_5yfdep
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=The+Ordinary+Bar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69345, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338183938_1yhbmtr0y completed
+ LOG     ✓ "local favorite bars in Bangkok": 5 places
+ LOG  [TaskManager] Task search_1764338161887_el201a39b completed
+ LOG  [TaskManager] Executing task search_1764338161887_vtgj2ocm7 (search)
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 4, "currentTask": "Searching: off-the-beaten-path bars in Bangkok", "results": 15, "status": "searching", "totalSteps": 10}
+ LOG     [4/10] Searching: "off-the-beaten-path bars in Bangkok"
+ LOG  🎯 [SearchProgressIndicator] Render - progress: {"currentStep": 4, "currentTask": "Searching: off-the-beaten-path bars in Bangkok", "results": 15, "status": "searching", "totalSteps": 10}
+ LOG  ✅ [PlacesInsights] Got 5 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 5 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338192132_a7ov37ft9 (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338192132_owibptx2z (scrape) - Queue: 2
+ LOG  [TaskManager] Added task scrape_1764338192133_we9kqjzv9 (scrape) - Queue: 3
+ LOG  [TaskManager] Added task scrape_1764338192134_vwlksenjq (scrape) - Queue: 4
+ LOG  [TaskManager] Added task scrape_1764338192134_htjca7gqr (scrape) - Queue: 5
+ LOG  [TaskManager] Executing task scrape_1764338192132_a7ov37ft9 (scrape)
+ LOG    [1/5] Enriching: The Ordinary Bar
+ LOG  [SearchProxy] Using ddg for: "The Ordinary Bar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_6cjla0
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_6cjla0
+ LOG  [DDGScraper] Original query: The Ordinary Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: The Ordinary Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=The+Ordinary+Bar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14254, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_5yfdep
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_5yfdep
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=The+Ordinary+Bar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338192132_a7ov37ft9 completed
+ LOG  [TaskManager] Executing task scrape_1764338192132_owibptx2z (scrape)
+ LOG    [2/5] Enriching: Bukowski & Co.
+ LOG  [SearchProxy] Using ddg for: "Bukowski & Co. bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_chr3bn
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_chr3bn
+ LOG  [DDGScraper] Original query: Bukowski & Co. bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Bukowski & Co. bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Bukowski+%26+Co.+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14264, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_nuxy50
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_nuxy50
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Bukowski+%26+Co.+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338192132_owibptx2z completed
+ LOG  [TaskManager] Executing task scrape_1764338192133_we9kqjzv9 (scrape)
+ LOG    [3/5] Enriching: Reggae Bar Bangkok
+ LOG  [SearchProxy] Using ddg for: "Reggae Bar Bangkok bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_jtgdbn
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_jtgdbn
+ LOG  [DDGScraper] Original query: Reggae Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Reggae Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Reggae+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14258, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_hh0vck
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_hh0vck
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Reggae+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338192133_we9kqjzv9 completed
+ LOG  [TaskManager] Executing task scrape_1764338192134_vwlksenjq (scrape)
+ LOG    [4/5] Enriching: YABAR Secret Bar & Rooftop
+ LOG  [SearchProxy] Using ddg for: "YABAR Secret Bar & Rooftop bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_u5z0od
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_u5z0od
+ LOG  [DDGScraper] Original query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=YABAR+Secret+Bar+%26+Rooftop+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5640, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_6jmlmi
+ LOG  ✅ [CacheService] Cache hit: brave_search_6jmlmi
+ LOG  ✅ [BraveScraper] Using cached results
+ LOG      ✅ "YABAR Secret Bar & Rooftop offers a hidden oasis with stunning views and a vibrant atmosphere for unforgettable nights."
+ LOG  [TaskManager] Task scrape_1764338192134_vwlksenjq completed
+ LOG  [TaskManager] Executing task scrape_1764338192134_htjca7gqr (scrape)
+ LOG    [5/5] Enriching: Glass Half Full Bar Yaowarat เยาวราช
+ LOG  [SearchProxy] Using ddg for: "Glass Half Full Bar Yaowarat เยาวราช bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_ujrgxr
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_ujrgxr
+ LOG  [DDGScraper] Original query: Glass Half Full Bar Yaowarat เยาวราช bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Glass Half Full Bar Yaowarat เยาวราช bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Glass+Half+Full+Bar+Yaowarat+%E0%B9%80%E0%B8%A2%E0%B8%B2%E0%B8%A7%E0%B8%A3%E0%B8%B2%E0%B8%8A+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5349, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_9cto14
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_9cto14
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Glass+Half+Full+Bar+Yaowarat+%E0%B9%80%E0%B8%A2%E0%B8%B2%E0%B8%A7%E0%B8%A3%E0%B8%B2%E0%B8%8A+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338192134_htjca7gqr completed
+ LOG     ✓ "off-the-beaten-path bars in Bangkok": 5 places
+ LOG  [TaskManager] Task search_1764338161887_vtgj2ocm7 completed
+ LOG  [TaskManager] Executing task search_1764338161887_cd2tnqk0k (search)
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 5, "currentTask": "Searching: less touristy bars in Bangkok", "results": 20, "status": "searching", "totalSteps": 10}
+ LOG     [5/10] Searching: "less touristy bars in Bangkok"
+ LOG  🎯 [SearchProgressIndicator] Render - progress: {"currentStep": 5, "currentTask": "Searching: less touristy bars in Bangkok", "results": 20, "status": "searching", "totalSteps": 10}
+ LOG  ✅ [PlacesInsights] Got 5 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 5 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338198707_10glo3i2s (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338198707_1o30tsdsb (scrape) - Queue: 2
+ LOG  [TaskManager] Added task scrape_1764338198708_2kfcqm89r (scrape) - Queue: 3
+ LOG  [TaskManager] Added task scrape_1764338198708_jzxougmex (scrape) - Queue: 4
+ LOG  [TaskManager] Added task scrape_1764338198709_8jww9a8ce (scrape) - Queue: 5
+ LOG  [TaskManager] Executing task scrape_1764338198707_10glo3i2s (scrape)
+ LOG    [1/5] Enriching: YABAR Secret Bar & Rooftop
+ LOG  [SearchProxy] Using ddg for: "YABAR Secret Bar & Rooftop bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_u5z0od
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_u5z0od
+ LOG  [DDGScraper] Original query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=YABAR+Secret+Bar+%26+Rooftop+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5640, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_6jmlmi
+ LOG  ✅ [CacheService] Cache hit: brave_search_6jmlmi
+ LOG  ✅ [BraveScraper] Using cached results
+ LOG      ✅ "YABAR Secret Bar & Rooftop offers a hidden oasis with stunning views and a vibrant atmosphere perfect for unforgettable nights."
+ LOG  [TaskManager] Task scrape_1764338198707_10glo3i2s completed
+ LOG  [TaskManager] Executing task scrape_1764338198707_1o30tsdsb (scrape)
+ LOG    [2/5] Enriching: Rabbit Hole
+ LOG  [SearchProxy] Using ddg for: "Rabbit Hole bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_sx8pfu
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_sx8pfu
+ LOG  [DDGScraper] Original query: Rabbit Hole bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Rabbit Hole bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Rabbit+Hole+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5895, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_6qf2pv
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_6qf2pv
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Rabbit+Hole+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338198707_1o30tsdsb completed
+ LOG  [TaskManager] Executing task scrape_1764338198708_2kfcqm89r (scrape)
+ LOG    [3/5] Enriching: YOU KNOW WHERE
+ LOG  [SearchProxy] Using ddg for: "YOU KNOW WHERE bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_45eedj
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_45eedj
+ LOG  [DDGScraper] Original query: YOU KNOW WHERE bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: YOU KNOW WHERE bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=YOU+KNOW+WHERE+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5160, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_uj0m4y
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_uj0m4y
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=YOU+KNOW+WHERE+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69360, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338198708_2kfcqm89r completed
+ LOG  [TaskManager] Executing task scrape_1764338198708_jzxougmex (scrape)
+ LOG    [4/5] Enriching: Starlight Rooftop Bar
+ LOG  [SearchProxy] Using ddg for: "Starlight Rooftop Bar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_dgdtl0
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_dgdtl0
+ LOG  [DDGScraper] Original query: Starlight Rooftop Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Starlight Rooftop Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Starlight+Rooftop+Bar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 3950, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_1rbe5x
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_1rbe5x
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Starlight+Rooftop+Bar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338198708_jzxougmex completed
+ LOG  [TaskManager] Executing task scrape_1764338198709_8jww9a8ce (scrape)
+ LOG    [5/5] Enriching: The Speakeasy Rooftop Bar Bangkok
+ LOG  [SearchProxy] Using ddg for: "The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_yz2qmk
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_yz2qmk
+ LOG  [DDGScraper] Original query: The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=The+Speakeasy+Rooftop+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 6788, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_j4n83f
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_j4n83f
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=The+Speakeasy+Rooftop+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338198709_8jww9a8ce completed
+ LOG     ✓ "less touristy bars in Bangkok": 5 places
+ LOG  [TaskManager] Task search_1764338161887_cd2tnqk0k completed
+ LOG  [TaskManager] Executing task search_1764338161887_u8o3qslka (search)
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 6, "currentTask": "Searching: insider-only bars in Bangkok", "results": 25, "status": "searching", "totalSteps": 10}
+ LOG     [6/10] Searching: "insider-only bars in Bangkok"
+ LOG  🎯 [SearchProgressIndicator] Render - progress: {"currentStep": 6, "currentTask": "Searching: insider-only bars in Bangkok", "results": 25, "status": "searching", "totalSteps": 10}
+ LOG  ✅ [PlacesInsights] Got 5 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 5 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338207922_kucterc4m (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338207923_vpof98lia (scrape) - Queue: 2
+ LOG  [TaskManager] Added task scrape_1764338207923_id2y84eps (scrape) - Queue: 3
+ LOG  [TaskManager] Added task scrape_1764338207923_kn2kp5kj3 (scrape) - Queue: 4
+ LOG  [TaskManager] Added task scrape_1764338207923_5krsbj1xo (scrape) - Queue: 5
+ LOG  [TaskManager] Executing task scrape_1764338207922_kucterc4m (scrape)
+ LOG    [1/5] Enriching: Leelabar
+ LOG  [SearchProxy] Using ddg for: "Leelabar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_oqywai
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_oqywai
+ LOG  [DDGScraper] Original query: Leelabar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Leelabar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Leelabar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5996, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_pr7v9v
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_pr7v9v
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Leelabar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338207922_kucterc4m completed
+ LOG  [TaskManager] Executing task scrape_1764338207923_vpof98lia (scrape)
+ LOG    [2/5] Enriching: YABAR Secret Bar & Rooftop
+ LOG  [SearchProxy] Using ddg for: "YABAR Secret Bar & Rooftop bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_u5z0od
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_u5z0od
+ LOG  [DDGScraper] Original query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=YABAR+Secret+Bar+%26+Rooftop+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5666, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_6jmlmi
+ LOG  ✅ [CacheService] Cache hit: brave_search_6jmlmi
+ LOG  ✅ [BraveScraper] Using cached results
+ LOG      ✅ "YABAR Secret Bar & Rooftop offers a hidden oasis with stunning views and a vibrant, intimate atmosphere for unforgettable nights."
+ LOG  [TaskManager] Task scrape_1764338207923_vpof98lia completed
+ LOG  [TaskManager] Executing task scrape_1764338207923_id2y84eps (scrape)
+ LOG    [3/5] Enriching: Sanay Rooftop Bar Khaosan - เสน่ห์ รูฟท็อป บาร์ ข้าวสาร
+ LOG  [SearchProxy] Using ddg for: "Sanay Rooftop Bar Khaosan - เสน่ห์ รูฟท็อป บาร์ ข้าวสาร bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_jdw6oh
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_jdw6oh
+ LOG  [DDGScraper] Original query: Sanay Rooftop Bar Khaosan - เสน่ห์ รูฟท็อป บาร์ ข้าวสาร bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Sanay Rooftop Bar Khaosan - เสน่ห์ รูฟท็อป บาร์ ข้าวสาร bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Sanay+Rooftop+Bar+Khaosan+-+%E0%B9%80%E0%B8%AA%E0%B8%99%E0%B9%88%E0%B8%AB%E0%B9%8C+%E0%B8%A3%E0%B8%B9%E0%B8%9F%E0%B8%97%E0%B9%87%E0%B8%AD%E0%B8%9B+%E0%B8%9A%E0%B8%B2%E0%B8%A3%E0%B9%8C+%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AA%E0%B8%B2%E0%B8%A3+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14326, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_n6zb3q
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_n6zb3q
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Sanay+Rooftop+Bar+Khaosan+-+%E0%B9%80%E0%B8%AA%E0%B8%99%E0%B9%88%E0%B8%AB%E0%B9%8C+%E0%B8%A3%E0%B8%B9%E0%B8%9F%E0%B8%97%E0%B9%87%E0%B8%AD%E0%B8%9B+%E0%B8%9A%E0%B8%B2%E0%B8%A3%E0%B9%8C+%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AA%E0%B8%B2%E0%B8%A3+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338207923_id2y84eps completed
+ LOG  [TaskManager] Executing task scrape_1764338207923_kn2kp5kj3 (scrape)
+ LOG    [4/5] Enriching: Hide Cafe Bar Tani Road
+ LOG  [SearchProxy] Using ddg for: "Hide Cafe Bar Tani Road bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_3p47m2
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_3p47m2
+ LOG  [DDGScraper] Original query: Hide Cafe Bar Tani Road bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Hide Cafe Bar Tani Road bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Hide+Cafe+Bar+Tani+Road+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14274, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_83z9rx
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_83z9rx
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Hide+Cafe+Bar+Tani+Road+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338207923_kn2kp5kj3 completed
+ LOG  [TaskManager] Executing task scrape_1764338207923_5krsbj1xo (scrape)
+ LOG    [5/5] Enriching: Starlight Rooftop Bar
+ LOG  [SearchProxy] Using ddg for: "Starlight Rooftop Bar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_dgdtl0
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_dgdtl0
+ LOG  [DDGScraper] Original query: Starlight Rooftop Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Starlight Rooftop Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Starlight+Rooftop+Bar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14258, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_1rbe5x
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_1rbe5x
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Starlight+Rooftop+Bar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69360, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338207923_5krsbj1xo completed
+ LOG     ✓ "insider-only bars in Bangkok": 5 places
+ LOG  [TaskManager] Task search_1764338161887_u8o3qslka completed
+ LOG  [TaskManager] Executing task search_1764338161888_f7jiz9svl (search)
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 7, "currentTask": "Searching: popular bars in Bangkok", "results": 30, "status": "searching", "totalSteps": 10}
+ LOG     [7/10] Searching: "popular bars in Bangkok"
+ LOG  🎯 [SearchProgressIndicator] Render - progress: {"currentStep": 7, "currentTask": "Searching: popular bars in Bangkok", "results": 30, "status": "searching", "totalSteps": 10}
+ LOG  ✅ [PlacesInsights] Got 5 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 5 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338214234_gk6ydunwk (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338214234_exnakz95p (scrape) - Queue: 2
+ LOG  [TaskManager] Added task scrape_1764338214235_8vwbakfhy (scrape) - Queue: 3
+ LOG  [TaskManager] Added task scrape_1764338214235_nllwmcaky (scrape) - Queue: 4
+ LOG  [TaskManager] Added task scrape_1764338214235_47k0mcr5f (scrape) - Queue: 5
+ LOG  [TaskManager] Executing task scrape_1764338214234_gk6ydunwk (scrape)
+ LOG    [1/5] Enriching: YABAR Secret Bar & Rooftop
+ LOG  [SearchProxy] Using ddg for: "YABAR Secret Bar & Rooftop bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_u5z0od
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_u5z0od
+ LOG  [DDGScraper] Original query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=YABAR+Secret+Bar+%26+Rooftop+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14288, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_6jmlmi
+ LOG  ✅ [CacheService] Cache hit: brave_search_6jmlmi
+ LOG  ✅ [BraveScraper] Using cached results
+ LOG      ✅ "YABAR Secret Bar & Rooftop offers a hidden oasis with breathtaking views and an exclusive, intimate vibe."
+ LOG  [TaskManager] Task scrape_1764338214234_gk6ydunwk completed
+ LOG  [TaskManager] Executing task scrape_1764338214234_exnakz95p (scrape)
+ LOG    [2/5] Enriching: The Speakeasy Rooftop Bar Bangkok
+ LOG  [SearchProxy] Using ddg for: "The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_yz2qmk
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_yz2qmk
+ LOG  [DDGScraper] Original query: The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=The+Speakeasy+Rooftop+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 4680, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_j4n83f
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_j4n83f
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=The+Speakeasy+Rooftop+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69360, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338214234_exnakz95p completed
+ LOG  [TaskManager] Executing task scrape_1764338214235_8vwbakfhy (scrape)
+ LOG    [3/5] Enriching: Rabbit Hole
+ LOG  [SearchProxy] Using ddg for: "Rabbit Hole bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_sx8pfu
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_sx8pfu
+ LOG  [DDGScraper] Original query: Rabbit Hole bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Rabbit Hole bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Rabbit+Hole+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5048, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_6qf2pv
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_6qf2pv
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Rabbit+Hole+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338214235_8vwbakfhy completed
+ LOG  [TaskManager] Executing task scrape_1764338214235_nllwmcaky (scrape)
+ LOG    [4/5] Enriching: Sky Bar
+ LOG  [SearchProxy] Using ddg for: "Sky Bar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_hmzhlk
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_hmzhlk
+ LOG  [DDGScraper] Original query: Sky Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Sky Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Sky+Bar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5492, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_pxg25r
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_pxg25r
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Sky+Bar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338214235_nllwmcaky completed
+ LOG  [TaskManager] Executing task scrape_1764338214235_47k0mcr5f (scrape)
+ LOG    [5/5] Enriching: Hide Cafe Bar Tani Road
+ LOG  [SearchProxy] Using ddg for: "Hide Cafe Bar Tani Road bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_3p47m2
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_3p47m2
+ LOG  [DDGScraper] Original query: Hide Cafe Bar Tani Road bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Hide Cafe Bar Tani Road bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Hide+Cafe+Bar+Tani+Road+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5235, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_83z9rx
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_83z9rx
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Hide+Cafe+Bar+Tani+Road+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338214235_47k0mcr5f completed
+ LOG     ✓ "popular bars in Bangkok": 5 places
+ LOG  [TaskManager] Task search_1764338161888_f7jiz9svl completed
+ LOG  [TaskManager] Executing task search_1764338161888_sq7t5ls1e (search)
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 8, "currentTask": "Searching: must-visit bars in Bangkok", "results": 35, "status": "searching", "totalSteps": 10}
+ LOG     [8/10] Searching: "must-visit bars in Bangkok"
+ LOG  🎯 [SearchProgressIndicator] Render - progress: {"currentStep": 8, "currentTask": "Searching: must-visit bars in Bangkok", "results": 35, "status": "searching", "totalSteps": 10}
+ LOG  ✅ [PlacesInsights] Got 5 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 5 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338223179_jttbyjba3 (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338223179_befslzjx5 (scrape) - Queue: 2
+ LOG  [TaskManager] Added task scrape_1764338223180_41queg912 (scrape) - Queue: 3
+ LOG  [TaskManager] Added task scrape_1764338223180_36daocntw (scrape) - Queue: 4
+ LOG  [TaskManager] Added task scrape_1764338223180_dha3kcbw3 (scrape) - Queue: 5
+ LOG  [TaskManager] Executing task scrape_1764338223179_jttbyjba3 (scrape)
+ LOG    [1/5] Enriching: YABAR Secret Bar & Rooftop
+ LOG  [SearchProxy] Using ddg for: "YABAR Secret Bar & Rooftop bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_u5z0od
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_u5z0od
+ LOG  [DDGScraper] Original query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=YABAR+Secret+Bar+%26+Rooftop+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5666, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_6jmlmi
+ LOG  ✅ [CacheService] Cache hit: brave_search_6jmlmi
+ LOG  ✅ [BraveScraper] Using cached results
+ LOG      ✅ "YABAR Secret Bar & Rooftop offers a hidden oasis with stunning city views and a vibrant, eclectic ambiance."
+ LOG  [TaskManager] Task scrape_1764338223179_jttbyjba3 completed
+ LOG  [TaskManager] Executing task scrape_1764338223179_befslzjx5 (scrape)
+ LOG    [2/5] Enriching: Octave Rooftop Lounge & Bar
+ LOG  [SearchProxy] Using ddg for: "Octave Rooftop Lounge & Bar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_bpii3q
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_bpii3q
+ LOG  [DDGScraper] Original query: Octave Rooftop Lounge & Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Octave Rooftop Lounge & Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Octave+Rooftop+Lounge+%26+Bar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14290, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_d9btun
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_d9btun
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Octave+Rooftop+Lounge+%26+Bar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338223179_befslzjx5 completed
+ LOG  [TaskManager] Executing task scrape_1764338223180_41queg912 (scrape)
+ LOG    [3/5] Enriching: The Speakeasy Rooftop Bar Bangkok
+ LOG  [SearchProxy] Using ddg for: "The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_yz2qmk
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_yz2qmk
+ LOG  [DDGScraper] Original query: The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=The+Speakeasy+Rooftop+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14288, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_j4n83f
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_j4n83f
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=The+Speakeasy+Rooftop+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338223180_41queg912 completed
+ LOG  [TaskManager] Executing task scrape_1764338223180_36daocntw (scrape)
+ LOG    [4/5] Enriching: Sky Bar
+ LOG  [SearchProxy] Using ddg for: "Sky Bar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_hmzhlk
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_hmzhlk
+ LOG  [DDGScraper] Original query: Sky Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Sky Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Sky+Bar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 4838, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_pxg25r
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_pxg25r
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Sky+Bar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69360, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338223180_36daocntw completed
+ LOG  [TaskManager] Executing task scrape_1764338223180_dha3kcbw3 (scrape)
+ LOG    [5/5] Enriching: Leelabar
+ LOG  [SearchProxy] Using ddg for: "Leelabar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_oqywai
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_oqywai
+ LOG  [DDGScraper] Original query: Leelabar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Leelabar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Leelabar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5996, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_pr7v9v
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_pr7v9v
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Leelabar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338223180_dha3kcbw3 completed
+ LOG     ✓ "must-visit bars in Bangkok": 5 places
+ LOG  [TaskManager] Task search_1764338161888_sq7t5ls1e completed
+ LOG  [TaskManager] Executing task search_1764338161888_mmwavulcr (search)
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 9, "currentTask": "Searching: trendy fun bars in Bangkok", "results": 40, "status": "searching", "totalSteps": 10}
+ LOG     [9/10] Searching: "trendy fun bars in Bangkok"
+ LOG  🎯 [SearchProgressIndicator] Render - progress: {"currentStep": 9, "currentTask": "Searching: trendy fun bars in Bangkok", "results": 40, "status": "searching", "totalSteps": 10}
+ LOG  ✅ [PlacesInsights] Got 5 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 5 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338230363_1b8lzu483 (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338230363_t3cfrmafw (scrape) - Queue: 2
+ LOG  [TaskManager] Added task scrape_1764338230364_xl82qilq0 (scrape) - Queue: 3
+ LOG  [TaskManager] Added task scrape_1764338230364_n3wjhaqm8 (scrape) - Queue: 4
+ LOG  [TaskManager] Added task scrape_1764338230364_lv5z75vqw (scrape) - Queue: 5
+ LOG  [TaskManager] Executing task scrape_1764338230363_1b8lzu483 (scrape)
+ LOG    [1/5] Enriching: YABAR Secret Bar & Rooftop
+ LOG  [SearchProxy] Using ddg for: "YABAR Secret Bar & Rooftop bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_u5z0od
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_u5z0od
+ LOG  [DDGScraper] Original query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=YABAR+Secret+Bar+%26+Rooftop+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5666, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_6jmlmi
+ LOG  ✅ [CacheService] Cache hit: brave_search_6jmlmi
+ LOG  ✅ [BraveScraper] Using cached results
+ LOG      ✅ "YABAR Secret Bar & Rooftop is known for its stunning skyline views and a hidden, exclusive ambiance that captivates guests."
+ LOG  [TaskManager] Task scrape_1764338230363_1b8lzu483 completed
+ LOG  [TaskManager] Executing task scrape_1764338230363_t3cfrmafw (scrape)
+ LOG    [2/5] Enriching: Leelabar
+ LOG  [SearchProxy] Using ddg for: "Leelabar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_oqywai
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_oqywai
+ LOG  [DDGScraper] Original query: Leelabar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Leelabar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Leelabar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5304, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_pr7v9v
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_pr7v9v
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Leelabar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338230363_t3cfrmafw completed
+ LOG  [TaskManager] Executing task scrape_1764338230364_xl82qilq0 (scrape)
+ LOG    [3/5] Enriching: SIN Rooftop Bar Bangkok
+ LOG  [SearchProxy] Using ddg for: "SIN Rooftop Bar Bangkok bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_ivj4jj
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_ivj4jj
+ LOG  [DDGScraper] Original query: SIN Rooftop Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: SIN Rooftop Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=SIN+Rooftop+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 7463, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_72fn5k
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_72fn5k
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=SIN+Rooftop+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338230364_xl82qilq0 completed
+ LOG  [TaskManager] Executing task scrape_1764338230364_n3wjhaqm8 (scrape)
+ LOG    [4/5] Enriching: YOU KNOW WHERE
+ LOG  [SearchProxy] Using ddg for: "YOU KNOW WHERE bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_45eedj
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_45eedj
+ LOG  [DDGScraper] Original query: YOU KNOW WHERE bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: YOU KNOW WHERE bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=YOU+KNOW+WHERE+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 4350, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_uj0m4y
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_uj0m4y
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=YOU+KNOW+WHERE+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338230364_n3wjhaqm8 completed
+ LOG  [TaskManager] Executing task scrape_1764338230364_lv5z75vqw (scrape)
+ LOG    [5/5] Enriching: The Speakeasy Rooftop Bar Bangkok
+ LOG  [SearchProxy] Using ddg for: "The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_yz2qmk
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_yz2qmk
+ LOG  [DDGScraper] Original query: The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: The Speakeasy Rooftop Bar Bangkok bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=The+Speakeasy+Rooftop+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 4680, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_j4n83f
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_j4n83f
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=The+Speakeasy+Rooftop+Bar+Bangkok+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338230364_lv5z75vqw completed
+ LOG     ✓ "trendy fun bars in Bangkok": 5 places
+ LOG  [TaskManager] Task search_1764338161888_mmwavulcr completed
+ LOG  [TaskManager] Executing task search_1764338161888_1u64xu8p3 (search)
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 10, "currentTask": "Searching: fun rooftop bars in Bangkok with views", "results": 45, "status": "searching", "totalSteps": 10}
+ LOG     [10/10] Searching: "fun rooftop bars in Bangkok with views"
+ LOG  🎯 [SearchProgressIndicator] Render - progress: {"currentStep": 10, "currentTask": "Searching: fun rooftop bars in Bangkok with views", "results": 45, "status": "searching", "totalSteps": 10}
+ LOG  ✅ [PlacesInsights] Got 5 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 5 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338239384_4dsuhg7dd (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338239384_jjpbb8bxj (scrape) - Queue: 2
+ LOG  [TaskManager] Added task scrape_1764338239385_ad9obftub (scrape) - Queue: 3
+ LOG  [TaskManager] Added task scrape_1764338239386_kvb8pcpg1 (scrape) - Queue: 4
+ LOG  [TaskManager] Added task scrape_1764338239386_xy08adjik (scrape) - Queue: 5
+ LOG  [TaskManager] Executing task scrape_1764338239384_4dsuhg7dd (scrape)
+ LOG    [1/5] Enriching: Leelabar
+ LOG  [SearchProxy] Using ddg for: "Leelabar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_oqywai
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_oqywai
+ LOG  [DDGScraper] Original query: Leelabar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Leelabar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Leelabar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5304, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_pr7v9v
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_pr7v9v
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Leelabar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69360, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338239384_4dsuhg7dd completed
+ LOG  [TaskManager] Executing task scrape_1764338239384_jjpbb8bxj (scrape)
+ LOG    [2/5] Enriching: YABAR Secret Bar & Rooftop
+ LOG  [SearchProxy] Using ddg for: "YABAR Secret Bar & Rooftop bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_u5z0od
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_u5z0od
+ LOG  [DDGScraper] Original query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: YABAR Secret Bar & Rooftop bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=YABAR+Secret+Bar+%26+Rooftop+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 4892, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_6jmlmi
+ LOG  ✅ [CacheService] Cache hit: brave_search_6jmlmi
+ LOG  ✅ [BraveScraper] Using cached results
+ LOG      ✅ "YABAR Secret Bar & Rooftop offers a hidden oasis with stunning views and a vibrant atmosphere for unforgettable nights."
+ LOG  [TaskManager] Task scrape_1764338239384_jjpbb8bxj completed
+ LOG  [TaskManager] Executing task scrape_1764338239385_ad9obftub (scrape)
+ LOG    [3/5] Enriching: Bangkok View Rooftop Bar
+ LOG  [SearchProxy] Using ddg for: "Bangkok View Rooftop Bar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_1pw36m
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_1pw36m
+ LOG  [DDGScraper] Original query: Bangkok View Rooftop Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Bangkok View Rooftop Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Bangkok+View+Rooftop+Bar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5062, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_96jlyz
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_96jlyz
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Bangkok+View+Rooftop+Bar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338239385_ad9obftub completed
+ LOG  [TaskManager] Executing task scrape_1764338239386_kvb8pcpg1 (scrape)
+ LOG    [4/5] Enriching: Sanay Rooftop Bar Khaosan - เสน่ห์ รูฟท็อป บาร์ ข้าวสาร
+ LOG  [SearchProxy] Using ddg for: "Sanay Rooftop Bar Khaosan - เสน่ห์ รูฟท็อป บาร์ ข้าวสาร bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_jdw6oh
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_jdw6oh
+ LOG  [DDGScraper] Original query: Sanay Rooftop Bar Khaosan - เสน่ห์ รูฟท็อป บาร์ ข้าวสาร bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Sanay Rooftop Bar Khaosan - เสน่ห์ รูฟท็อป บาร์ ข้าวสาร bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Sanay+Rooftop+Bar+Khaosan+-+%E0%B9%80%E0%B8%AA%E0%B8%99%E0%B9%88%E0%B8%AB%E0%B9%8C+%E0%B8%A3%E0%B8%B9%E0%B8%9F%E0%B8%97%E0%B9%87%E0%B8%AD%E0%B8%9B+%E0%B8%9A%E0%B8%B2%E0%B8%A3%E0%B9%8C+%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AA%E0%B8%B2%E0%B8%A3+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5121, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_n6zb3q
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_n6zb3q
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Sanay+Rooftop+Bar+Khaosan+-+%E0%B9%80%E0%B8%AA%E0%B8%99%E0%B9%88%E0%B8%AB%E0%B9%8C+%E0%B8%A3%E0%B8%B9%E0%B8%9F%E0%B8%97%E0%B9%87%E0%B8%AD%E0%B8%9B+%E0%B8%9A%E0%B8%B2%E0%B8%A3%E0%B9%8C+%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AA%E0%B8%B2%E0%B8%A3+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338239386_kvb8pcpg1 completed
+ LOG  [TaskManager] Executing task scrape_1764338239386_xy08adjik (scrape)
+ LOG    [5/5] Enriching: Paradise Lost Bangkok - Rooftop Bar
+ LOG  [SearchProxy] Using ddg for: "Paradise Lost Bangkok - Rooftop Bar bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_f4jitd
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_f4jitd
+ LOG  [DDGScraper] Original query: Paradise Lost Bangkok - Rooftop Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Paradise Lost Bangkok - Rooftop Bar bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Paradise+Lost+Bangkok+-+Rooftop+Bar+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 4976, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_gevtfe
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_gevtfe
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Paradise+Lost+Bangkok+-+Rooftop+Bar+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338239386_xy08adjik completed
+ LOG     ✓ "fun rooftop bars in Bangkok with views": 5 places
+ LOG  [TaskManager] Task search_1764338161888_1u64xu8p3 completed
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 10, "currentTask": "Search complete", "results": 50, "status": "complete", "totalSteps": 10}
+ LOG  ✅ [TaskExecutor] Completed 10 TaskManager searches
+ LOG  ✅ [QueryProcessing] Completed expanded searches
+ LOG  🎯 [QueryProcessing] Deduplicated to 20 unique places
+ LOG  🎯 [SearchProgressIndicator] Render - progress: {"currentStep": 10, "currentTask": "Search complete", "results": 50, "status": "complete", "totalSteps": 10}
+Android Bundled 2ms src/services/ranking/PlaceRanker.ts (1 module)
+Android Bundled 17ms src/services/ranking/LLMReranker.ts (1 module)
+ LOG  🤖 [OpenAICore] Generating JSON with temperature 0.3...
+ ERROR  ❌ [TravelService] Advanced processing error: [ReferenceError: Property 'allHiddenGems' doesn't exist] 
+
+Code: TravelService.ts
+  699 |       const placesWithGemFlag = uniquePlaces.map((p: any) => ({
+  700 |         ...p,
+> 701 |         isHiddenGem: allHiddenGems.some((hg: any) => hg.placeId === p.placeId),
+      |                      ^
+  702 |       }));
+  703 |       
+  704 |       // Rank with LLM re-ranker (pass keywords and establishments from QueryAnalysis)
+Call Stack
+  uniquePlaces.map$argument_0 (src/services/TravelService.ts:701:22)
+  generateAdvancedRecommendations (src/services/TravelService.ts:699:49)
+ LOG  🤖 [OpenAICore] Generating JSON with temperature 0.3...
+ ERROR  Hybrid recommendation error: [TypeError: Cannot read property 'length' of undefined] 
+
+Code: TravelService.ts
+  264 |   private async ensureCoordinates(recommendations: TravelRecommendation[]): Promise<TravelRecommendation[]> {
+  265 |     for (const rec of recommendations) {
+> 266 |       if (!rec.coordinates && rec.highlights.length > 0) {
+      |                                             ^
+  267 |         const firstHighlightWithCoords = rec.highlights.find((h: any) => h.latitude && h.longitude);
+  268 |         if (firstHighlightWithCoords) {
+  269 |           (rec as any).coordinates = {
+Call Stack
+  ensureCoordinates (src/services/TravelService.ts:266:45)
+  ensureCoordinates (src/services/TravelService.ts:264:34)
+  generateHybridRecommendations (src/services/TravelService.ts:631:54)
+ LOG  ⏳ [TravelService] Calling LLM...
+ LOG  📋 [TravelService] Prompt length: 1726 chars
+ LOG  🤖 [OpenAICore] Generating JSON with temperature 0.3...
+ LOG  ✅ [TravelService] LLM response received (15569ms)
+ LOG  📄 [TravelService] Response length: 5050 chars
+ LOG  ✅ [TravelService] Parsed 1 recommendations
+ LOG  📸 [TravelService] Fetching details for recommendations...
+ LOG  🔄 [TravelService] Falling back to mock data
+ LOG  ✅ [TravelService] Generated 1 recommendations
+ LOG  🚀 [TravelService] Step 3: Adding transport options to destination city...
+ ERROR  ❌ [TravelService] Error: [TypeError: Cannot convert undefined value to object] 
+
+Code: TravelService.ts
+  530 |       console.log('📸 [TravelService] Fetching details for recommendations...');
+  531 |       for (const rec of recommendations) {
+> 532 |         for (const highlight of rec.highlights) {
+      |         ^
+  533 |           if (this.photosService) {
+  534 |             try {
+  535 |               const details = await this.photosService.getPlaceDetails(
+Call Stack
+  generateLLMOnlyRecommendations (src/services/TravelService.ts:532:9)
+ LOG  ⚠️ [TravelService] No coordinates for Bangkok
+ LOG  🔎 [TravelService] Step 4: Validating with web search...
+Android Bundled 2ms src/services/SearchService.ts (1 module)
+ LOG  📸 [TravelService] Fetching photos for: Hidden Rooftop Café in Le Marais
+ LOG  📍 [PlacesPhotoService] Getting details for: Hidden Rooftop Café in Le Marais Bangkok
+ LOG  🔍 [GooglePlacesClient] Text search: Hidden Rooftop Café in Le Marais Bangkok
+ LOG  ✅ [GooglePlacesClient] Found 20 results
+ LOG  📋 [GooglePlacesClient] Getting details for: ChIJX0xMhkyZ4jARB4YkTjznrbw
+ LOG  ✅ [GooglePlacesClient] Got details for: undefined
+ LOG  ✅ [PlacesPhotoService] Got 5 photos, rating: 4.7, open: false
+ LOG  ✅ [TravelService] Got 5 photos for: Hidden Rooftop Café in Le Marais
+ LOG  📸 [TravelService] Fetching photos for: Eiffel Tower at Dawn
+ LOG  📍 [PlacesPhotoService] Getting details for: Eiffel Tower at Dawn Bangkok
+ LOG  🔍 [GooglePlacesClient] Text search: Eiffel Tower at Dawn Bangkok
+ LOG  ✅ [GooglePlacesClient] Found 2 results
+ LOG  📋 [GooglePlacesClient] Getting details for: ChIJaSv_6gaZ4jARnbiUVn6Z_YY
+ LOG  ✅ [GooglePlacesClient] Got details for: undefined
+ LOG  ✅ [PlacesPhotoService] Got 5 photos, rating: 4.7, open: false
+ LOG  ✅ [TravelService] Got 5 photos for: Eiffel Tower at Dawn
+ LOG  🎯 [TravelService] Step 5: Ranking with crowd intelligence...
+ LOG  🎯 [Ranking] Ranking 4 places...
+ LOG  🧠 [CrowdIntel] Analyzing: Hidden Rooftop Café in Le Marais
+ LOG  💾 [CacheService] Getting from cache: crowd_intel_n1kizx
+ LOG  🧠 [CrowdIntel] Analyzing: Eiffel Tower at Dawn
+ LOG  💾 [CacheService] Getting from cache: crowd_intel_6lfwhn
+ LOG  🧠 [CrowdIntel] Analyzing: Private Seine River Dinner Cruise
+ LOG  💾 [CacheService] Getting from cache: crowd_intel_26fn3k
+ LOG  🧠 [CrowdIntel] Analyzing: Free Walking Tour of Montmartre
+ LOG  💾 [CacheService] Getting from cache: crowd_intel_44f3cz
+ LOG  ⚠️ [CacheService] Cache miss: crowd_intel_6lfwhn
+ LOG  🤖 [OpenAICore] Generating JSON with temperature 0.3...
+Android Bundled 6ms src/services/DDGScraperService.ts (1 module)
+ LOG  ⚠️ [CacheService] Cache miss: crowd_intel_26fn3k
+ LOG  🤖 [OpenAICore] Generating JSON with temperature 0.3...
+ LOG  ⚠️ [CacheService] Cache miss: crowd_intel_n1kizx
+ LOG  🤖 [OpenAICore] Generating JSON with temperature 0.3...
+ LOG  ⚠️ [CacheService] Cache miss: crowd_intel_44f3cz
+ LOG  🤖 [OpenAICore] Generating JSON with temperature 0.3...
+ LOG  🔍 [CrowdIntel] DDG queries: ["Eiffel Tower at Dawn Bangkok crowded busy reviews", "Eiffel Tower at Dawn Bangkok fun exciting vibrant", "Eiffel Tower at Dawn Bangkok popular must-visit", "Eiffel Tower at Dawn Bangkok entertaining lively", "Eiffel Tower at Dawn Bangkok evening crowd level"]
+ LOG  🔍 [DDGScraper] Scraping 5 queries...
+ LOG  [DDGScraper] Original query: Eiffel Tower at Dawn Bangkok crowded busy reviews
+ LOG  [DDGScraper] Sanitized query: Eiffel Tower at Dawn Bangkok crowded busy reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Eiffel+Tower+at+Dawn+Bangkok+crowded+busy+reviews
+ LOG  [DDGScraper] Original query: Eiffel Tower at Dawn Bangkok fun exciting vibrant
+ LOG  [DDGScraper] Sanitized query: Eiffel Tower at Dawn Bangkok fun exciting vibrant
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Eiffel+Tower+at+Dawn+Bangkok+fun+exciting+vibrant
+ LOG  🔍 [CrowdIntel] DDG queries: ["Private Seine River Dinner Cruise Bangkok crowded busy reviews", "Private Seine River Dinner Cruise Bangkok fun exciting vibrant", "Private Seine River Dinner Cruise Bangkok popular must-visit", "Private Seine River Dinner Cruise Bangkok entertaining lively", "Private Seine River Dinner Cruise Bangkok evening crowd level"]
+ LOG  🔍 [DDGScraper] Scraping 5 queries...
+ LOG  [DDGScraper] Original query: Private Seine River Dinner Cruise Bangkok crowded busy reviews
+ LOG  [DDGScraper] Sanitized query: Private Seine River Dinner Cruise Bangkok crowded busy reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Private+Seine+River+Dinner+Cruise+Bangkok+crowded+busy+reviews
+ LOG  [DDGScraper] Original query: Private Seine River Dinner Cruise Bangkok fun exciting vibrant
+ LOG  [DDGScraper] Sanitized query: Private Seine River Dinner Cruise Bangkok fun exciting vibrant
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Private+Seine+River+Dinner+Cruise+Bangkok+fun+exciting+vibrant
+ LOG  🔍 [CrowdIntel] DDG queries: ["Hidden Rooftop Café in Le Marais Bangkok crowded busy reviews", "Hidden Rooftop Café in Le Marais Bangkok fun exciting vibrant", "Hidden Rooftop Café in Le Marais Bangkok popular must-visit", "Hidden Rooftop Café in Le Marais Bangkok entertaining lively", "Hidden Rooftop Café in Le Marais Bangkok evening crowd level"]
+ LOG  🔍 [DDGScraper] Scraping 5 queries...
+ LOG  [DDGScraper] Original query: Hidden Rooftop Café in Le Marais Bangkok crowded busy reviews
+ LOG  [DDGScraper] Sanitized query: Hidden Rooftop Café in Le Marais Bangkok crowded busy reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Hidden+Rooftop+Caf%C3%A9+in+Le+Marais+Bangkok+crowded+busy+reviews
+ LOG  [DDGScraper] Original query: Hidden Rooftop Café in Le Marais Bangkok fun exciting vibrant
+ LOG  [DDGScraper] Sanitized query: Hidden Rooftop Café in Le Marais Bangkok fun exciting vibrant
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Hidden+Rooftop+Caf%C3%A9+in+Le+Marais+Bangkok+fun+exciting+vibrant
+ LOG  🔍 [CrowdIntel] DDG queries: ["Free Walking Tour of Montmartre Bangkok crowded busy reviews", "Free Walking Tour of Montmartre Bangkok fun exciting vibrant", "Free Walking Tour of Montmartre Bangkok popular must-visit", "Free Walking Tour of Montmartre Bangkok entertaining lively", "Free Walking Tour of Montmartre Bangkok evening crowd level"]
+ LOG  🔍 [DDGScraper] Scraping 5 queries...
+ LOG  [DDGScraper] Original query: Free Walking Tour of Montmartre Bangkok crowded busy reviews
+ LOG  [DDGScraper] Sanitized query: Free Walking Tour of Montmartre Bangkok crowded busy reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Free+Walking+Tour+of+Montmartre+Bangkok+crowded+busy+reviews
+ LOG  [DDGScraper] Original query: Free Walking Tour of Montmartre Bangkok fun exciting vibrant
+ LOG  [DDGScraper] Sanitized query: Free Walking Tour of Montmartre Bangkok fun exciting vibrant
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Free+Walking+Tour+of+Montmartre+Bangkok+fun+exciting+vibrant
+ LOG  ✅ [PlacesInsights] Got 2 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 2 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338331514_palzaotmo (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338331515_pmdn8wpzn (scrape) - Queue: 2
+ LOG  [TaskManager] Executing task scrape_1764338331514_palzaotmo (scrape)
+ LOG    [1/2] Enriching: Wat Arun Ratchawararam Ratchawaramahawihan
+ LOG  [SearchProxy] Using ddg for: "Wat Arun Ratchawararam Ratchawaramahawihan place_of_worship price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_xagxk3
+ LOG  ✅ [PlacesInsights] Got 2 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 2 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338331523_awqlfql7l (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338331524_1ee0hs9x9 (scrape) - Queue: 2
+ LOG  [TaskManager] Executing task scrape_1764338331523_awqlfql7l (scrape)
+ LOG    [1/2] Enriching: Wat Arun Ratchawararam Ratchawaramahawihan
+ LOG  [SearchProxy] Using ddg for: "Wat Arun Ratchawararam Ratchawaramahawihan place_of_worship price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_xagxk3
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_xagxk3
+ LOG  [DDGScraper] Original query: Wat Arun Ratchawararam Ratchawaramahawihan place_of_worship price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Wat Arun Ratchawararam Ratchawaramahawihan place_of_worship price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Wat+Arun+Ratchawararam+Ratchawaramahawihan+place_of_worship+price+range+atmosphere+reviews
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_xagxk3
+ LOG  [DDGScraper] Original query: Wat Arun Ratchawararam Ratchawaramahawihan place_of_worship price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Wat Arun Ratchawararam Ratchawaramahawihan place_of_worship price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Wat+Arun+Ratchawararam+Ratchawaramahawihan+place_of_worship+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5641, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ LOG  ✅ [PlacesInsights] Got 5 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 5 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338331713_749wf62x8 (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338331714_fecah1uzk (scrape) - Queue: 2
+ LOG  [TaskManager] Added task scrape_1764338331714_4245yzwam (scrape) - Queue: 3
+ LOG  [TaskManager] Added task scrape_1764338331714_rwd9rqsmj (scrape) - Queue: 4
+ LOG  [TaskManager] Added task scrape_1764338331714_oum4yl3zm (scrape) - Queue: 5
+ LOG  [TaskManager] Executing task scrape_1764338331713_749wf62x8 (scrape)
+ LOG    [1/5] Enriching: Hide Cafe Bar Tani Road
+ LOG  [SearchProxy] Using ddg for: "Hide Cafe Bar Tani Road bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_3p47m2
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 7268, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ LOG  ✅ [DDGScraper] Found 0 crowd mentions
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_3p47m2
+ LOG  [DDGScraper] Original query: Hide Cafe Bar Tani Road bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Hide Cafe Bar Tani Road bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Hide+Cafe+Bar+Tani+Road+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5388, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ LOG  ✅ [PlacesInsights] Got 5 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 5 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338331763_ovyjw80on (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338331763_tod8teysa (scrape) - Queue: 2
+ LOG  [TaskManager] Added task scrape_1764338331763_38eecu4j0 (scrape) - Queue: 3
+ LOG  [TaskManager] Added task scrape_1764338331763_sigkfec28 (scrape) - Queue: 4
+ LOG  [TaskManager] Added task scrape_1764338331763_05gdnidui (scrape) - Queue: 5
+ LOG  [TaskManager] Executing task scrape_1764338331763_ovyjw80on (scrape)
+ LOG    [1/5] Enriching: Chao Phraya Princess
+ LOG  [SearchProxy] Using ddg for: "Chao Phraya Princess buffet_restaurant price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_qm7w54
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_qm7w54
+ LOG  [DDGScraper] Original query: Chao Phraya Princess buffet_restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Chao Phraya Princess buffet_restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Chao+Phraya+Princess+buffet_restaurant+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 8293, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ LOG  ✅ [DDGScraper] Found 0 crowd mentions
+ LOG  ✅ [PlacesInsights] Got 5 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 5 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338331815_s4kz43d01 (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338331816_q2h21mae3 (scrape) - Queue: 2
+ LOG  [TaskManager] Added task scrape_1764338331816_zz6gbc1wc (scrape) - Queue: 3
+ LOG  [TaskManager] Added task scrape_1764338331816_88ipavejg (scrape) - Queue: 4
+ LOG  [TaskManager] Added task scrape_1764338331816_slxtv4vcu (scrape) - Queue: 5
+ LOG  [TaskManager] Executing task scrape_1764338331815_s4kz43d01 (scrape)
+ LOG    [1/5] Enriching: Chao Phraya Princess
+ LOG  [SearchProxy] Using ddg for: "Chao Phraya Princess buffet_restaurant price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_qm7w54
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 4834, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14278, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_qm7w54
+ LOG  [DDGScraper] Original query: Chao Phraya Princess buffet_restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Chao Phraya Princess buffet_restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Chao+Phraya+Princess+buffet_restaurant+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14338, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_9aek84
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14344, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_9aek84
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_9aek84
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Wat+Arun+Ratchawararam+Ratchawaramahawihan+place_of_worship+price+range+atmosphere+reviews
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_9aek84
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Wat+Arun+Ratchawararam+Ratchawaramahawihan+place_of_worship+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14274, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_83z9rx
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_83z9rx
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Hide+Cafe+Bar+Tani+Road+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14296, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_x4iwf
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14284, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_x4iwf
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_x4iwf
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Chao+Phraya+Princess+buffet_restaurant+price+range+atmosphere+reviews
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_x4iwf
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Chao+Phraya+Princess+buffet_restaurant+price+range+atmosphere+reviews
+ LOG  ✅ [PlacesInsights] Got 5 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 5 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338332122_5hwonoaga (scrape) - Queue: 1
+ LOG  [TaskManager] Added task scrape_1764338332123_6oaas7gbr (scrape) - Queue: 2
+ LOG  [TaskManager] Added task scrape_1764338332123_mzuuo3yv6 (scrape) - Queue: 3
+ LOG  [TaskManager] Added task scrape_1764338332123_xe63bkwsg (scrape) - Queue: 4
+ LOG  [TaskManager] Added task scrape_1764338332123_y3dsaczs2 (scrape) - Queue: 5
+ LOG  [TaskManager] Executing task scrape_1764338332122_5hwonoaga (scrape)
+ LOG    [1/5] Enriching: Hidden Garden Cafe'
+ LOG  [SearchProxy] Using ddg for: "Hidden Garden Cafe' coffee_shop price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_piatf3
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_piatf3
+ LOG  [DDGScraper] Original query: Hidden Garden Cafe' coffee_shop price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Hidden Garden Cafe coffee_shop price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Hidden+Garden+Cafe+coffee_shop+price+range+atmosphere+reviews
+ LOG  ✅ [PlacesInsights] Got 1 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 1 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338332159_yzpqjm0pn (scrape) - Queue: 1
+ LOG  [TaskManager] Executing task scrape_1764338332159_yzpqjm0pn (scrape)
+ LOG    [1/1] Enriching: Bangkok Walking Tours
+ LOG  [SearchProxy] Using ddg for: "Bangkok Walking Tours travel_agency price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_q3rqpq
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_q3rqpq
+ LOG  [DDGScraper] Original query: Bangkok Walking Tours travel_agency price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Bangkok Walking Tours travel_agency price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Bangkok+Walking+Tours+travel_agency+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14268, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_r24560
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_r24560
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Hidden+Garden+Cafe'+coffee_shop+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331713_749wf62x8 completed
+ LOG  [TaskManager] Executing task scrape_1764338331714_fecah1uzk (scrape)
+ LOG    [2/5] Enriching: Hidden Garden Cafe'
+ LOG  [SearchProxy] Using ddg for: "Hidden Garden Cafe' coffee_shop price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_piatf3
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_piatf3
+ LOG  [DDGScraper] Original query: Hidden Garden Cafe' coffee_shop price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Hidden Garden Cafe coffee_shop price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Hidden+Garden+Cafe+coffee_shop+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331514_palzaotmo completed
+ LOG  [TaskManager] Executing task scrape_1764338331515_pmdn8wpzn (scrape)
+ LOG    [2/2] Enriching: Wat Phra Chetuphon Wimon Mangkhalaram Rajwaramahawihan
+ LOG  [SearchProxy] Using ddg for: "Wat Phra Chetuphon Wimon Mangkhalaram Rajwaramahawihan place_of_worship price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_1sky94
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331523_awqlfql7l completed
+ LOG  [TaskManager] Executing task scrape_1764338331524_1ee0hs9x9 (scrape)
+ LOG    [2/2] Enriching: Wat Phra Chetuphon Wimon Mangkhalaram Rajwaramahawihan
+ LOG  [SearchProxy] Using ddg for: "Wat Phra Chetuphon Wimon Mangkhalaram Rajwaramahawihan place_of_worship price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_1sky94
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14278, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_hp2aev
+ LOG  ✅ [PlacesInsights] Got 1 places with summaries
+ LOG  🌐 [PlacesInsights] Enriching 1 places with web descriptions (throttled)...
+ LOG  [TaskManager] Added task scrape_1764338332357_0mycbd3lt (scrape) - Queue: 1
+ LOG  [TaskManager] Executing task scrape_1764338332357_0mycbd3lt (scrape)
+ LOG    [1/1] Enriching: Bangkok Walking Tours
+ LOG  [SearchProxy] Using ddg for: "Bangkok Walking Tours travel_agency price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_q3rqpq
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_1sky94
+ LOG  [DDGScraper] Original query: Wat Phra Chetuphon Wimon Mangkhalaram Rajwaramahawihan place_of_worship price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Wat Phra Chetuphon Wimon Mangkhalaram Rajwaramahawihan place_of_worship price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Wat+Phra+Chetuphon+Wimon+Mangkhalaram+Rajwaramahawihan+place_of_worship+price+range+atmosphere+reviews
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_1sky94
+ LOG  [DDGScraper] Original query: Wat Phra Chetuphon Wimon Mangkhalaram Rajwaramahawihan place_of_worship price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Wat Phra Chetuphon Wimon Mangkhalaram Rajwaramahawihan place_of_worship price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Wat+Phra+Chetuphon+Wimon+Mangkhalaram+Rajwaramahawihan+place_of_worship+price+range+atmosphere+reviews
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_hp2aev
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Bangkok+Walking+Tours+travel_agency+price+range+atmosphere+reviews
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_q3rqpq
+ LOG  [DDGScraper] Original query: Bangkok Walking Tours travel_agency price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Bangkok Walking Tours travel_agency price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Bangkok+Walking+Tours+travel_agency+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69345, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331763_ovyjw80on completed
+ LOG  [TaskManager] Executing task scrape_1764338331763_tod8teysa (scrape)
+ LOG    [2/5] Enriching: Apsara Cruise
+ LOG  [SearchProxy] Using ddg for: "Apsara Cruise thai_restaurant price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_4uca86
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331815_s4kz43d01 completed
+ LOG  [TaskManager] Executing task scrape_1764338331816_q2h21mae3 (scrape)
+ LOG    [2/5] Enriching: Saffron Cruise by Banyan Tree Bangkok
+ LOG  [SearchProxy] Using ddg for: "Saffron Cruise by Banyan Tree Bangkok thai_restaurant price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_t3dqng
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14274, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_r24560
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_t3dqng
+ LOG  [DDGScraper] Original query: Saffron Cruise by Banyan Tree Bangkok thai_restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Saffron Cruise by Banyan Tree Bangkok thai_restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Saffron+Cruise+by+Banyan+Tree+Bangkok+thai_restaurant+price+range+atmosphere+reviews
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_4uca86
+ LOG  [DDGScraper] Original query: Apsara Cruise thai_restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Apsara Cruise thai_restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Apsara+Cruise+thai_restaurant+price+range+atmosphere+reviews
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_r24560
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Hidden+Garden+Cafe'+coffee_shop+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14356, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_j3sjf5
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 5549, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ LOG  ✅ [DDGScraper] Found 0 crowd mentions
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_j3sjf5
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Wat+Phra+Chetuphon+Wimon+Mangkhalaram+Rajwaramahawihan+place_of_worship+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14290, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_hp2aev
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14362, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_j3sjf5
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_hp2aev
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Bangkok+Walking+Tours+travel_agency+price+range+atmosphere+reviews
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_j3sjf5
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Wat+Phra+Chetuphon+Wimon+Mangkhalaram+Rajwaramahawihan+place_of_worship+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14266, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_cdpbub
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14326, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_ajtan9
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_cdpbub
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Apsara+Cruise+thai_restaurant+price+range+atmosphere+reviews
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_ajtan9
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Saffron+Cruise+by+Banyan+Tree+Bangkok+thai_restaurant+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69360, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338332122_5hwonoaga completed
+ LOG  [TaskManager] Executing task scrape_1764338332123_6oaas7gbr (scrape)
+ LOG    [2/5] Enriching: Hide Cafe Bar Tani Road
+ LOG  [SearchProxy] Using ddg for: "Hide Cafe Bar Tani Road bar price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_3p47m2
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_3p47m2
+ LOG  [DDGScraper] Original query: Hide Cafe Bar Tani Road bar price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Hide Cafe Bar Tani Road bar price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Hide+Cafe+Bar+Tani+Road+bar+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69360, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338332159_yzpqjm0pn completed
+ LOG  [BraveScraper] Response: {"length": 69345, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331714_fecah1uzk completed
+ LOG  [TaskManager] Executing task scrape_1764338331714_4245yzwam (scrape)
+ LOG    [3/5] Enriching: Treehouse Cafe & Bar
+ LOG  [SearchProxy] Using ddg for: "Treehouse Cafe & Bar restaurant price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_pl8bty
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_pl8bty
+ LOG  [DDGScraper] Original query: Treehouse Cafe & Bar restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Treehouse Cafe & Bar restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Treehouse+Cafe+%26+Bar+restaurant+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14268, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_83z9rx
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331515_pmdn8wpzn completed
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_83z9rx
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Hide+Cafe+Bar+Tani+Road+bar+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": false, "length": 4724, "status": 200}
+ LOG  [DDGScraper] Parsed results: 0
+ LOG  ✅ [DDGScraper] Found 0 crowd mentions
+ LOG  🔍 [PlacesInsights] Fetching hours: https://places.googleapis.com/v1/places/ChIJaSv_6gaZ4jARnbiUVn6Z_YY
+ LOG  [BraveScraper] Response: {"length": 69360, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338332357_0mycbd3lt completed
+ LOG  🔍 [PlacesInsights] Fetching details: https://places.googleapis.com/v1/places/ChIJB6Y3IUye4jAR-sxfTuX24sw
+ LOG  🔍 [PlacesInsights] Fetching hours: https://places.googleapis.com/v1/places/ChIJB6Y3IUye4jAR-sxfTuX24sw
+ LOG  [BraveScraper] Response: {"length": 69360, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331524_1ee0hs9x9 completed
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331763_tod8teysa completed
+ LOG  [TaskManager] Executing task scrape_1764338331763_38eecu4j0 (scrape)
+ LOG    [3/5] Enriching: Saffron Cruise by Banyan Tree Bangkok
+ LOG  [SearchProxy] Using ddg for: "Saffron Cruise by Banyan Tree Bangkok thai_restaurant price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_t3dqng
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_t3dqng
+ LOG  [DDGScraper] Original query: Saffron Cruise by Banyan Tree Bangkok thai_restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Saffron Cruise by Banyan Tree Bangkok thai_restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Saffron+Cruise+by+Banyan+Tree+Bangkok+thai_restaurant+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69360, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331816_q2h21mae3 completed
+ LOG  [TaskManager] Executing task scrape_1764338331816_zz6gbc1wc (scrape)
+ LOG    [3/5] Enriching: Chaophrayacruise
+ LOG  [SearchProxy] Using ddg for: "Chaophrayacruise restaurant price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_jbdpjd
+ LOG  ✅ [PlacesInsights] Got opening hours for places/ChIJaSv_6gaZ4jARnbiUVn6Z_YY
+ LOG  ✅ [CacheService] Cached opening hours: places/ChIJaSv_6gaZ4jARnbiUVn6Z_YY
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_jbdpjd
+ LOG  [DDGScraper] Original query: Chaophrayacruise restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Chaophrayacruise restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Chaophrayacruise+restaurant+price+range+atmosphere+reviews
+ LOG  ✅ [PlacesInsights] Got place details for places/ChIJB6Y3IUye4jAR-sxfTuX24sw
+ LOG  ✅ [PlacesInsights] Got opening hours for places/ChIJB6Y3IUye4jAR-sxfTuX24sw
+ LOG  ✅ [CacheService] Cached place summary: places/ChIJB6Y3IUye4jAR-sxfTuX24sw
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14284, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_o1f031
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14332, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_ajtan9
+ LOG  ✅ [CacheService] Cached opening hours: places/ChIJB6Y3IUye4jAR-sxfTuX24sw
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_ajtan9
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Saffron+Cruise+by+Banyan+Tree+Bangkok+thai_restaurant+price+range+atmosphere+reviews
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_o1f031
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Treehouse+Cafe+%26+Bar+restaurant+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14274, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_v4h6xc
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_v4h6xc
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Chaophrayacruise+restaurant+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69345, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338332123_6oaas7gbr completed
+ LOG  [TaskManager] Executing task scrape_1764338332123_mzuuo3yv6 (scrape)
+ LOG    [3/5] Enriching: Treehouse Cafe & Bar
+ LOG  [SearchProxy] Using ddg for: "Treehouse Cafe & Bar restaurant price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_pl8bty
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_pl8bty
+ LOG  [DDGScraper] Original query: Treehouse Cafe & Bar restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Treehouse Cafe & Bar restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Treehouse+Cafe+%26+Bar+restaurant+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14284, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_o1f031
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_o1f031
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Treehouse+Cafe+%26+Bar+restaurant+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331714_4245yzwam completed
+ LOG  [TaskManager] Executing task scrape_1764338331714_rwd9rqsmj (scrape)
+ LOG    [4/5] Enriching: Rainforest Cafe Bangkok
+ LOG  [SearchProxy] Using ddg for: "Rainforest Cafe Bangkok coffee_shop price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_c7jsx7
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331763_38eecu4j0 completed
+ LOG  [TaskManager] Executing task scrape_1764338331763_sigkfec28 (scrape)
+ LOG    [4/5] Enriching: Chaophrayacruise
+ LOG  [SearchProxy] Using ddg for: "Chaophrayacruise restaurant price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_jbdpjd
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331816_zz6gbc1wc completed
+ LOG  [TaskManager] Executing task scrape_1764338331816_88ipavejg (scrape)
+ LOG    [4/5] Enriching: Pruek Cruise
+ LOG  [SearchProxy] Using ddg for: "Pruek Cruise point_of_interest price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_91f668
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_jbdpjd
+ LOG  [DDGScraper] Original query: Chaophrayacruise restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Chaophrayacruise restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Chaophrayacruise+restaurant+price+range+atmosphere+reviews
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_c7jsx7
+ LOG  [DDGScraper] Original query: Rainforest Cafe Bangkok coffee_shop price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Rainforest Cafe Bangkok coffee_shop price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Rainforest+Cafe+Bangkok+coffee_shop+price+range+atmosphere+reviews
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_91f668
+ LOG  [DDGScraper] Original query: Pruek Cruise point_of_interest price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Pruek Cruise point_of_interest price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Pruek+Cruise+point_of_interest+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14280, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_v4h6xc
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_v4h6xc
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Chaophrayacruise+restaurant+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14284, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_km9982
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_km9982
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Rainforest+Cafe+Bangkok+coffee_shop+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14268, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_ro6g4n
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_ro6g4n
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Pruek+Cruise+point_of_interest+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69345, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331763_sigkfec28 completed
+ LOG  [TaskManager] Executing task scrape_1764338331763_05gdnidui (scrape)
+ LOG    [5/5] Enriching: Pruek Cruise
+ LOG  [SearchProxy] Using ddg for: "Pruek Cruise point_of_interest price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_91f668
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_91f668
+ LOG  [DDGScraper] Original query: Pruek Cruise point_of_interest price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Pruek Cruise point_of_interest price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Pruek+Cruise+point_of_interest+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331714_rwd9rqsmj completed
+ LOG  [TaskManager] Executing task scrape_1764338331714_oum4yl3zm (scrape)
+ LOG    [5/5] Enriching: Hong Sieng Kong
+ LOG  [SearchProxy] Using ddg for: "Hong Sieng Kong cafe price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_tg5u1
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_tg5u1
+ LOG  [DDGScraper] Original query: Hong Sieng Kong cafe price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Hong Sieng Kong cafe price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Hong+Sieng+Kong+cafe+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14274, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_ro6g4n
+ LOG  💾 [CacheService] Setting cache: crowd_intel_44f3cz
+ LOG  ✅ [CacheService] Cached: crowd_intel_44f3cz
+ LOG  ✅ [CrowdIntel] Result: moderate (confidence: 0.80)
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_ro6g4n
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Pruek+Cruise+point_of_interest+price+range+atmosphere+reviews
+ LOG  💾 [CacheService] Setting cache: crowd_intel_6lfwhn
+ LOG  ✅ [CacheService] Cached: crowd_intel_6lfwhn
+ LOG  ✅ [CrowdIntel] Result: moderate (confidence: 0.80)
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14260, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_bhisuo
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_bhisuo
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Hong+Sieng+Kong+cafe+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338332123_mzuuo3yv6 completed
+ LOG  [TaskManager] Executing task scrape_1764338332123_xe63bkwsg (scrape)
+ LOG    [4/5] Enriching: Rainforest Cafe Bangkok
+ LOG  [SearchProxy] Using ddg for: "Rainforest Cafe Bangkok coffee_shop price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_c7jsx7
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331816_88ipavejg completed
+ LOG  [TaskManager] Executing task scrape_1764338331816_slxtv4vcu (scrape)
+ LOG    [5/5] Enriching: Wonderful Pearl Cruise
+ LOG  [SearchProxy] Using ddg for: "Wonderful Pearl Cruise buffet_restaurant price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_pt56go
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_c7jsx7
+ LOG  [DDGScraper] Original query: Rainforest Cafe Bangkok coffee_shop price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Rainforest Cafe Bangkok coffee_shop price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Rainforest+Cafe+Bangkok+coffee_shop+price+range+atmosphere+reviews
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_pt56go
+ LOG  [DDGScraper] Original query: Wonderful Pearl Cruise buffet_restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Wonderful Pearl Cruise buffet_restaurant price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Wonderful+Pearl+Cruise+buffet_restaurant+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14288, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_e3fyi7
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_e3fyi7
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Wonderful+Pearl+Cruise+buffet_restaurant+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14290, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_km9982
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_km9982
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Rainforest+Cafe+Bangkok+coffee_shop+price+range+atmosphere+reviews
+ LOG  [BraveScraper] Response: {"length": 69362, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331763_05gdnidui completed
+ LOG  🔍 [PlacesInsights] Fetching hours: https://places.googleapis.com/v1/places/ChIJDW6sQpOY4jARb3IP4RHvang
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331714_oum4yl3zm completed
+ LOG  ✅ [PlacesInsights] Got opening hours for places/ChIJDW6sQpOY4jARb3IP4RHvang
+ LOG  ✅ [CacheService] Cached opening hours: places/ChIJDW6sQpOY4jARb3IP4RHvang
+ LOG  [BraveScraper] Response: {"length": 69345, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338331816_slxtv4vcu completed
+ LOG  [BraveScraper] Response: {"length": 69330, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338332123_xe63bkwsg completed
+ LOG  [TaskManager] Executing task scrape_1764338332123_y3dsaczs2 (scrape)
+ LOG    [5/5] Enriching: Hong Sieng Kong
+ LOG  [SearchProxy] Using ddg for: "Hong Sieng Kong cafe price range atmosphere reviews"
+ LOG  💾 [CacheService] Getting from cache: ddg_search_tg5u1
+ LOG  ⚠️ [CacheService] Cache miss: ddg_search_tg5u1
+ LOG  [DDGScraper] Original query: Hong Sieng Kong cafe price range atmosphere reviews
+ LOG  [DDGScraper] Sanitized query: Hong Sieng Kong cafe price range atmosphere reviews
+ LOG  [DDGScraper] Fetching: https://html.duckduckgo.com/html/?q=Hong+Sieng+Kong+cafe+price+range+atmosphere+reviews
+ LOG  [DDGScraper] Response: {"hasCaptcha": true, "length": 14254, "status": 202}
+ WARN  [DDGScraper] CAPTCHA detected
+ WARN  [SearchProxy] DDG returned suspicious results (0), trying Brave...
+ LOG  💾 [CacheService] Getting from cache: brave_search_bhisuo
+ LOG  ⚠️ [CacheService] Cache miss: brave_search_bhisuo
+ LOG  [BraveScraper] Fetching: https://search.brave.com/search?q=Hong+Sieng+Kong+cafe+price+range+atmosphere+reviews
+ LOG  💾 [CacheService] Setting cache: crowd_intel_26fn3k
+ LOG  ✅ [CacheService] Cached: crowd_intel_26fn3k
+ LOG  ✅ [CrowdIntel] Result: moderate (confidence: 0.80)
+ LOG  [BraveScraper] Response: {"length": 69345, "status": 429}
+ LOG  [BraveScraper] Parsed results: 1
+ LOG  [TaskManager] Task scrape_1764338332123_y3dsaczs2 completed
+ LOG  🔍 [PlacesInsights] Fetching details: https://places.googleapis.com/v1/places/ChIJX0xMhkyZ4jARB4YkTjznrbw
+ LOG  🔍 [PlacesInsights] Fetching hours: https://places.googleapis.com/v1/places/ChIJX0xMhkyZ4jARB4YkTjznrbw
+ LOG  ✅ [PlacesInsights] Got opening hours for places/ChIJX0xMhkyZ4jARB4YkTjznrbw
+ LOG  ✅ [PlacesInsights] Got place details for places/ChIJX0xMhkyZ4jARB4YkTjznrbw
+ LOG  ✅ [CacheService] Cached place summary: places/ChIJX0xMhkyZ4jARB4YkTjznrbw
+ LOG  ✅ [CacheService] Cached opening hours: places/ChIJX0xMhkyZ4jARB4YkTjznrbw
+ LOG  💾 [CacheService] Setting cache: crowd_intel_n1kizx
+ LOG  ✅ [CacheService] Cached: crowd_intel_n1kizx
+ LOG  ✅ [CrowdIntel] Result: busy (confidence: 0.80)
+ LOG  📊 [Ranking] Hidden Rooftop Café in Le Marais:
+ LOG     Sentiment: 25/25
+ LOG     Crowd: 18/20
+ LOG     Hours: 0/15
+ LOG     Rating: 10/20
+ LOG     LLM: 16/20
+ LOG     = TOTAL: 69/100
+ LOG  📊 [Ranking] Eiffel Tower at Dawn:
+ LOG     Sentiment: 25/25
+ LOG     Crowd: 16/20
+ LOG     Hours: 0/15
+ LOG     Rating: 10/20
+ LOG     LLM: 16/20
+ LOG     = TOTAL: 67/100
+ LOG  📊 [Ranking] Private Seine River Dinner Cruise:
+ LOG     Sentiment: 25/25
+ LOG     Crowd: 16/20
+ LOG     Hours: 0/15
+ LOG     Rating: 10/20
+ LOG     LLM: 16/20
+ LOG     = TOTAL: 67/100
+ LOG  📊 [Ranking] Free Walking Tour of Montmartre:
+ LOG     Sentiment: 25/25
+ LOG     Crowd: 16/20
+ LOG     Hours: 0/15
+ LOG     Rating: 10/20
+ LOG     LLM: 16/20
+ LOG     = TOTAL: 67/100
+ LOG  ✅ [Ranking] Ranked 4 places
+ LOG  🏆 [Ranking] Top place: Hidden Rooftop Café in Le Marais (69/100)
+ LOG  ✅ [TravelService] Ranked 4 highlights for Bangkok
+ WARN  ⚠️ [TravelService] No highlights with coordinates for Bangkok, trying geocoding...
+ LOG  🌍 [TravelService] Geocoding: Bangkok
+ LOG  ✅ [TravelService] Geocoded to: (13.7563309, 100.5017651)
+ LOG  ✅ [TravelService] Geocoded destination: Bangkok (13.7563309, 100.5017651)
+ LOG  ✅ [TravelService] Recommendations complete
+ LOG  💾 [CacheService] Setting cache: travel_recommendations_buslqh
+ LOG  ✅ [CacheService] Cached: travel_recommendations_buslqh
+ LOG  [AdaptUI] Fetched places: {"count": 1}
+ LOG  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ LOG  DATA ENRICHMENT: Adding Real-Time Data
+ LOG  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 3, "currentTask": "Enriching data...", "results": 1, "status": "searching", "totalSteps": 10}
+ LOG  📊 [DataEnrichment] Enriching 1 places
+ LOG  ✅ [DataEnrichment] Complete
+ LOG  📊 [SearchProgressIndicator] Progress update: {"currentStep": 10, "currentTask": "Search complete", "results": 1, "status": "complete", "totalSteps": 10}
+ LOG  🔍 [AdaptUI] Checking coordinates for 1 places
+ LOG     Place 1: Bangkok
+ LOG        Has coordinates: true
+ LOG        Highlights: 4
+ LOG        Highlights with coords: 0/4
+ LOG  ✅ [AdaptUI] Bangkok already has coordinates
+ LOG  📊 [AdaptUI] Valid places with coordinates: 1/1
+ LOG  ✅ [AdaptUI] Center location: (13.7563, 100.5018)
+ LOG  [SearchContext] 🗑️ Cleared 0 plugin caches
+ LOG  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ LOG  📦 [SearchContext] Context Stored
+ LOG  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ LOG  Query: fun bars in Bangkok
+ LOG  Destination: Bangkok
+ LOG  Results: 1 places
+ LOG  Center Location: {"lat": 13.7563309, "lng": 100.5017651}
+ LOG  User Location: 12.954203, 77.6564031
+ LOG  Intent: search
+ LOG  Categories: dining, entertainment
+ LOG  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ LOG  [AdaptUI] ✅ Enrichment complete - Context stored, old caches cleared
+ LOG  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ LOG  PHASE 2: UI Generation (HYBRID mode)
+ LOG  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ LOG  🔧 [AdaptUI] Passing capabilities to UI service: {"capabilities": {"camera": false, "food": false, "internet": false, "location": true, "maps": true, "neighborhood": true, "notifications": true, "photos": true, "transport": true}, "permissions": {"background": false, "canGetLocation": true, "foreground": true}, "userLocation": {"accuracy": 100, "altitude": 813.5, "heading": 0, "latitude": 12.954203, "longitude": 77.6564031, "speed": 0}}
+ LOG  🎨 [UIGeneration] Mode: hybrid
+ LOG  🔀 [UIGeneration] Generating hybrid UI
+ LOG  🎨 [UIGenerator] Generating hybrid structure from prompt...
+ LOG  🔧 [OpenAICore] Using chat completions JSON mode for HYBRID structure...
+ LOG  [getTabs] Plugin tabs available: 2
+ LOG  [getTabs] Plugin tab check: {"id": "neighborhood", "isEnabled": true, "label": "Area", "willAdd": true}
+ LOG  [getTabs] Plugin tab check: {"id": "transport", "isEnabled": true, "label": "Transport", "willAdd": true}
+ LOG  🎯 [SearchProgressIndicator] Render - progress: {"currentStep": 10, "currentTask": "Search complete", "results": 1, "status": "complete", "totalSteps": 10}
+ LOG  📝 [OpenAICore] Hybrid JSON preview: {"layout":"vertical","sections":[{"id":"filters","component":"filter-chips","itemComponent":null,"itemCount":null,"children":null,"options":["budget","mid-range","luxury"]},{"id":"results","component":"list-travel","itemComponent":"card-travel","itemCount":1,"children":null,"options":null}]}
+ LOG  ✅ [UIGenerator] Hybrid structure validated
+ LOG  🔧 [UIGeneration] Hydrating structure: {
+  "layout": "vertical",
+  "sections": [
+    {
+      "id": "filters",
+      "component": "filter-chips",
+      "itemComponent": null,
+      "itemCount": null,
+      "children": null,
+      "options": [
+        "budget",
+        "mid-range",
+        "luxury"
+      ]
+    },
+    {
+      "id": "results",
+      "component": "list-travel",
+      "itemComponent": "card-travel",
+      "itemCount": 1,
+      "children": null,
+      "options": null
+    }
+  ]
+}
+ LOG  📊 [UIGeneration] Data items: 1
+ LOG  🌳 [UIGeneration] Found 2 root sections: ["filters", "results"]
+ LOG  🔧 [UIGeneration] Hydrating section: filters, component: filter-chips
+ LOG  ✅ [UIGeneration] Hydrated component: filter-chips
+ LOG  ✅ [UIGeneration] Added 3 options to filters
+ LOG  🔧 [UIGeneration] Hydrating section: results, component: list-travel
+ LOG  ✅ [UIGeneration] Hydrated component: list-travel
+ LOG  🔍 [UIGeneration] itemComponent: card-travel, isDestinationCard: true
+ LOG  📋 [UIGeneration] List with 1 destination cards
+ LOG  ✅ [UIGeneration] Added item template: card-travel
+ LOG  ✅ [UIGeneration] Hydrated 2 root components
+ LOG  📦 [UIGeneration] Final schema: {
+  "id": "hybrid-1764338338745",
+  "componentCount": 2,
+  "components": [
+    {
+      "id": "filters",
+      "type": "chip-group",
+      "childrenCount": 0
+    },
+    {
+      "id": "results",
+      "type": "list",
+      "childrenCount": 1
+    }
+  ]
+}
+ LOG  [AdaptUI] UI schema generated with orbital theme: {"accentColor": "#FF5252", "bgColor": "#FF6B6B", "borderWidth": 3}
+ LOG  ============================================================
+ LOG  [AdaptUI] COMPLETE - Ready to render
+ LOG  ============================================================
+ LOG  [getTabs] Plugin tabs available: 2
+ LOG  [getTabs] Plugin tab check: {"id": "neighborhood", "isEnabled": true, "label": "Area", "willAdd": true}
+ LOG  [getTabs] Plugin tab check: {"id": "transport", "isEnabled": true, "label": "Transport", "willAdd": true}
+ LOG  🎯 [SearchProgressIndicator] Component unmounting

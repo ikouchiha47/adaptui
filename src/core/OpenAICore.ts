@@ -4,13 +4,17 @@ import { zodTextFormat } from "openai/helpers/zod";
 import { HybridUIStructureSchema } from '../types/hybrid-ui.zod';
 import { LLMProvider } from './LLMProvider';
 
+function isGp4t(modelName: string) {
+  return !modelName.startsWith("gpt-5")
+}
+
 export class OpenAICore implements LLMProvider {
   private apiKey: string;
   private model: string;
   private baseUrl = 'https://api.openai.com/v1';
   private client?: OpenAI;
 
-  constructor(apiKey: string, model: string = 'gpt-4-turbo') {
+  constructor(apiKey: string, model: string) {
     this.apiKey = apiKey;
     this.model = model;
     // Initialize official OpenAI SDK client (reserved for future use)
@@ -24,7 +28,7 @@ export class OpenAICore implements LLMProvider {
   /**
    * Generate content with JSON mode
    */
-  async generateContent(prompt: string, jsonSchema?: any): Promise<string> {
+  async generateContent(prompt: string, jsonSchema?: any, reasoningEffort: 'minimal' | 'low' | 'medium' | 'high' = 'low'): Promise<string> {
     try {
       console.log(`🤖 [OpenAICore] Calling ${this.model}...`);
       const startTime = Date.now();
@@ -37,7 +41,8 @@ export class OpenAICore implements LLMProvider {
       console.log(`✅ [OpenAICore] Response received (${duration}ms)`);
       return await this.generateStructuredResponse(
         prompt,
-        jsonSchema ? zodTextFormat(jsonSchema, "output_schema") : null);
+        jsonSchema ? zodTextFormat(jsonSchema, "output_schema") : null,
+        reasoningEffort);
 
       // return data.choices[0].message.content;
     } catch (error) {
@@ -88,12 +93,12 @@ export class OpenAICore implements LLMProvider {
       // }
 
       const response = await this.client?.responses.parse({
-        model: "gpt-4.1",
+        model: this.model,
+        reasoning: { effort: 'low' },
         input: [
           { role: 'system', content: "You are an expert UX and creative UI designs. Convert the information into UI using the provided base components." },
           { role: 'user', content: prompt }
         ],
-        temperature: 0.1,
         text: {
           format: zodTextFormat(HybridUIStructureSchema, "ui")
         },
@@ -116,7 +121,7 @@ export class OpenAICore implements LLMProvider {
    * Generate structured response using Responses API (GPT-5)
    * Uses a manual JSON Schema object that we know the API accepts.
    */
-  private async generateStructuredResponse(prompt: string, jsonSchema?: any): Promise<string> {
+  private async generateStructuredResponse(prompt: string, jsonSchema?: any, reasoningEffort: 'minimal' | 'low' | 'medium' | 'high' = 'low'): Promise<string> {
     const timeout = 90000; // 90 second timeout for complex schemas
     
     try {
@@ -133,17 +138,17 @@ export class OpenAICore implements LLMProvider {
 
       const response = await this.client?.responses.parse({
         model: this.model,
-          reasoning: { effort: 'low' },
-          input: [
-            {
-              role: 'user',
-              content: prompt
-            }
-          ],
-          text: {
-            format: jsonSchema ? jsonSchema : { type: 'json_object' }
-          },
-      }, {signal: controller.signal})
+        reasoning: { effort: reasoningEffort },
+        input: [
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        text: {
+          format: jsonSchema ? jsonSchema : { type: 'json_object' }
+        },
+      }, {signal: controller.signal});
 
       // const response = await fetch(`${this.baseUrl}/responses`, {
       //   method: 'POST',
@@ -235,14 +240,43 @@ export class OpenAICore implements LLMProvider {
   }
 
   /**
-   * Generate JSON content
+   * Generate JSON response with specific temperature
    */
-  async generateJSON<T>(prompt: string): Promise<T> {
+  async generateJSON(prompt: string, temperature: number = 0.3): Promise<string> {
     try {
-      const content = await this.generateContent(prompt, true);
-      return JSON.parse(content);
+      console.log(`🤖 [OpenAICore] Generating JSON with temperature ${temperature}...`);
+      
+      const _modelName = 'gpt-4.1-mini' //this.model
+      const response = await this.client?.chat.completions.create({
+        model: _modelName,
+        messages: [{ role: 'user', content: prompt }],
+        temperature: isGp4t(_modelName) ? temperature : 1,
+        response_format: { type: 'json_object' },
+      });
+
+      return response?.choices[0]?.message?.content || '{}';
     } catch (error) {
-      console.error('❌ [OpenAICore] JSON parsing error:', error);
+      console.error('❌ [OpenAICore] JSON generation error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Generate plain text response (no JSON)
+   */
+  async generateText(prompt: string): Promise<string> {
+    try {
+      const response = await this.client?.responses.create({
+        model: this.model,
+        input: [{ role: 'user', content: prompt }],
+        temperature: isGp4t(this.model) ? 1 : 0.7,
+        reasoning: { effort: 'medium' },
+      });
+
+      return response!.output_text || '';
+
+    } catch (error) {
+      console.error('❌ [OpenAICore] Text generation error:', error);
       throw error;
     }
   }

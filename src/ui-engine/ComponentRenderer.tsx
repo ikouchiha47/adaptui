@@ -32,7 +32,7 @@ export function ComponentRenderer({ schema, onAction }: ComponentRendererProps) 
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: schema.theme.colors.background }]}>
+    <View style={[styles.container]}>
       {schema.components.map((component) => (
         <RenderComponent
           key={component.id}
@@ -141,16 +141,35 @@ function RenderComponent({ component, theme, onAction, data }: RenderComponentPr
       const isDestinationCard = props.highlights && Array.isArray(props.highlights);
       
       if (isDestinationCard) {
+        // Use theme properties directly - no hardcoding!
+        const cardStyle = {
+          backgroundColor: (theme as any).cardBg || theme.colors.surface,
+          borderColor: (theme as any).borderWidth > 2 ? theme.colors.text : `${theme.colors.primary}50`,
+          borderWidth: (theme as any).borderWidth || 2,
+          borderRadius: (theme as any).borderRadius || theme.borderRadius.md,
+          shadowColor: (theme as any).shadowColor || '#000000',
+          shadowOffset: (theme as any).shadowOffset || { width: 0, height: 4 },
+          shadowOpacity: (theme as any).shadowOpacity !== undefined ? (theme as any).shadowOpacity : 0.3,
+          shadowRadius: (theme as any).shadowRadius !== undefined ? (theme as any).shadowRadius : 8,
+          elevation: (theme as any).shadowRadius !== undefined ? (theme as any).shadowRadius : 8,
+        };
+        
         // Render full destination card (like static UI)
         return (
-          <View style={[styles.destinationCard, combinedStyle]}>
+          <View style={[styles.destinationCard, cardStyle, combinedStyle]}>
             {/* Photo grid with variant layouts */}
-            {props.photoUrls && props.photoUrls.length > 0 && (
-              <PhotoGridVariant 
-                photos={props.photoUrls} 
-                variant={props.photoGridVariant || 'horizontal'}
-              />
-            )}
+            {props.photoUrls && props.photoUrls.length > 0 && (() => {
+              const variant = props.photoGridVariant || 'horizontal';
+              if (!props.photoGridVariant) {
+                console.warn(`⚠️ [PhotoGrid] No variant specified for "${props.destination || props.name}", defaulting to horizontal`);
+              }
+              return (
+                <PhotoGridVariant 
+                  photos={props.photoUrls} 
+                  variant={variant}
+                />
+              );
+            })()}
             
             {/* Destination header */}
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 8 }}>
@@ -181,13 +200,53 @@ function RenderComponent({ component, theme, onAction, data }: RenderComponentPr
             {/* Highlights list */}
             <View style={styles.highlightsContainer}>
               {props.highlights.map((highlight: any, idx: number) => {
-                const badgeColor = highlight.type === 'luxury' ? '#8B5CF6' :
-                                  highlight.type === 'budget' ? '#10B981' :
-                                  highlight.type === 'touristy' ? '#F59E0B' :
-                                  highlight.type === 'hidden-gem' ? '#EC4899' : '#6366F1';
+                const themeAny = theme as any;
+                const badges = themeAny.badges || {
+                  luxury: '#8B5CF6',
+                  budget: '#10B981',
+                  midrange: '#3B82F6',
+                  touristy: '#F59E0B',
+                  offbeat: '#EC4899',
+                  default: '#6366F1',
+                };
+                
+                const badgeColor = highlight.type === 'luxury' ? badges.luxury :
+                                  highlight.type === 'budget' ? badges.budget :
+                                  highlight.type === 'mid-range' ? badges.midrange :
+                                  highlight.type === 'touristy' ? badges.touristy :
+                                  highlight.type === 'offbeat' ? badges.offbeat :
+                                  highlight.type === 'hidden-gem' ? badges.offbeat : badges.default;
+                
+                // Extract theme badge styling - NO FALLBACKS, use magenta to show missing theme values
+                const MISSING_THEME_COLOR = '#FF00FF'; // Bright magenta to highlight missing theme values
+                const themeAnyRef = theme as any;
+                const badgeBorderWidth = themeAnyRef.badgeBorderWidth ?? themeAnyRef.borderWidth ?? 1;
+                const badgeBorderColor = themeAnyRef.badgeStyle?.borderColor ?? MISSING_THEME_COLOR;
+                const badgeBorderRadius = themeAnyRef.borderRadius ?? 6;
+                const badgeTextColor = themeAnyRef.badgeStyle?.textColor ?? MISSING_THEME_COLOR;
+                const priceIconColor = themeAnyRef.badgeStyle?.priceIconColor ?? MISSING_THEME_COLOR;
+                const ratingIconColor = themeAnyRef.badgeStyle?.ratingIconColor ?? MISSING_THEME_COLOR;
+                const openIconColor = themeAnyRef.badgeStyle?.openIconColor ?? MISSING_THEME_COLOR;
+                const successBgColor = (themeAnyRef.semantic?.success ?? MISSING_THEME_COLOR) + '20';
+                const errorBgColor = (themeAnyRef.semantic?.error ?? MISSING_THEME_COLOR) + '20';
+                
+                // Use theme properties for highlight cards
+                const highlightStyle = {
+                  backgroundColor: themeAny.cardBg || theme.colors.surface,
+                  borderColor: themeAny.borderWidth > 2 ? theme.colors.text : theme.colors.border,
+                  borderWidth: themeAny.borderWidth || 1,
+                  borderLeftWidth: themeAny.borderWidth ? themeAny.borderWidth * 2 : 3,
+                  borderLeftColor: theme.colors.primary,
+                  borderRadius: themeAny.borderRadius || theme.borderRadius.md,
+                  shadowColor: themeAny.shadowColor || '#000000',
+                  shadowOffset: themeAny.shadowOffset ? { width: themeAny.shadowOffset.x / 2, height: themeAny.shadowOffset.y / 2 } : { width: 0, height: 2 },
+                  shadowOpacity: themeAny.shadowOpacity !== undefined ? themeAny.shadowOpacity : 0.2,
+                  shadowRadius: themeAny.shadowRadius !== undefined ? themeAny.shadowRadius : 4,
+                  elevation: themeAny.shadowRadius !== undefined ? themeAny.shadowRadius : 4,
+                };
                 
                 return (
-                  <View key={idx} style={[styles.highlightCard, { backgroundColor: '#0F172A', borderColor: '#334155' }]}>
+                  <View key={idx} style={[styles.highlightCard, highlightStyle]}>
                     {/* Title */}
                     <Text style={[styles.highlightName, { color: theme.colors.text }]}>
                       {highlight.name}
@@ -200,40 +259,140 @@ function RenderComponent({ component, theme, onAction, data }: RenderComponentPr
                     
                     {/* Badges row: Type, Cost, Rating, Hours */}
                     <View style={styles.highlightBadgesRow}>
-                      {/* Type badge */}
-                      <View style={[styles.typeBadge, { backgroundColor: badgeColor }]}>
-                        <Text style={styles.typeText}>{highlight.type.toUpperCase()}</Text>
+                      {/* Type badge with neobrutal shadow */}
+                      <View style={{ position: 'relative' }}>
+                        {/* Hard shadow layer (neobrutal effect) */}
+                        {themeAnyRef.useHardShadow && (
+                          <View style={[styles.typeBadge, {
+                            position: 'absolute',
+                            top: 2,
+                            left: 2,
+                            backgroundColor: '#000000',
+                            borderWidth: badgeBorderWidth,
+                            borderColor: badgeBorderColor,
+                            borderRadius: badgeBorderRadius,
+                            zIndex: 0,
+                          }]}>
+                            <Text style={[styles.typeText, { opacity: 0 }]}>{highlight.type.toUpperCase()}</Text>
+                          </View>
+                        )}
+                        {/* Actual badge */}
+                        <View style={[styles.typeBadge, { 
+                          backgroundColor: badgeColor,
+                          borderWidth: badgeBorderWidth,
+                          borderColor: badgeBorderColor,
+                          borderRadius: badgeBorderRadius,
+                          zIndex: 1,
+                          ...(!themeAnyRef.useHardShadow && {
+                            shadowColor: themeAnyRef.shadowColor,
+                            shadowOffset: themeAnyRef.shadowOffset,
+                            shadowOpacity: themeAnyRef.shadowOpacity,
+                            shadowRadius: themeAnyRef.shadowRadius,
+                          }),
+                        }]}>
+                          <Text style={[styles.typeText, { color: badgeTextColor }]}>{highlight.type.toUpperCase()}</Text>
+                        </View>
                       </View>
                       
-                      {/* Cost */}
+                      {/* Cost with neobrutal shadow */}
                       {highlight.estimatedCost && (
-                        <View style={[styles.infoBadge, { backgroundColor: theme.colors.surface }]}>
-                          <Ionicons name="cash-outline" size={12} color="#10B981" />
-                          <Text style={[styles.infoBadgeText, { color: '#10B981' }]}>
-                            {formatPrice(highlight.estimatedCost)}
-                          </Text>
+                        <View style={{ position: 'relative' }}>
+                          {themeAnyRef.useHardShadow && (
+                            <View style={[styles.infoBadge, {
+                              position: 'absolute',
+                              top: 2,
+                              left: 2,
+                              backgroundColor: '#000000',
+                              borderWidth: badgeBorderWidth,
+                              borderColor: badgeBorderColor,
+                              borderRadius: badgeBorderRadius,
+                            }]}>
+                              <Ionicons name="cash-outline" size={12} color="transparent" />
+                              <Text style={[styles.infoBadgeText, { opacity: 0 }]}>
+                                {formatPrice(highlight.estimatedCost)}
+                              </Text>
+                            </View>
+                          )}
+                          <View style={[styles.infoBadge, { 
+                            backgroundColor: theme.colors.surface,
+                            borderWidth: badgeBorderWidth,
+                            borderColor: badgeBorderColor,
+                            borderRadius: badgeBorderRadius,
+                            ...(!themeAnyRef.useHardShadow && {
+                              shadowColor: themeAnyRef.shadowColor,
+                              shadowOffset: themeAnyRef.shadowOffset,
+                              shadowOpacity: themeAnyRef.shadowOpacity,
+                              shadowRadius: themeAnyRef.shadowRadius,
+                              elevation: themeAnyRef.shadowRadius || 1,
+                            }),
+                          }]}>
+                            <Ionicons name="cash-outline" size={12} color={priceIconColor} />
+                            <Text style={[styles.infoBadgeText, { color: badgeTextColor }]}>
+                              {formatPrice(highlight.estimatedCost)}
+                            </Text>
+                          </View>
                         </View>
                       )}
                       
-                      {/* Rating */}
+                      {/* Rating with neobrutal shadow */}
                       {highlight.rating && (
-                        <View style={[styles.infoBadge, { backgroundColor: theme.colors.surface }]}>
-                          <Ionicons name="thumbs-up" size={12} color="#F59E0B" />
-                          <Text style={[styles.infoBadgeText, { color: '#F59E0B' }]}>
-                            {highlight.rating}
-                          </Text>
+                        <View style={{ position: 'relative' }}>
+                          {themeAnyRef.useHardShadow && (
+                            <View style={[styles.infoBadge, {
+                              position: 'absolute',
+                              top: 2,
+                              left: 2,
+                              backgroundColor: '#000000',
+                              borderWidth: badgeBorderWidth,
+                              borderColor: badgeBorderColor,
+                              borderRadius: badgeBorderRadius,
+                            }]}>
+                              <Ionicons name="star" size={12} color="transparent" />
+                              <Text style={[styles.infoBadgeText, { opacity: 0 }]}>
+                                {highlight.rating}
+                              </Text>
+                            </View>
+                          )}
+                          <View style={[styles.infoBadge, { 
+                            backgroundColor: theme.colors.surface,
+                            borderWidth: badgeBorderWidth,
+                            borderColor: badgeBorderColor,
+                            borderRadius: badgeBorderRadius,
+                            ...(!themeAnyRef.useHardShadow && {
+                              shadowColor: themeAnyRef.shadowColor,
+                              shadowOffset: themeAnyRef.shadowOffset,
+                              shadowOpacity: themeAnyRef.shadowOpacity,
+                              shadowRadius: themeAnyRef.shadowRadius,
+                              elevation: themeAnyRef.shadowRadius || 1,
+                            }),
+                          }]}>
+                            <Ionicons name="star" size={12} color={ratingIconColor} />
+                            <Text style={[styles.infoBadgeText, { color: badgeTextColor }]}>
+                              {highlight.rating}
+                            </Text>
+                          </View>
                         </View>
                       )}
                       
                       {/* Opening hours */}
                       {highlight.isOpen !== undefined && (
-                        <View style={[styles.infoBadge, { backgroundColor: theme.colors.surface }]}>
+                        <View style={[styles.infoBadge, { 
+                          backgroundColor: highlight.isOpen ? successBgColor : errorBgColor,
+                          borderWidth: badgeBorderWidth,
+                          borderColor: badgeBorderColor,
+                          borderRadius: badgeBorderRadius,
+                          shadowColor: themeAnyRef.shadowColor,
+                          shadowOffset: themeAnyRef.shadowOffset,
+                          shadowOpacity: themeAnyRef.shadowOpacity,
+                          shadowRadius: themeAnyRef.shadowRadius,
+                          elevation: themeAnyRef.shadowRadius || 1,
+                        }]}>
                           <Ionicons 
                             name={highlight.isOpen ? "checkmark-circle" : "close-circle"} 
                             size={12} 
-                            color={highlight.isOpen ? "#10B981" : "#EF4444"} 
+                            color={openIconColor} 
                           />
-                          <Text style={[styles.infoBadgeText, { color: highlight.isOpen ? "#10B981" : "#EF4444" }]}>
+                          <Text style={[styles.infoBadgeText, { color: badgeTextColor }]}>
                             {highlight.isOpen ? "Open" : "Closed"}
                           </Text>
                         </View>
@@ -246,9 +405,39 @@ function RenderComponent({ component, theme, onAction, data }: RenderComponentPr
             
             {/* Local Tip */}
             {props.localTip && (
-              <View style={[styles.localTipBox, { backgroundColor: '#0F172A', borderColor: '#6366F1' }]}>
-                <Text style={[styles.localTipLabel, { color: '#6366F1' }]}>💡 Local Tip</Text>
-                <Text style={[styles.localTipText, { color: '#E2E8F0' }]}>
+              <View style={[
+                styles.localTipBox, 
+                { 
+                  backgroundColor: (theme as any).localTipBg || '#0F172A', 
+                  borderColor: (theme as any).localTipBorder || '#6366F1',
+                  borderWidth: (theme as any).borderWidth || 2,
+                  borderRadius: (theme as any).borderRadius || 12,
+                },
+                // Add neobrutal hard shadow if theme uses it
+                (theme as any).useHardShadow && {
+                  shadowColor: 'transparent',
+                  elevation: 0,
+                  marginBottom: 8,
+                  transform: [{ translateX: -2 }, { translateY: -2 }],
+                }
+              ]}>
+                {/* Hard shadow layer for neobrutal */}
+                {(theme as any).useHardShadow && (
+                  <View style={{
+                    position: 'absolute',
+                    top: 2,
+                    left: 2,
+                    right: -2,
+                    bottom: -2,
+                    backgroundColor: (theme as any).shadowColor || '#000000',
+                    borderWidth: (theme as any).borderWidth || 2,
+                    borderColor: (theme as any).localTipBorder || '#000000',
+                    borderRadius: (theme as any).borderRadius || 0,
+                    zIndex: -1,
+                  }} />
+                )}
+                <Text style={[styles.localTipLabel, { color: (theme as any).localTipLabel || '#6366F1' }]}>💡 Local Tip</Text>
+                <Text style={[styles.localTipText, { color: (theme as any).localTipText || '#E2E8F0' }]}>
                   {props.localTip}
                 </Text>
               </View>
@@ -336,29 +525,66 @@ function RenderComponent({ component, theme, onAction, data }: RenderComponentPr
         console.warn('⚠️ [ComponentRenderer] chip-group missing options');
         return null;
       }
+      
+      // Remove backgroundColor from container - only chips should have bg
+      const { backgroundColor, ...containerStyle } = combinedStyle;
+      
       return (
-        <View style={[styles.chipGroup, styles.chipGroupContainer, combinedStyle]}>
-          {props.options.map((option: any) => (
-            <TouchableOpacity
-              key={option.id}
-              style={[
-                styles.chip,
-                {
-                  backgroundColor: props.variant === 'filled' ? theme.colors.primary : 'transparent',
-                  borderColor: theme.colors.primary,
-                  borderWidth: 1,
-                },
-              ]}
-              onPress={() => handlePress()}
-            >
-              {option.icon && (
-                <Ionicons name={option.icon as any} size={16} color={theme.colors.text} style={{ marginRight: 6 }} />
-              )}
-              <Text style={[styles.chipText, { color: theme.colors.text }]}>
-                {option.label}
-              </Text>
-            </TouchableOpacity>
-          ))}
+        <View style={[styles.chipGroup, styles.chipGroupContainer, containerStyle]}>
+          {props.options.map((option: any, index: number) => {
+            const isSelected = props.selectedValue === option.value || 
+                             (props.selectedValue === undefined && index === 0);
+            
+            return (
+              <TouchableOpacity
+                key={option.id || option.value}
+                style={[
+                  styles.chip,
+                  {
+                    backgroundColor: isSelected 
+                      ? `${theme.colors.primary}40`
+                      : (props.variant === 'filled' ? theme.colors.primary : 'transparent'),
+                    borderColor: isSelected ? theme.colors.primary : `${theme.colors.primary}60`,
+                    borderWidth: isSelected ? 2 : 1,
+                  },
+                ]}
+                onPress={() => {
+                  if (component.interaction?.hapticFeedback) {
+                    const feedbackMap: Record<string, any> = {
+                      light: Haptics.ImpactFeedbackStyle.Light,
+                      medium: Haptics.ImpactFeedbackStyle.Medium,
+                      heavy: Haptics.ImpactFeedbackStyle.Heavy,
+                    };
+                    Haptics.impactAsync(feedbackMap[component.interaction.hapticFeedback] || Haptics.ImpactFeedbackStyle.Medium);
+                  }
+                  onAction(component.interaction?.onPress, option);
+                }}
+              >
+                {option.icon && (
+                  <Ionicons name={option.icon as any} size={16} color={theme.colors.text} style={{ marginRight: 6 }} />
+                )}
+                <Text style={[styles.chipText, { 
+                  color: theme.colors.text,
+                  fontWeight: isSelected ? '600' : '400'
+                }]}>
+                  {option.label}
+                </Text>
+                {option.badge && (
+                  <View style={{
+                    marginLeft: 6,
+                    paddingHorizontal: 6,
+                    paddingVertical: 2,
+                    borderRadius: 8,
+                    backgroundColor: `${theme.colors.primary}30`
+                  }}>
+                    <Text style={{ fontSize: 10, color: theme.colors.text }}>
+                      {option.badge}
+                    </Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            );
+          })}
         </View>
       );
 
@@ -442,10 +668,27 @@ function RenderComponent({ component, theme, onAction, data }: RenderComponentPr
 }
 
 // Photo Grid Variant Component
-function PhotoGridVariant({ photos, variant }: { photos: string[]; variant: 'horizontal' | 'split' | 'masonry' }) {
+function PhotoGridVariant({ 
+  photos, 
+  variant, 
+  styleOverrides 
+}: { 
+  photos: string[]; 
+  variant: 'hero-left' | 'hero-right' | 'equal-row' | 'experimental' | 'horizontal' | 'split' | 'masonry'; 
+  styleOverrides?: { gap?: number; borderRadius?: number; aspectRatio?: number };
+}) {
   const hasMore = photos.length > 3;
   
-  if (variant === 'split' && photos.length >= 3) {
+  // Map old names to new names for backwards compatibility
+  const normalizedVariant = variant === 'split' ? 'hero-left' 
+    : variant === 'masonry' ? 'hero-right'
+    : variant === 'horizontal' ? 'equal-row'
+    : variant;
+  
+  // Log variant usage to track if LLM is using different layouts
+  console.log(`📸 [PhotoGrid] Rendering variant: ${normalizedVariant} (${photos.length} photos)${styleOverrides ? ' with custom styles' : ''}`);
+  
+  if ((normalizedVariant === 'hero-left' || normalizedVariant === 'experimental') && photos.length >= 3) {
     // Split layout: 1 large left, 2 stacked right
     return (
       <View style={styles.photoGridSplit}>
@@ -482,8 +725,8 @@ function PhotoGridVariant({ photos, variant }: { photos: string[]; variant: 'hor
     );
   }
   
-  if (variant === 'masonry' && photos.length >= 3) {
-    // Masonry layout: 2 left stacked, 1 large right
+  if (normalizedVariant === 'hero-right' && photos.length >= 3) {
+    // Hero-right layout: 2 left stacked, 1 large right
     return (
       <View style={styles.photoGridSplit}>
         {/* Left: Two stacked photos */}
@@ -519,9 +762,14 @@ function PhotoGridVariant({ photos, variant }: { photos: string[]; variant: 'hor
     );
   }
   
-  // Default: Horizontal layout (3 equal photos)
+  // Default: Equal-row layout (3 equal photos)
+  // Apply style overrides if experimental variant
+  const gridStyle = normalizedVariant === 'experimental' && styleOverrides
+    ? [styles.destinationPhotoGrid, { gap: styleOverrides.gap || 8 }]
+    : styles.destinationPhotoGrid;
+    
   return (
-    <View style={styles.destinationPhotoGrid}>
+    <View style={gridStyle}>
       {photos.slice(0, 3).map((url: string, idx: number) => {
         const isLast = idx === 2;
         
@@ -896,13 +1144,13 @@ const styles = StyleSheet.create({
   typeBadge: {
     paddingHorizontal: 12,
     paddingVertical: 6,
-    borderRadius: 6,
+    // borderRadius, shadow, border, and backgroundColor are set inline from theme
   },
   typeText: {
     fontSize: 10,
     fontWeight: '700',
-    color: '#FFF',
     letterSpacing: 0.5,
+    // color is set inline from theme
   },
   infoBadge: {
     flexDirection: 'row',
@@ -910,12 +1158,7 @@ const styles = StyleSheet.create({
     gap: 4,
     paddingHorizontal: 10,
     paddingVertical: 6,
-    borderRadius: 6,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 1,
+    // borderRadius, shadow, and border are set inline from theme
   },
   infoBadgeText: {
     fontSize: 11,
@@ -923,7 +1166,6 @@ const styles = StyleSheet.create({
   },
   localTipBox: {
     padding: 16,
-    borderRadius: 12,
     borderWidth: 2,
   },
   localTipLabel: {

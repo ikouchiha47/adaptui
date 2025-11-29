@@ -11,6 +11,7 @@ interface ThemePickerProps {
 
 export function ThemePicker({ currentTheme, onChangeTheme, theme }: ThemePickerProps) {
   const [visible, setVisible] = useState(false);
+  const isBrutal = theme.borderWidth && theme.borderWidth > 2;
 
   return (
     <View style={styles.themePickerContainer}>
@@ -21,7 +22,18 @@ export function ThemePicker({ currentTheme, onChangeTheme, theme }: ThemePickerP
         }}
         style={[
           styles.themeButton,
-          { backgroundColor: theme.cardBg, borderColor: theme.accent },
+          { 
+            backgroundColor: theme.cardBg, 
+            borderColor: isBrutal ? '#000000' : theme.accent,
+            borderWidth: theme.borderWidth || 1,
+            borderRadius: isBrutal ? 0 : 12,
+            shadowColor: isBrutal ? '#000000' : '#000',
+            shadowOffset: theme.shadowOffset 
+              ? { width: theme.shadowOffset.x, height: theme.shadowOffset.y }
+              : { width: 0, height: 2 },
+            shadowOpacity: isBrutal ? 1 : 0.3,
+            shadowRadius: isBrutal ? 0 : 4,
+          },
         ]}
       >
         <Text style={[styles.themeButtonText, { color: theme.text }]}>
@@ -30,7 +42,15 @@ export function ThemePicker({ currentTheme, onChangeTheme, theme }: ThemePickerP
       </TouchableOpacity>
 
       {visible && (
-        <View style={[styles.themeDropdown, { backgroundColor: theme.cardBg }]}>
+        <View style={[
+          styles.themeDropdown, 
+          { 
+            backgroundColor: theme.cardBg,
+            borderWidth: isBrutal ? 3 : 0,
+            borderColor: isBrutal ? '#000000' : 'transparent',
+            borderRadius: isBrutal ? 0 : 12,
+          }
+        ]}>
           {(Object.entries(THEMES) as [ThemeKey, typeof THEMES[ThemeKey]][]).map(([key, t]) => (
             <TouchableOpacity
               key={key}
@@ -39,10 +59,16 @@ export function ThemePicker({ currentTheme, onChangeTheme, theme }: ThemePickerP
                 onChangeTheme(key);
                 setVisible(false);
               }}
-              style={styles.themeOption}
+              style={[
+                styles.themeOption,
+                key !== currentTheme && isBrutal && {
+                  borderBottomWidth: 2,
+                  borderBottomColor: '#00000020',
+                }
+              ]}
             >
               <Text style={[styles.themeOptionText, { color: theme.text }]}>
-                {t.name}
+                {t.name} {key === currentTheme ? '✓' : ''}
               </Text>
             </TouchableOpacity>
           ))}

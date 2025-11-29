@@ -10,4 +10,14 @@ export interface LLMProvider {
    * Generate minimal hybrid UI structure
    */
   generateHybridStructure(prompt: string): Promise<string>;
+  
+  /**
+   * Generate JSON response with specific temperature
+   */
+  generateJSON(prompt: string, temperature?: number): Promise<string>;
+  
+  /**
+   * Generate plain text response (no JSON)
+   */
+  generateText(prompt: string): Promise<string>;
 }

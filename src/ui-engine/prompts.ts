@@ -18,6 +18,53 @@ function getCategories(analysis: any): string[] {
 }
 
 /**
+ * Extract data characteristics dynamically (not hardcoded)
+ */
+function extractDataCharacteristics(data: EnrichedPlace[]): string {
+  if (data.length === 0) return 'No data available';
+  
+  // Analyze actual data structure
+  const characteristics: string[] = [];
+  
+  // Check what fields exist in the data
+  const sample = data[0];
+  
+  // Price levels (if exists)
+  const priceLevels = new Set(data.map((d: any) => d.priceLevel).filter(Boolean));
+  if (priceLevels.size > 0) {
+    characteristics.push(`Price levels: ${Array.from(priceLevels).sort().map(p => '$'.repeat(p as number)).join(', ')}`);
+  }
+  
+  // Ratings (if exists)
+  const ratings = data.map((d: any) => d.rating).filter(Boolean);
+  if (ratings.length > 0) {
+    const min = Math.min(...ratings);
+    const max = Math.max(...ratings);
+    characteristics.push(`Ratings: ${min.toFixed(1)} - ${max.toFixed(1)}`);
+  }
+  
+  // Types/categories (if exists)
+  const types = new Set(data.flatMap((d: any) => d.types || d.type || []).filter(Boolean));
+  if (types.size > 0) {
+    characteristics.push(`Types: ${Array.from(types).slice(0, 5).join(', ')}`);
+  }
+  
+  // Enrichment vibes (if exists)
+  const vibes = new Set(data.flatMap((d: any) => d.enrichment?.vibe || []).filter(Boolean));
+  if (vibes.size > 0) {
+    characteristics.push(`Vibes: ${Array.from(vibes).join(', ')}`);
+  }
+  
+  // Crowd levels (if exists)
+  const crowdLevels = new Set(data.map((d: any) => d.enrichment?.popularity?.crowdLevel).filter(Boolean));
+  if (crowdLevels.size > 0) {
+    characteristics.push(`Crowd levels: ${Array.from(crowdLevels).join(', ')}`);
+  }
+  
+  return characteristics.join('\n- ');
+}
+
+/**
  * Build dynamic UI generation prompt
  */
 export function buildDynamicUIPrompt(
@@ -27,6 +74,7 @@ export function buildDynamicUIPrompt(
   capabilities: any
 ): string {
   const emotionGuidance = getEmotionDesignGuidance(analysis.sentiment.emotion);
+  const dataCharacteristics = extractDataCharacteristics(data);
   
   return `You are AdaptUI. Generate a complete UI schema with intelligent layout decisions.
 
@@ -40,10 +88,56 @@ Categories: ${getCategories(analysis).join(', ')}
 Emotion: ${analysis.sentiment.emotion} (${analysis.sentiment.intensity})
 Vibe: ${analysis.sentiment.vibe.join(', ')}
 Suggested Time: ${analysis.temporal.suggestedTimeOfDay}
-Data: ${data.length} enriched places
+Data: ${data.length} items
 
 Capabilities:
 ${Object.entries(capabilities.capabilities).map(([k, v]) => `- ${k}: ${v ? 'YES' : 'NO'}`).join('\n')}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DATA CHARACTERISTICS (Extracted from actual data)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+- ${dataCharacteristics}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FILTER GENERATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Query Emotion: ${analysis.sentiment.emotion}
+Query Vibes: ${analysis.sentiment.vibe.join(', ')}
+
+TASK: Generate 5-7 filter chips based on:
+1. Query emotion (${analysis.sentiment.emotion}) - prioritize relevant filters
+2. Data characteristics above - only show filters that apply to actual data
+3. User intent - help user refine results
+
+FILTER SELECTION LOGIC:
+- Look at "Vibes" in data characteristics
+- Look at "Price levels" in data characteristics
+- Look at "Crowd levels" in data characteristics
+- Match with query emotion and vibes
+- Choose icons that match:
+  * romantic → heart, candle, rose
+  * fun → party, music, cocktail
+  * peaceful → leaf, spa, meditation
+  * luxury/upscale → diamond, crown, star
+  * budget/affordable → cash, wallet, piggy-bank
+  * hidden-gem → compass, map, treasure
+  * popular/local-favorite → star, heart, thumbs-up
+  * quiet → volume-off, moon, zen
+  * busy → people, fire, trending
+
+Example filter chips:
+{
+  "type": "chip-group",
+  "props": {
+    "options": [
+      { "id": "romantic", "label": "Romantic", "icon": "heart", "selected": true },
+      { "id": "intimate", "label": "Intimate", "icon": "candle" },
+      { "id": "upscale", "label": "Upscale", "icon": "diamond" }
+    ]
+  }
+}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TASK
@@ -60,20 +154,25 @@ Generate a UI schema that:
    - Emotion: ${analysis.sentiment.emotion}
    - ${emotionGuidance}
 
-3. TIME BADGES:
+3. FILTER CHIPS (REQUIRED):
+   - Generate filter chips based on data characteristics above
+   - Include query emotion as selected filter
+   - Limit to 5-7 most relevant filters
+   - Use appropriate icons
+
+4. TIME BADGES:
    - Show suggested time: ${analysis.temporal.suggestedTimeOfDay}
    - Reason: ${analysis.temporal.timeReasoning}
    - Include time badges with icons
 
-4. REAL-TIME DATA:
-   - Each place has enrichment.timeRecommendation with badges
+5. REAL-TIME DATA:
+   - Each item has enrichment data
    - Show crowd level, weather, opening status
    - Use badge icons: 🤫 (quiet), 👥 (busy), ☀️ (weather), ✅ (open)
 
-5. COMPONENTS:
+6. COMPONENTS:
    - Header with title and result count
-   - Search input (if search intent)
-   - Filter chips (if applicable)
+   - Filter chips (REQUIRED - based on data characteristics)
    - Main content area with ${data.length} items
    - Each item shows: name, vibe, photo, time badge, real-time badges
 
@@ -90,25 +189,9 @@ export function buildHybridUIPrompt(
   context: DeviceContext,
   capabilities: any
 ): string {
-  // Extract actual data structure to show LLM what's available
+  // Extract data characteristics dynamically (not hardcoded)
+  const dataCharacteristics = extractDataCharacteristics(data);
   const dataSample = data[0] || {};
-  const hasPhotos = data.some((d: any) => d.highlights?.some((h: any) => h.photoUrls?.length > 0));
-  const hasTransport = data.some((d: any) => d.transportTickets?.length > 0);
-  const hasCoordinates = data.some((d: any) => d.highlights?.some((h: any) => h.latitude && h.longitude));
-  
-  // Collect all available photo URLs
-  const allPhotos = data.flatMap((d: any) => 
-    d.highlights?.flatMap((h: any) => h.photoUrls || []) || []
-  ).filter(Boolean);
-  
-  // Collect all transport tickets
-  const allTransport = data.flatMap((d: any) => d.transportTickets || []);
-  
-  // Collect all coordinates
-  const allCoordinates = data.flatMap((d: any) => 
-    d.highlights?.filter((h: any) => h.latitude && h.longitude)
-      .map((h: any) => ({ name: h.name, lat: h.latitude, lng: h.longitude })) || []
-  );
   
   return `You are AdaptUI. Select and arrange pre-built components to create the UI.
 
@@ -131,49 +214,46 @@ Device:
 - Height: ${context.dimensions.height}px
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-AVAILABLE DATA (Your "Tools" - like Crew AI)
+AVAILABLE DATA (${data.length} items)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Data Structure (${data.length} destinations):
+Data Sample (first item):
 ${JSON.stringify(dataSample, null, 2).substring(0, 800)}
 
-PHOTOS DATA:
-- Total photos available: ${allPhotos.length}
-- Sample URLs: ${allPhotos.slice(0, 3).join(', ')}
-- Decision: ${hasPhotos ? '✅ USE photo-grid component' : '❌ DO NOT use photo-grid'}
+Data Characteristics:
+- ${dataCharacteristics}
 
-TRANSPORT DATA:
-- Transport tickets available: ${allTransport.length}
-- Sample: ${JSON.stringify(allTransport[0], null, 2).substring(0, 200)}
-- Decision: ${hasTransport ? '✅ USE transport-tickets component' : '❌ DO NOT use transport-tickets'}
-
-MAP DATA:
-- Locations with coordinates: ${allCoordinates.length}
-- Sample: ${JSON.stringify(allCoordinates.slice(0, 2), null, 2)}
-- Decision: ${hasCoordinates ? '✅ CAN use map component (if available)' : '❌ No coordinates for map'}
-
-ENRICHMENT DATA (Real-time):
-- Time recommendations: ${dataSample.enrichment?.timeRecommendation ? 'YES' : 'NO'}
-- Weather data: ${dataSample.enrichment?.weather ? 'YES' : 'NO'}
-- Crowd levels: ${dataSample.enrichment?.popularity ? 'YES' : 'NO'}
+Full Data:
+${JSON.stringify(data, null, 2)}
 
 Capabilities:
 ${capabilities && capabilities.capabilities ? Object.entries(capabilities.capabilities).map(([k, v]) => `- ${k}: ${v ? 'YES' : 'NO'}`).join('\n') : '- No capabilities detected'}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-TASK: DATA-DRIVEN UI COMPOSITION (Like Crew AI Agent)
+FILTER GENERATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Your job: Analyze the AVAILABLE DATA above and select components that match what's actually there.
+Query Emotion: ${analysis.sentiment.emotion}
+Query Vibes: ${analysis.sentiment.vibe.join(', ')}
 
-DECISION TREE:
-1. IF photos available (${allPhotos.length} photos) -> INCLUDE photo-grid section
-2. IF transport tickets available (${allTransport.length} tickets) -> INCLUDE transport-tickets section
-3. IF coordinates available (${allCoordinates.length} locations) -> CONSIDER map section
-4. IF time recommendations exist -> INCLUDE badge-time
-5. IF crowd data exists -> INCLUDE badge-crowd
-6. IF weather data exists -> INCLUDE badge-weather
-7. ALWAYS include list-travel with appropriate card type for category
+TASK: Generate 5-7 filter chips based on:
+1. Query emotion (${analysis.sentiment.emotion})
+2. Data characteristics above
+3. User intent
+
+Look at the data characteristics and generate filters that match what's actually in the data.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TASK: DATA-DRIVEN UI COMPOSITION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Analyze the data above and generate appropriate UI components.
+
+DECISION LOGIC:
+1. Look at data characteristics - what fields exist?
+2. Generate filters based on actual data (vibes, price levels, etc.)
+3. Include appropriate list/grid components
+4. Use data-driven approach - don't assume structure
 
 REQUIRED OUTPUT STRUCTURE:
 {
@@ -189,11 +269,7 @@ REQUIRED OUTPUT STRUCTURE:
       "component": "list-travel",
       "itemComponent": "card-travel",
       "itemCount": ${data.length}
-    }${hasTransport ? `,
-    {
-      "id": "transport",
-      "component": "transport-tickets"
-    }` : ''}
+    }
   ]
 }
 
@@ -203,6 +279,27 @@ CRITICAL: Always include filter-chips at the top for budget filtering.
 CRITICAL RULES:
 1. DO NOT create badge sections - badges are rendered INSIDE cards automatically
 2. DO NOT create photo-grid section - photos are shown in each card automatically
+3. PHOTO GRID VARIANTS: Each highlight in card-travel MUST have photoGridVariant set:
+   
+   VISUAL LAYOUTS:
+   ┌─────────┬───┐  "hero-left" - Hero photo left, 2 stacked right
+   │    1    │ 2 │  Use for: Romantic, luxury, featured attractions, main highlights
+   │  HERO   ├───┤
+   │         │ 3 │
+   └─────────┴───┘
+   
+   ┌───┬─────────┐  "hero-right" - 2 stacked left, hero photo right  
+   │ 1 │         │  Use for: Temples, nature, cultural sites, variety
+   ├───┤    3    │
+   │ 2 │  HERO   │
+   └───┴─────────┘
+   
+   ┌───┬───┬───┐  "equal-row" - 3 equal (BORING, avoid)
+   │ 1 │ 2 │ 3 │  Use for: Generic listings only
+   └───┴───┴───┘
+   
+   CRITICAL: MIX variants across highlights for visual interest!
+   Example: First = "hero-left", Second = "hero-right", Third = "hero-left"
 3. DO NOT use stack-vertical or stack-horizontal as wrappers
 4. ONLY use these exact component names: list-travel, transport-tickets, filter-chips
 5. Each card in the list will automatically show:
@@ -215,13 +312,25 @@ CRITICAL RULES:
 CRITICAL RULES:
 1. ONLY include components if the data supports them (check AVAILABLE DATA section above)
 2. EVERY component referenced in "children" MUST be defined as its own section first
-3. Only use component IDs from the registry: badge-time, badge-crowd, badge-weather, filter-chips, list-travel, card-restaurant, card-hotel, card-activity, photo-grid, transport-tickets, stack-horizontal, stack-vertical
+3. Available component IDs:
+   TRAVEL-SPECIFIC: card-travel, card-restaurant, card-hotel, card-activity, list-travel
+   GENERIC (for non-travel): card-item, card-detail, list-items
+   OTHER: badge-time, badge-crowd, badge-weather, filter-chips, photo-grid, stack-horizontal, stack-vertical
+   
 4. Don't invent component IDs - they don't exist!
-5. For categories "${getCategories(analysis).join(', ')}", use appropriate card variants:
+
+5. Choose components based on category:
+   TRAVEL categories (dining, accommodation, activities):
    - dining → card-restaurant
    - accommodation → card-hotel
    - activities → card-activity
-   - transport → card-transport
+   - list → list-travel
+   
+   NON-TRAVEL categories (products, services, shopping, etc.):
+   - Use card-item (generic item card)
+   - Use card-detail (for detailed specs/features)
+   - Use list-items (generic list)
+   
 6. Match the emotion "${analysis.sentiment.emotion}" with appropriate layout density
 
 Return ONLY the high-level structure JSON. No markdown, no explanations.`;
@@ -230,9 +339,54 @@ Return ONLY the high-level structure JSON. No markdown, no explanations.`;
 /**
  * Build query analysis prompt
  */
-export function buildQueryAnalysisPrompt(query: string, userContext?: any): string {
+export function buildQueryAnalysisPrompt(query: string, userContext?: any, capabilities?: any): string {
   // Add timestamp to prevent caching issues
   const timestamp = new Date().toISOString();
+  
+  // Build capability-specific instructions
+  let capabilityInstructions = '';
+  
+  if (capabilities?.transport) {
+    capabilityInstructions += `
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🛫 TRANSPORT CAPABILITY ENABLED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+When extracting destination, provide MULTIPLE airport options:
+- destinationAirports: Array of IATA airport codes (up to 5), sorted by relevance
+  
+  Format: ["PRIMARY", "ALTERNATIVE1", "ALTERNATIVE2", ...]
+  
+  Examples:
+  - Bangkok → ["BKK", "DMK"] (Suvarnabhumi is main, Don Mueang is alternative)
+  - Tokyo → ["NRT", "HND"] (Narita for international, Haneda for domestic)
+  - New York → ["JFK", "LGA", "EWR"] (JFK main, LaGuardia, Newark)
+  - Singapore → ["SIN"] (only one major airport)
+  - Bali → ["DPS"] (Ngurah Rai International)
+  
+  Sorting Priority:
+  1. Main international airport first
+  2. Distance from DESTINATION CITY CENTER (closest to where user wants to go)
+  3. Size/capacity of airport
+  4. Frequency of international flights
+  
+  The system will:
+  - Verify codes against 6,000+ airport database
+  - Research transport for top 3 airports
+  - Display all 5 options in UI for user selection
+`;
+  }
+  
+  if (capabilities?.neighborhood) {
+    capabilityInstructions += `
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏘️ NEIGHBORHOOD CAPABILITY ENABLED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Extract neighborhood/area context:
+- Specific districts, neighborhoods, or areas mentioned
+- Local characteristics (trendy, historic, quiet, nightlife)
+- This helps provide area-specific insights and recommendations.
+`;
+  }
   
   return `You are a travel query analyzer. Extract structured parameters from natural language.
 
@@ -246,6 +400,7 @@ ${userContext ? `User Context:
 - Location: ${userContext.location || 'Unknown'}
 - Previous searches: ${userContext.history?.join(', ') || 'None'}
 ` : ''}
+${capabilityInstructions}
 
 Extract the following:
 
@@ -279,6 +434,9 @@ Extract the following:
 
 5. PARAMETERS:
    - destination: Where they want to go
+   - destinationAirports: REQUIRED array of IATA airport codes for the destination, sorted by relevance
+     Examples: Bangkok → ["BKK", "DMK"], Paris → ["CDG", "ORY"], NYC → ["JFK", "LGA", "EWR"]
+     ALWAYS provide ALL major airports serving the destination city
    - establishments: Types of places ["restaurant", "hotel", "museum"]
    - keywords: Descriptive terms ["romantic", "cheap", "rooftop"]
    - natureOfTravel: romantic | family | business | solo | adventure | luxury | budget
@@ -318,6 +476,7 @@ Return ONLY valid JSON matching this structure:
   },
   "parameters": {
     "destination": "Bali",
+    "destinationAirports": ["DPS"],
     "establishments": ["restaurant"],
     "keywords": ["romantic", "intimate"],
     "natureOfTravel": "romantic",
@@ -497,6 +656,30 @@ Requirements:
 6. IMPORTANT: Keep component nesting to MAX 2 levels deep
 7. IMPORTANT: Only use these component types: text, input, button, card, list, chip-group, image, stack
 8. DO NOT use: icon, container, view, or any other types
+
+SPECIAL: Airport Selection (when destinationAirports exists):
+If analysis.parameters.destinationAirports has multiple airports, create an interactive selector:
+
+{
+  "type": "chip-group",
+  "props": {
+    "options": [
+      { "value": "BKK", "label": "BKK", "badge": "Primary" },
+      { "value": "DMK", "label": "DMK", "badge": "Alt" }
+    ],
+    "selectedValue": "BKK",
+    "variant": "outlined"
+  },
+  "interaction": {
+    "onPress": "select-airport"
+  }
+}
+
+The chip-group will:
+- Show all airports as selectable chips
+- Highlight selected airport (first by default)
+- Pass selected airport value to onAction handler
+- Trigger re-fetch of transport data when changed
 
 Return ONLY valid JSON. No markdown, no explanations.`;
 }

@@ -19,7 +19,26 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
   'card-travel': {
     id: 'card-travel',
     name: 'Travel Destination Card',
-    description: 'Card for displaying complete destination with grouped highlights and local tip. Automatically renders photo grid variants (horizontal/split/masonry) based on photoGridVariant field in highlights.',
+    description: `Card for displaying complete destination with grouped highlights and local tip. 
+
+PHOTO GRID VARIANTS (set on EACH highlight):
+┌─────────┬───┐  "hero-left" - Main photo left, 2 stacked right (romantic/luxury/featured)
+│    1    │ 2 │
+│  HERO   ├───┤
+│         │ 3 │
+└─────────┴───┘
+
+┌───┬─────────┐  "hero-right" - 2 stacked left, main photo right (temples/nature/variety)
+│ 1 │         │
+├───┤    3    │
+│ 2 │  HERO   │
+└───┴─────────┘
+
+┌───┬───┬───┐  "equal-row" - 3 equal (BORING, avoid unless generic)
+│ 1 │ 2 │ 3 │
+└───┴───┴───┘
+
+CRITICAL: ALWAYS vary layouts across highlights - mix hero-left and hero-right for visual interest!`,
     category: 'card',
     requiredProps: ['destination', 'vibe', 'highlights'],
     optionalProps: ['photoUrl', 'photoUrls', 'photoGridVariant', 'bestTime', 'localTip', 'transportTickets'],
@@ -30,15 +49,28 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
         destination: 'Ubud, Bali',
         vibe: 'Peaceful & Cultural',
         highlights: [
-          { name: 'Tegalalang Rice Terrace', type: 'touristy', description: 'Iconic terraced rice fields', estimatedCost: '$10' },
-          { name: 'Campuhan Ridge Walk', type: 'offbeat', description: 'Scenic jungle trail', estimatedCost: 'Free' }
+          { 
+            name: 'Tegalalang Rice Terrace', 
+            type: 'touristy', 
+            description: 'Iconic terraced rice fields', 
+            estimatedCost: '$10',
+            photoUrls: ['url1', 'url2', 'url3'],
+            photoGridVariant: 'hero-left'  // Main attraction gets hero treatment
+          },
+          { 
+            name: 'Campuhan Ridge Walk', 
+            type: 'offbeat', 
+            description: 'Scenic jungle trail', 
+            estimatedCost: 'Free',
+            photoUrls: ['url1', 'url2', 'url3'],
+            photoGridVariant: 'hero-right'  // Alternate for variety
+          }
         ],
-        photoUrls: ['https://...'],
         bestTime: 'Morning (6-9 AM)',
         localTip: 'Visit rice terraces early to avoid crowds'
       }
     },
-    useCases: ['Travel recommendations', 'Destination browsing', 'Trip planning']
+    useCases: ['Travel recommendations', 'Destination browsing', 'Trip planning', 'Visual storytelling with varied photo layouts']
   },
 
   'card-restaurant': {
@@ -132,6 +164,50 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
   },
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // GENERIC ALIASES (for non-travel use cases)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  'card-item': {
+    id: 'card-item',
+    name: 'Generic Item Card',
+    description: 'Generic card for any item (products, services, etc.) - alias for card-travel',
+    category: 'card',
+    requiredProps: ['name', 'description'],
+    optionalProps: ['price', 'rating', 'image', 'tags', 'metadata'],
+    example: {
+      type: 'card',
+      props: {
+        name: 'Canon EOS R5',
+        description: 'Professional mirrorless camera',
+        price: '$3,899',
+        rating: 4.8,
+        image: 'https://...',
+        tags: ['professional', 'high-quality', 'expensive']
+      }
+    },
+    useCases: ['Product listings', 'Service cards', 'Generic items', 'Comparison items']
+  },
+
+  'card-detail': {
+    id: 'card-detail',
+    name: 'Detail Card',
+    description: 'Detailed card with specs/features - alias for card-highlight',
+    category: 'card',
+    requiredProps: ['name'],
+    optionalProps: ['specs', 'features', 'price', 'image', 'description'],
+    example: {
+      type: 'card',
+      props: {
+        name: 'iPhone 15 Pro',
+        specs: ['A17 Pro chip', '48MP camera', 'Titanium design'],
+        price: '$999',
+        image: 'https://...'
+      }
+    },
+    useCases: ['Product details', 'Spec comparisons', 'Feature lists']
+  },
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // LISTS
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -152,6 +228,25 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
       }
     },
     useCases: ['Main content display', 'Search results', 'Recommendations']
+  },
+
+  'list-items': {
+    id: 'list-items',
+    name: 'Generic Items List',
+    description: 'Vertical list for any items (products, services, etc.) - alias for list-travel',
+    category: 'list',
+    requiredProps: ['items'],
+    optionalProps: ['title', 'separator', 'emptyMessage'],
+    example: {
+      type: 'list',
+      props: {
+        layout: 'vertical',
+        items: [],
+        separator: true,
+        title: 'Results'
+      }
+    },
+    useCases: ['Product lists', 'Search results', 'Any item listing']
   },
 
   'list-grid': {
@@ -342,19 +437,46 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
   'photo-grid-variant': {
     id: 'photo-grid-variant',
     name: 'Photo Grid Variant',
-    description: 'Smart photo grid with 3 layout variants that adapt to content and user intent. VARIANTS: (1) horizontal - 3 equal photos side-by-side, classic layout. (2) split - 1 large photo (50%) + 2 small stacked photos (50%), Instagram-style, great for highlighting main photo in romantic/luxury contexts. (3) masonry - 2 small stacked photos (50%) + 1 large photo (50%), Pinterest-style, good for visual variety in attractions/temples. The system auto-selects variants based on place type and user emotion.',
+    description: `Smart photo grid with 4 layout variants. VISUAL LAYOUTS:
+
+(1) "hero-left" - Hero photo dominates left, 2 stacked right:
+    ┌─────────┬───┐
+    │         │ 2 │
+    │    1    ├───┤
+    │ (HERO)  │ 3 │
+    └─────────┴───┘
+    Use for: Romantic places, luxury venues, featured attractions, main highlights
+
+(2) "hero-right" - 2 stacked left, hero photo dominates right:
+    ┌───┬─────────┐
+    │ 1 │         │
+    ├───┤    3    │
+    │ 2 │ (HERO)  │
+    └───┴─────────┘
+    Use for: Temples, nature spots, cultural sites, visual variety
+
+(3) "equal-row" - 3 equal photos side-by-side (BORING, avoid):
+    ┌─────┬─────┬─────┐
+    │  1  │  2  │  3  │
+    └─────┴─────┴─────┘
+    Use for: Generic listings only when no emphasis needed
+
+(4) "experimental" - Custom layout with style overrides:
+    Accepts styleOverrides prop for custom spacing, sizes, borders
+    Use for: Testing new layouts, special themes`,
     category: 'layout',
     requiredProps: ['photos', 'variant'],
-    optionalProps: ['maxPhotos'],
+    optionalProps: ['maxPhotos', 'styleOverrides'],
     example: {
       type: 'photo-grid-variant',
       props: {
         photos: ['url1', 'url2', 'url3'],
-        variant: 'split',
-        maxPhotos: 3
+        variant: 'hero-left',
+        maxPhotos: 3,
+        styleOverrides: { gap: 4, borderRadius: 16 }
       }
     },
-    useCases: ['Dynamic photo layouts', 'Context-aware galleries', 'Romantic/luxury showcases', 'Attraction highlights', 'Visual variety']
+    useCases: ['Dynamic photo layouts', 'Context-aware galleries', 'Romantic/luxury showcases', 'Attraction highlights', 'Visual variety', 'Custom themed layouts']
   },
 
   'transport-tickets': {
@@ -425,13 +547,11 @@ export function hydrateComponent(componentId: string, data: any): any {
     return null;
   }
   
-  // Start with the example as a template
-  const hydrated = JSON.parse(JSON.stringify(def.example));
-  
-  // Merge in the provided data
-  if (hydrated.props) {
-    Object.assign(hydrated.props, data);
-  }
+  // Use the example structure but replace props entirely with real data
+  const hydrated = {
+    type: def.example.type,
+    props: data  // Use real data directly, don't merge with example
+  };
   
   return hydrated;
 }

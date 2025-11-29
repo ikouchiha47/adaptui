@@ -79,6 +79,36 @@ export class GeminiCore implements LLMProvider {
   }
 
   /**
+   * Generate plain text response (no JSON)
+   */
+  async generateText(prompt: string): Promise<string> {
+    const result = await this.model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      generationConfig: {
+        temperature: 0.7,
+        responseMimeType: 'text/plain',
+      },
+    });
+
+    return await result.response.text();
+  }
+
+  /**
+   * Generate JSON response with specific temperature
+   */
+  async generateJSON(prompt: string, temperature: number = 0.3): Promise<string> {
+    const result = await this.model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      generationConfig: {
+        temperature,
+        responseMimeType: 'application/json',
+      },
+    });
+
+    return await result.response.text();
+  }
+
+  /**
    * Generate minimal hybrid UI structure
    */
   async generateHybridStructure(prompt: string): Promise<string> {

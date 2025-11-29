@@ -6,6 +6,8 @@ interface CentralOrbProps {
     cardBg: string;
     accent: string;
     text: string;
+    borderWidth?: number;
+    shadowOffset?: { x: number; y: number };
   };
   x: number;
   y: number;
@@ -31,6 +33,8 @@ export function CentralOrb({ theme, x, y }: CentralOrbProps) {
     ).start();
   }, []);
 
+  const isBrutal = theme.borderWidth && theme.borderWidth > 2;
+  
   return (
     <Animated.View
       style={{
@@ -39,18 +43,20 @@ export function CentralOrb({ theme, x, y }: CentralOrbProps) {
         top: y - 80,
         width: 160,
         height: 160,
-        borderRadius: 80,
+        borderRadius: isBrutal ? 0 : 80,
         backgroundColor: theme.cardBg,
-        opacity: 0.95,
+        opacity: isBrutal ? 1 : 0.95,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: theme.accent,
-        shadowOffset: { width: 0, height: 12 },
-        shadowOpacity: 0.6,
-        shadowRadius: 24,
+        shadowColor: isBrutal ? '#000000' : theme.accent,
+        shadowOffset: theme.shadowOffset 
+          ? { width: theme.shadowOffset.x, height: theme.shadowOffset.y }
+          : { width: 0, height: 12 },
+        shadowOpacity: isBrutal ? 1 : 0.6,
+        shadowRadius: isBrutal ? 0 : 24,
         elevation: 12,
-        borderWidth: 2,
-        borderColor: `${theme.accent}40`,
+        borderWidth: theme.borderWidth || 2,
+        borderColor: isBrutal ? '#000000' : `${theme.accent}40`,
         transform: [{ scale: pulseAnim }],
       }}
     >

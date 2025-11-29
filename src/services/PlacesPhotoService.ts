@@ -13,6 +13,8 @@ export interface PlaceDetails {
   rating?: number;
   isOpen?: boolean;
   openingHours?: string[];
+  latitude?: number;
+  longitude?: number;
 }
 
 export class PlacesPhotoService {
@@ -104,13 +106,19 @@ export class PlacesPhotoService {
         height: photo.height
       })) || [];
 
+      // Extract coordinates from geometry
+      const latitude = details.geometry?.location?.lat;
+      const longitude = details.geometry?.location?.lng;
+      
       console.log(`✅ [PlacesPhotoService] Got ${photos.length} photos, rating: ${details.rating}, open: ${details.opening_hours?.open_now}`);
       
       return {
         photos,
         rating: details.rating,
         isOpen: details.opening_hours?.open_now,
-        openingHours: details.opening_hours?.weekday_text
+        openingHours: details.opening_hours?.weekday_text,
+        latitude,
+        longitude
       };
     } catch (error) {
       console.error(`❌ [PlacesPhotoService] Error:`, error);

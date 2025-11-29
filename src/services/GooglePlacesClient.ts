@@ -211,4 +211,34 @@ export class GooglePlacesClient {
       return null;
     }
   }
+
+  /**
+   * Geocode a city name to get lat/lng coordinates
+   */
+  async geocodeCity(cityName: string): Promise<{ lat: number; lng: number } | null> {
+    try {
+      console.log(`🌍 [GooglePlacesClient] Geocoding city: ${cityName}`);
+      
+      const params = new URLSearchParams({
+        address: cityName,
+        key: this.apiKey,
+      });
+
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?${params}`;
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.status !== 'OK' || !data.results || data.results.length === 0) {
+        console.warn(`⚠️ [GooglePlacesClient] Geocoding failed: ${data.status}`);
+        return null;
+      }
+
+      const location = data.results[0].geometry.location;
+      console.log(`✅ [GooglePlacesClient] Geocoded ${cityName}:`, location);
+      return location;
+    } catch (error) {
+      console.error(`❌ [GooglePlacesClient] Geocoding error:`, error);
+      return null;
+    }
+  }
 }

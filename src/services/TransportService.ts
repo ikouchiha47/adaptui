@@ -15,6 +15,8 @@ export interface TransportTicket {
   stops?: number;
   distance?: number;
   image?: string;
+  deepLink?: string; // URL to open in WebView
+  searchQuery?: string; // DDG search query
 }
 
 export interface TransportSearch {
@@ -22,6 +24,8 @@ export interface TransportSearch {
   to: string;
   date: string;
   passengers: number;
+  fromCoords?: { lat: number; lng: number };
+  toCoords?: { lat: number; lng: number };
 }
 
 export class TransportService {
@@ -32,44 +36,54 @@ export class TransportService {
   }
 
   /**
-   * Search for flights (using mock data for now)
-   * In production, integrate with Skyscanner, Amadeus, or Kiwi API
+   * Search for flights by scraping DuckDuckGo and generating deep links
    */
   async searchFlights(search: TransportSearch): Promise<TransportTicket[]> {
     try {
       console.log(`✈️ [TransportService] Searching flights: ${search.from} → ${search.to}`);
       
-      // Mock flight data
+      // Generate Skyscanner deep link
+      const skyscannerUrl = this.generateSkyscannerUrl(search);
+      
+      // Scrape DDG for flight info
+      const query = `flights from ${search.from} to ${search.to}`;
+      const scrapedInfo = await this.scrapeDDGForTransport(query);
+      
+      // Create flight options with deep links
       const flights: TransportTicket[] = [
         {
           id: 'FL001',
           type: 'flight',
           from: search.from,
           to: search.to,
-          departureTime: '08:00',
-          arrivalTime: '14:30',
-          duration: '6h 30m',
-          price: 250,
+          departureTime: 'Search',
+          arrivalTime: 'Flights',
+          duration: 'Varies',
+          price: 0,
           currency: 'USD',
-          provider: 'AirAsia',
-          seats: 5,
-          distance: 1200,
-          image: '✈️'
+          provider: 'Skyscanner',
+          seats: 0,
+          distance: 0,
+          image: '✈️',
+          deepLink: skyscannerUrl,
+          searchQuery: query
         },
         {
           id: 'FL002',
           type: 'flight',
           from: search.from,
           to: search.to,
-          departureTime: '14:00',
-          arrivalTime: '20:15',
-          duration: '6h 15m',
-          price: 280,
+          departureTime: 'Search',
+          arrivalTime: 'Options',
+          duration: 'Varies',
+          price: 0,
           currency: 'USD',
-          provider: 'Garuda Indonesia',
-          seats: 3,
-          distance: 1200,
-          image: '✈️'
+          provider: 'Rome2Rio',
+          seats: 0,
+          distance: 0,
+          image: '🗺️',
+          deepLink: this.generateRome2RioUrl(search),
+          searchQuery: `transport from ${search.from} to ${search.to}`
         },
         {
           id: 'FL003',
@@ -231,6 +245,74 @@ export class TransportService {
       return ['train', 'bus', 'flight'];
     } else {
       return ['bus', 'train'];
+    }
+  }
+
+  /**
+   * Generate Skyscanner deep link
+   */
+  private generateSkyscannerUrl(search: TransportSearch): string {
+    // Convert city names to airport codes (simplified - in production use proper mapping)
+    const fromCode = this.getCityCode(search.from);
+    const toCode = this.getCityCode(search.to);
+    const date = search.date.replace(/-/g, '');
+    
+    return `https://www.skyscanner.com/transport/flights/${fromCode}/${toCode}/${date}/?adultsv2=1&cabinclass=economy&rtn=0`;
+  }
+
+  /**
+   * Generate Rome2Rio deep link
+   */
+  private generateRome2RioUrl(search: TransportSearch): string {
+    const from = encodeURIComponent(search.from);
+    const to = encodeURIComponent(search.to);
+    return `https://www.rome2rio.com/map/${from}/${to}`;
+  }
+
+  /**
+   * Get city/airport code (simplified)
+   */
+  private getCityCode(cityName: string): string {
+    // Extract first 3 letters or use common codes
+    const codes: Record<string, string> = {
+      'bangalore': 'blr',
+      'mumbai': 'bom',
+      'delhi': 'del',
+      'bangkok': 'bkk',
+      'singapore': 'sin',
+      'kuala lumpur': 'kul',
+      'bali': 'dps',
+      'phuket': 'hkt',
+      'tokyo': 'tyo',
+      'seoul': 'sel',
+      'hong kong': 'hkg',
+    };
+    
+    const normalized = cityName.toLowerCase().split(',')[0].trim();
+    return codes[normalized] || normalized.substring(0, 3);
+  }
+
+  /**
+   * Scrape DuckDuckGo for transport information
+   */
+  private async scrapeDDGForTransport(query: string): Promise<any> {
+    try {
+      const url = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
+      const response = await fetch(url);
+      const html = await response.text();
+      
+      // Extract useful info from HTML (simplified)
+      // In production, parse HTML properly to extract prices, durations, etc.
+      const hasResults = html.includes('result');
+      
+      return {
+        hasResults,
+        query,
+        // Could extract more info here
+      };
+    } catch (error) {
+      console.error('❌ [TransportService] DDG scrape error:', error);
+      return { hasResults: false };
     }
   }
 }

@@ -11,12 +11,17 @@ interface HeaderProps {
 }
 
 export function Header({ title, onBack, theme, backgroundColor, borderColor }: HeaderProps) {
+  const isBrutal = theme.borderWidth && theme.borderWidth > 2;
+  
   return (
     <View style={[
       styles.header,
       {
         backgroundColor: backgroundColor || 'rgba(0, 0, 0, 0.3)',
         borderBottomColor: borderColor || 'rgba(255, 255, 255, 0.1)',
+        borderBottomWidth: theme.borderWidth || 1,
+        borderTopWidth: isBrutal ? theme.borderWidth : 0,
+        borderTopColor: isBrutal ? borderColor : 'transparent',
       }
     ]}>
       <TouchableOpacity onPress={onBack} style={styles.backButton}>
@@ -39,7 +44,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    borderBottomWidth: 1,
   },
   backButton: {
     padding: 12,

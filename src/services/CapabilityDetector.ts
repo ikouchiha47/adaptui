@@ -1,5 +1,6 @@
 // Capability Detector - Determine what features are available based on permissions
 
+import { pluginRegistry } from '../plugins/PluginSystem';
 import { LocationPermissions, LocationService } from './LocationService';
 
 export interface AppCapabilities {
@@ -11,7 +12,8 @@ export interface AppCapabilities {
   camera: boolean;
   food: boolean;
   internet: boolean;
-  advancedFeatures: boolean;
+  // Dynamic plugin capabilities
+  [key: string]: boolean;
 }
 
 export interface CapabilityContext {
@@ -35,6 +37,7 @@ export class CapabilityDetector {
       userLocation = await LocationService.getCurrentLocation();
     }
 
+    // Base capabilities
     const capabilities: AppCapabilities = {
       location: permissions.canGetLocation,
       transport: true, // ON by default
@@ -44,10 +47,29 @@ export class CapabilityDetector {
       camera: false, // Not implemented yet
       food: false, // OFF by default
       internet: false, // OFF by default
-      advancedFeatures: true, // ON by default
     };
 
-    console.log('✅ [CapabilityDetector] Capabilities:', capabilities);
+    // Add plugin capabilities dynamically
+    try {
+      const plugins = pluginRegistry.getAllPlugins();
+      console.log('[CapabilityDetector] Found plugins:', plugins.length);
+      
+      plugins.forEach((plugin: any) => {
+        const enabled = plugin.capability.defaultEnabled;
+        capabilities[plugin.capability.id] = enabled;
+        console.log('[CapabilityDetector] Plugin capability:', {
+          id: plugin.capability.id,
+          label: plugin.capability.label,
+          defaultEnabled: enabled,
+          added: enabled
+        });
+      });
+    } catch (error) {
+      // Plugins not initialized yet
+      console.log('[CapabilityDetector] Plugins not initialized:', error);
+    }
+
+    console.log('[CapabilityDetector] Final capabilities:', capabilities);
 
     return {
       capabilities,
@@ -67,18 +89,29 @@ export class CapabilityDetector {
       
       if (permissions.canGetLocation) {
         const userLocation = await LocationService.getCurrentLocation();
+        const caps: AppCapabilities = {
+          location: true,
+          transport: true,
+          photos: true,
+          maps: true,
+          notifications: true,
+          camera: false,
+          food: false,
+          internet: false,
+        };
+        
+        // Add plugin capabilities
+        try {
+          const plugins = pluginRegistry.getAllPlugins();
+          plugins.forEach((plugin: any) => {
+            caps[plugin.capability.id] = plugin.capability.defaultEnabled;
+          });
+        } catch (error) {
+          // Plugins not initialized yet
+        }
+        
         return {
-          capabilities: {
-            location: true,
-            transport: true,
-            photos: true,
-            maps: true,
-            notifications: true,
-            camera: false,
-            food: false,
-            internet: false,
-            advancedFeatures: true,
-          },
+          capabilities: caps,
           userLocation: userLocation || undefined,
           permissions
         };

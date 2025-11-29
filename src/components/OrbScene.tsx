@@ -156,6 +156,7 @@ export function OrbScene({ theme, onSelectCategory }: OrbSceneProps) {
             y={planet.y}
             delay={planet.delay}
             onPress={() => handlePlanetPress(planet.id)}
+            theme={theme}
           />
         ))}
       </View>

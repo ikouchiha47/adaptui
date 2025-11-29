@@ -10,7 +10,19 @@ interface PhotoGridProps {
 const { width } = Dimensions.get('window');
 
 export function PhotoGrid({ photos, theme, onViewMore }: PhotoGridProps) {
+  // 🔍 DETAILED PHOTO URL LOGGING
+  console.log('📸 [PhotoGrid] Received photos array:', photos);
+  console.log('📸 [PhotoGrid] Photos count:', photos?.length || 0);
+  if (photos && photos.length > 0) {
+    photos.forEach((url, idx) => {
+      console.log(`📸 [PhotoGrid] Photo ${idx + 1}:`, url);
+      console.log(`📸 [PhotoGrid] Photo ${idx + 1} type:`, typeof url);
+      console.log(`📸 [PhotoGrid] Photo ${idx + 1} length:`, url?.length);
+    });
+  }
+
   if (!photos || photos.length === 0) {
+    console.log('⚠️ [PhotoGrid] No photos to display');
     return (
       <View style={[styles.placeholder, { backgroundColor: theme.surface, borderColor: theme.border }]}>
         <Text style={{ color: theme.text, opacity: 0.5 }}>📷 No photos available</Text>
@@ -21,6 +33,9 @@ export function PhotoGrid({ photos, theme, onViewMore }: PhotoGridProps) {
   // Show max 3 photos in grid
   const displayPhotos = photos.slice(0, 3);
   const remainingCount = photos.length - 3;
+  
+  console.log('📸 [PhotoGrid] Display photos:', displayPhotos);
+  console.log('📸 [PhotoGrid] Remaining count:', remainingCount);
 
   if (displayPhotos.length === 1) {
     return (

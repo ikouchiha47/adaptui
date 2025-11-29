@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { ActivityIndicator, Animated, Dimensions, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path, Polygon } from 'react-native-svg';
-import { ComponentRenderer } from '../ui-engine/ComponentRenderer';
 
 const { width, height } = Dimensions.get('window');
 
@@ -259,7 +258,7 @@ export function DynamicTravelScreen({ theme, onBack }: DynamicTravelScreenProps)
           {/* Dynamic UI Rendering */}
           {uiSchema && (
             <View style={styles.dynamicContainer}>
-              <ComponentRenderer schema={uiSchema} onAction={handleAction} />
+              <ModularComponentRenderer schema={uiSchema} onAction={handleAction} />
             </View>
           )}
         </ScrollView>

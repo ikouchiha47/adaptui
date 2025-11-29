@@ -107,9 +107,10 @@ export const FiltersSchema = z.object({
 
 // Query parameters
 export const ParametersSchema = z.object({
-  destination: z.string(),
-  establishments: z.array(z.string()),
-  keywords: z.array(z.string()),
+  destination: z.string().describe('City or destination name (e.g., "Bangkok", "Paris")'),
+  destinationAirports: z.array(z.string()).describe('REQUIRED: Array of IATA airport codes for the destination city, sorted by relevance (e.g., ["BKK", "DMK"] for Bangkok). Include all major airports serving the destination. Will be validated against airport database.'),
+  establishments: z.array(z.string()).describe('Types of places mentioned (e.g., ["bar", "restaurant", "hotel"])'),
+  keywords: z.array(z.string()).describe('Key search terms and descriptors from the query'),
   natureOfTravel: NatureOfTravelSchema,
   filters: FiltersSchema,
   sortBy: SortBySchema,

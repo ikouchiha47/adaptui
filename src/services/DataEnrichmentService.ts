@@ -105,21 +105,38 @@ export class DataEnrichmentService {
           openingHours: details.openingHours
         });
         
+        const priceDisplay = this.convertPriceLevel(place.priceLevel);
+        
         enriched.push({
           ...place,
+          estimatedCost: priceDisplay,
+          // Add price to each highlight
+          highlights: place.highlights?.map((h: any) => ({
+            ...h,
+            estimatedCost: h.estimatedCost || priceDisplay
+          })),
           enrichment: {
             openingHours: details.openingHours,
             popularity,
             weather,
             tidal,
-            timeRecommendation
+            timeRecommendation,
+            vibe: this.extractVibes(place, analysis)
           }
         });
       } catch (error) {
         console.error('❌ [DataEnrichment] Error enriching place:', error);
         // Add place without enrichment
+        const priceDisplay = this.convertPriceLevel(place.priceLevel);
+        
         enriched.push({
           ...place,
+          estimatedCost: priceDisplay,
+          // Add price to each highlight
+          highlights: place.highlights?.map((h: any) => ({
+            ...h,
+            estimatedCost: h.estimatedCost || priceDisplay
+          })),
           enrichment: this.getDefaultEnrichment(analysis)
         });
       }
@@ -286,12 +303,82 @@ export class DataEnrichmentService {
           { icon: '⏰', text: analysis.temporal.suggestedTimeOfDay, color: '#6366F1' }
         ],
         alternatives: []
-      }
+      },
+      vibe: []
     };
+  }
+
+  /**
+   * Extract vibe tags from place data
+   */
+  private extractVibes(place: any, analysis: QueryAnalysis): string[] {
+    const vibes: string[] = [];
+    
+    // From price level
+    if (place.priceLevel === 1) vibes.push('budget', 'affordable');
+    if (place.priceLevel === 2) vibes.push('mid-range');
+    if (place.priceLevel >= 3) vibes.push('upscale', 'luxury');
+    
+    // From rating and popularity
+    if (place.rating >= 4.5 && place.userRatingsTotal < 100) vibes.push('hidden-gem');
+    if (place.rating >= 4.5 && place.userRatingsTotal > 1000) vibes.push('popular');
+    if (place.rating >= 4.7) vibes.push('highly-rated');
+    
+    // From query emotion
+    const emotion = analysis.sentiment.emotion;
+    vibes.push(emotion); // Add query emotion as a vibe
+    
+    // From query vibes
+    if (analysis.sentiment.vibe) {
+      vibes.push(...analysis.sentiment.vibe);
+    }
+    
+    // From place types (if available)
+    if (place.types) {
+      if (place.types.includes('fine_dining')) vibes.push('fine-dining');
+      if (place.types.includes('bar') || place.types.includes('night_club')) vibes.push('nightlife');
+      if (place.types.includes('cafe')) vibes.push('casual', 'cozy');
+      if (place.types.includes('tourist_attraction')) vibes.push('touristy');
+    }
+    
+    // Remove duplicates
+    return [...new Set(vibes)];
   }
 
   private isWaterActivity(types: string[]): boolean {
     const waterTypes = ['beach', 'water_park', 'aquarium', 'marina', 'swimming_pool'];
     return types?.some(type => waterTypes.includes(type)) || false;
+  }
+
+  /**
+   * Convert Google's priceLevel to display format
+   * PRICE_LEVEL_UNSPECIFIED = N/A
+   * PRICE_LEVEL_FREE = Free
+   * PRICE_LEVEL_INEXPENSIVE = $
+   * PRICE_LEVEL_MODERATE = $$
+   * PRICE_LEVEL_EXPENSIVE = $$$
+   * PRICE_LEVEL_VERY_EXPENSIVE = $$$$
+   */
+  private convertPriceLevel(priceLevel: string | number | undefined): string | undefined {
+    if (!priceLevel) return undefined;
+    
+    const level = typeof priceLevel === 'string' ? priceLevel : priceLevel.toString();
+    
+    const mapping: Record<string, string> = {
+      'PRICE_LEVEL_UNSPECIFIED': undefined as any,
+      'PRICE_LEVEL_FREE': 'Free',
+      'PRICE_LEVEL_INEXPENSIVE': '$',
+      'PRICE_LEVEL_MODERATE': '$$',
+      'PRICE_LEVEL_EXPENSIVE': '$$$',
+      'PRICE_LEVEL_VERY_EXPENSIVE': '$$$$',
+      '0': undefined as any,
+      '1': 'Free',
+      '2': '$',
+      '3': '$$',
+      '4': '$$$',
+      '5': '$$$$'
+    };
+    
+    return mapping[level];
   }
 }

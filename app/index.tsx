@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { OrbScene } from '../src/components/OrbScene';
 import { ThemePicker } from '../src/components/ThemePicker';
 import { TravelScreen } from '../src/components/TravelScreen';
+import { initializePlugins } from '../src/plugins/index';
 import { AdaptUIScreen } from '../src/screens/AdaptUIScreen';
 import { CacheService } from '../src/services/CacheService';
 import { THEMES, ThemeKey } from '../src/theme/orbitalThemes';
@@ -19,6 +20,9 @@ export default function AdaptUI() {
   // Initialize cache and location on app start
   useEffect(() => {
     const initializeApp = async () => {
+      // Initialize plugins
+      initializePlugins();
+      
       // Initialize cache
       await CacheService.init();
       
