@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "buildDate": "2025-11-28T18:21:35.863Z",
+  "airportCount": 6072,
+  "countryCount": 261,
+  "source": "OpenFlights (https://github.com/jpatokal/openflights)"
+}
