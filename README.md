@@ -4,6 +4,8 @@
 
 AdaptUI is a proof-of-concept React Native app that uses AI to generate custom user interfaces on-demand. Instead of navigating through multiple apps for different tasks, you ask AdaptUI what you need, and it creates a purpose-built interface just for that moment.
 
+Blog: [src](https://ikouchiha47.github.io/2025/11/28/adaptui.html)
+
 ---
 
 ## 🎯 The Problem
@@ -123,7 +125,7 @@ User Query
   React Native UI
 ```
 
-**Read more:** [BLOG_1_ADAPTUI_ARCHITECTURE.md](./BLOG_1_ADAPTUI_ARCHITECTURE.md)
+**Read more:** [BLOG_1_ADAPTUI_ARCHITECTURE.md](./blogs/BLOG_1_ADAPTUI_ARCHITECTURE.md)
 
 ---
 
